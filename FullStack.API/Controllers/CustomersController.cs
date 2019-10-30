@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FullStack.BLL.Interfaces;
+using FullStack.BLL.Models;
 using FullStack.BLL.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -32,10 +33,10 @@ namespace FullStack.API.Controllers
         //    return Ok(customers);
         //}
 
-        [HttpGet,Authorize]
-        public IActionResult Get(int skip=0, int take=0,string filter="")
+        [HttpGet]
+        public IActionResult Get(int skip, int take,string filterFirstName,string filterLastName,string filterAccountNumber,decimal filterSumTotalDueHigher,decimal filterSumTotalDueLower)
         {
-            var customers = _customerService.GetListCustomersPage(skip,take,filter);
+            var customers = _customerService.GetListCustomersPage(skip,take,filterFirstName,filterLastName,filterAccountNumber,filterSumTotalDueHigher,filterSumTotalDueLower);
             return Ok(customers);
         }
 

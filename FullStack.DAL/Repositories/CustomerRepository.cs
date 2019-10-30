@@ -21,21 +21,42 @@ namespace FullStack.DAL.Repositories
             return _context.Customers.Include("Person").Include("SalesOrderHeader").Where(c => c.Person != null);
         }
 
-        public CustomerFilterPagination GetCustomersPage(int skip, int take,string filter)
+        public CustomerFilterPagination GetCustomersPage(int skip, int take, string filterFirstName, string filterLastName, 
+            string filterAccountNumber, decimal filterSumTotalDueHigher, decimal filterSumTotalDueLower)
         {
-            var paginationFilterModel = new CustomerFilterPagination(skip, take, filter);
+            var paginationFilterModel = new CustomerFilterPagination(skip, take,filterFirstName,filterLastName,filterAccountNumber,filterSumTotalDueHigher,filterSumTotalDueLower);
             var query = _context.Customers
                 .Include("Person")
                 .Include("SalesOrderHeader")
                 .Where(c => c.Person != null);
 
-            if (filter != null)
+
+            if (filterFirstName != null)
             {
-                query = query.Where(c =>
-                    c.Person.FirstName.ToLower().Contains(filter.ToLower()) |
-                    c.Person.LastName.ToLower().Contains(filter.ToLower()) |
-                    c.AccountNumber.ToLower().Contains(filter.ToLower()));
+                query = query.Where(c => c.Person.FirstName.ToLower().Contains(filterFirstName.ToLower()));
             }
+
+            if (filterLastName != null)
+            {
+                query = query.Where(c => c.Person.LastName.ToLower().Contains(filterLastName.ToLower()));
+            }
+
+            if (filterAccountNumber != null)
+            {
+                query = query.Where(c => c.AccountNumber.ToLower().Contains(filterAccountNumber.ToString().ToLower()));
+            }
+
+            if (filterSumTotalDueHigher != 0)
+            {
+                query = query.Where(c => c.SalesOrderHeader.Sum(s => s.TotalDue) > filterSumTotalDueHigher); 
+            }
+
+            if (filterSumTotalDueLower != 0 )
+            {
+
+                query = query.Where(c => c.SalesOrderHeader.Sum(s => s.TotalDue) < filterSumTotalDueLower);
+            }
+
 
             paginationFilterModel.TotalItems = query.Count();
 

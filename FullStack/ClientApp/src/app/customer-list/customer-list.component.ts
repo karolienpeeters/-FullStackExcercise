@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { Pagination } from '../interfaces/pagination';
+import { CustomerFilterPagination } from '../interfaces/customerFilterPagination';
 
 @Component({
   selector: 'app-customer-list',
@@ -11,30 +12,38 @@ export class CustomerListComponent implements OnInit {
 
   public customerlist;
   public customerPagination: Pagination;
-  public searchText: string = "";
+  public filterFirstName:string="";
+  public filterLastName:string="";
+  public filterAccountNumber:string="";
+  public filterSumTotalDueHigher:number=0;
+  public filterSumTotalDueLower:number=0;
+ 
   pager: any = {};
   pageSize = 15;
   maxPages = 10;
   initialPage = 0;
 
 
-  constructor(private service: DataService) { }
+  constructor(private service: DataService) { 
+   
+  }
 
   ngOnInit() {
-    this.GetListCustomer(this.initialPage, this.pageSize,this.searchText);
+   
+    this.GetListCustomer(this.initialPage, this.pageSize,this.filterFirstName,this.filterAccountNumber,this.filterLastName,this.filterSumTotalDueHigher,this.filterSumTotalDueLower);
 
   }
 
   setPage(page: number) {
     this.pager = this.paginate(this.customerPagination.totalItems, page, this.pageSize, this.maxPages);
     if (page !== 0) {
-      this.GetListCustomer(page, 15,this.searchText);
+      this.GetListCustomer(page, 15,this.filterFirstName,this.filterAccountNumber,this.filterLastName,this.filterSumTotalDueHigher,this.filterSumTotalDueLower);
     }
 
   }
 
-  GetListCustomer(pageNumber: number, pageItems: number,filter:string="") {
-    this.service.GetCustomersPage("api/customers", pageNumber, pageItems,filter).subscribe((result => {
+  GetListCustomer(pageNumber: number, pageItems: number,filterFirstName:string,filterAccountNumber:string,filterLastName:string,filterSumTotalDueHigher:number,filterSumTotalDueLower) {
+    this.service.GetCustomersPage("api/customers", pageNumber, pageItems,filterFirstName,filterAccountNumber,filterLastName,filterSumTotalDueHigher,filterSumTotalDueLower).subscribe((result => {
       console.log(result);
       this.customerPagination = result as Pagination;
       this.customerlist = this.customerPagination.customerItemList;
@@ -51,7 +60,9 @@ export class CustomerListComponent implements OnInit {
   }
 
   Filter(pageNumber: number) {
-    this.service.FilterCustomers("api/customers", pageNumber, 15, this.searchText).subscribe((result => {
+    console.log("in filter method");
+
+    this.service.FilterCustomers("api/customers", pageNumber, 15, this.filterFirstName,this.filterAccountNumber,this.filterLastName,this.filterSumTotalDueHigher,this.filterSumTotalDueLower).subscribe((result => {
       console.log(result);
       this.customerPagination = result as Pagination;
       this.customerlist = this.customerPagination.customerItemList;
@@ -65,6 +76,15 @@ export class CustomerListComponent implements OnInit {
 
     }));
 
+  }
+
+  ClearForm(){
+    this.filterAccountNumber="";
+    this.filterFirstName="";
+    this.filterLastName="";
+    this.filterSumTotalDueHigher = 0;
+    this.filterSumTotalDueLower=0;
+   this.GetListCustomer(this.initialPage, this.pageSize,this.filterFirstName,this.filterAccountNumber,this.filterLastName,this.filterSumTotalDueHigher,this.filterSumTotalDueLower);
   }
 
 

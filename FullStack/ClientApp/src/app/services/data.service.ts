@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Pagination } from '../interfaces/pagination';
 import { AuthService } from './auth.service';
+import { CustomerFilterPagination } from '../interfaces/customerFilterPagination';
 
 
 @Injectable({
@@ -18,9 +19,9 @@ export class DataService {
   //   return this.http.get<Pagination>(this.createCompleteRoute(route,environment.urlAddress));
   // }
 
-  GetCustomersPage(route:string,page:number, items:number,filter:string){
+  GetCustomersPage(route:string,page:number, items:number,filterFirstName:string,filterAccountNumber:string,filterLastName:string,filterSumTotalDueHigher:number,filterSumTotalDueLower:number){
     
-    return this.http.get(this.createFilterPageRoute(route,environment.urlAddress,page,items,filter),{
+    return this.http.get(this.createFilterPageRoute(route,environment.urlAddress,page,items,filterFirstName,filterAccountNumber,filterLastName,filterSumTotalDueHigher,filterSumTotalDueLower),{
       headers: new HttpHeaders({
         "Authorization": "bearer " + this.auth.authResponse.token,
         "Content-Type": "application/json"
@@ -28,9 +29,9 @@ export class DataService {
     })
   }
 
- FilterCustomers(route:string,page:number, items:number,filter:string){
+ FilterCustomers(route:string,page:number, items:number,filterFirstName:string,filterAccountNumber:string,filterLastName:string,filterSumTotalDueHigher:number,filterSumTotalDueLower:number){
     
-    return this.http.get(this.createFilterPageRoute(route,environment.urlAddress,page,items,filter),{
+    return this.http.get(this.createFilterPageRoute(route,environment.urlAddress,page,items,filterFirstName,filterAccountNumber,filterLastName,filterSumTotalDueHigher,filterSumTotalDueLower),{
       headers: new HttpHeaders({
         "Authorization": "bearer " + this.auth.authResponse.token,
         "Content-Type": "application/json"
@@ -55,8 +56,10 @@ export class DataService {
     return `${envAddress}/${route}?skip=${page}&take=${items}`;
   }
 
-  private createFilterPageRoute(route:string, envAddress:string,page:number, items:number,filter:string){
-    return `${envAddress}/${route}?skip=${page}&take=${items}&filter=${filter}`;
+  private createFilterPageRoute(route:string, envAddress:string,page:number, items:number,filterFirstName:string,filterAccountNumber:string,filterLastName:string,filterSumTotalDueHigher:number,filterSumTotalDueLower:number){
+    let filterroute= `${envAddress}/${route}?skip=${page}&take=${items}&filterfirstname=${filterFirstName}&filterlastname=${filterLastName}&filteraccountnumber=${filterAccountNumber}&filtersumtotalduehigher=${filterSumTotalDueHigher}&filtersumtotalduelower=${filterSumTotalDueLower}`;
+    console.log(filterroute);
+    return filterroute;
   }
 
   private createRoute(route:string, envAddress:string){

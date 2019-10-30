@@ -19,6 +19,13 @@ namespace FullStack.BLL.Models
         public int TotalItems { get; set; }
         public int CurrentPage { get; set; }
         public int PageSize { get; set; }
+
+        public string FilterFirstName { get; set; }
+        public string FilterLastName { get; set; }
+        public string FilterAccountNumber { get; set; }
+        public decimal FilterSumTotalDue { get; set; }
+        public bool Higher { get; set; }
+        public bool Lower { get; set; }
         
         public List<CustomerDto> CustomerItemList { get; set; }
     }
