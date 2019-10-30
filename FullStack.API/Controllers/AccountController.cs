@@ -20,18 +20,15 @@ namespace FullStack.API.Controllers
     [EnableCors("AllowOrigin")]
     public class AccountController : ControllerBase
     {
-        readonly UserManager<IdentityUser> _userManager;
+        
 
         private readonly IUserService _userService;
        
 
-        public AccountController(UserManager<IdentityUser> userManager, IUserService userService)
+        public AccountController(IUserService userService)
         {
-            _userManager = userManager;
             _userService = userService;
         }
-
-
 
 
         [HttpPost, Route("login")]
@@ -41,20 +38,11 @@ namespace FullStack.API.Controllers
             {
                 return BadRequest("Invalid client request");
             }
-            var theUser = await _userManager.FindByNameAsync(login.UserName);
-            if (theUser != null && await _userManager.CheckPasswordAsync(theUser, login.PassWord))
+
+            var token = await _userService.HandleLogin(login);
+            if (token.ToString() != "")
             {
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("fullstack_951357456"));
-                var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-                var tokeOptions = new JwtSecurityToken(
-                    issuer: "https://localhost:44318",
-                    audience: "*",
-                    claims: new List<Claim>(),
-                    expires: DateTime.Now.AddMinutes(5),
-                    signingCredentials: signinCredentials
-                );
-                var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
-                return Ok(new { Token = tokenString });
+                return Ok(new { Token = token });
             }
             else
             {

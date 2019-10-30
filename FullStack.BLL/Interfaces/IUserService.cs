@@ -9,5 +9,6 @@ namespace FullStack.BLL.Interfaces
     public interface IUserService
     {
         Task<string> HandleLogin(LoginDto login);
+        List<UserDto> GetUsersWithRoles();
     }
 }

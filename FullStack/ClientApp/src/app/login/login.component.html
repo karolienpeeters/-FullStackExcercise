@@ -1,6 +1,44 @@
-<h1>Login</h1>
+<!-- <h1>Login</h1>
 <form #myform="ngForm" (ngSubmit)="login(myform)">
   <input type="text" name="UserName" ngModel>
   <input type="password" name="Password" ngModel>
-  <input type="submit">Login
-</form>
+  <input type="submit">
+</form> -->
+
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title>Login</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form class="example-form" #myform="ngForm" (ngSubmit)="login(myform)">
+      <table class="example-full-width" cellspacing="0">
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="UserName" type="text" name="UserName" ngModel required>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Password" type="password" name="PassWord" ngModel required>
+        </mat-form-field>
+      </td>
+      </tr>
+    </table>
+      <button mat-raised-button type="submit">Login</button>
+    </form>
+
+    <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+
+  </mat-card-content>
+
+  <mat-card-actions>
+
+    <!-- <button mat-raised-button (click)="login()" color="primary">Login</button> -->
+  
+  </mat-card-actions>
+
+</mat-card>

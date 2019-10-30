@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FullStack.DAL.Models
+namespace FullStack.DAL.Models.Entities
 {
     public partial class Person
     {

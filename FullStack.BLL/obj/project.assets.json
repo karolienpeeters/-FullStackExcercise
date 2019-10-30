@@ -4481,11 +4481,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\admin\\Documents\\dotnetacademy\\FullStackExercise\\FullStack\\FullStack.BLL\\FullStack.BLL.csproj",
+      "projectUniqueName": "C:\\Users\\admin\\Documents\\dotnetacademy\\FullStack\\FullStackExercise\\FullStack.BLL\\FullStack.BLL.csproj",
       "projectName": "FullStack.BLL",
-      "projectPath": "C:\\Users\\admin\\Documents\\dotnetacademy\\FullStackExercise\\FullStack\\FullStack.BLL\\FullStack.BLL.csproj",
+      "projectPath": "C:\\Users\\admin\\Documents\\dotnetacademy\\FullStack\\FullStackExercise\\FullStack.BLL\\FullStack.BLL.csproj",
       "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\admin\\Documents\\dotnetacademy\\FullStackExercise\\FullStack\\FullStack.BLL\\obj\\",
+      "outputPath": "C:\\Users\\admin\\Documents\\dotnetacademy\\FullStack\\FullStackExercise\\FullStack.BLL\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -4504,8 +4504,8 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "C:\\Users\\admin\\Documents\\dotnetacademy\\FullStackExercise\\FullStack\\FullStack.DAL\\FullStack.DAL.csproj": {
-              "projectPath": "C:\\Users\\admin\\Documents\\dotnetacademy\\FullStackExercise\\FullStack\\FullStack.DAL\\FullStack.DAL.csproj"
+            "C:\\Users\\admin\\Documents\\dotnetacademy\\FullStack\\FullStackExercise\\FullStack.DAL\\FullStack.DAL.csproj": {
+              "projectPath": "C:\\Users\\admin\\Documents\\dotnetacademy\\FullStack\\FullStackExercise\\FullStack.DAL\\FullStack.DAL.csproj"
             }
           }
         }

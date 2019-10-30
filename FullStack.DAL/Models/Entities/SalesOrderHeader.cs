@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FullStack.DAL.Models
+namespace FullStack.DAL.Models.Entities
 {
     public partial class SalesOrderHeader
     {

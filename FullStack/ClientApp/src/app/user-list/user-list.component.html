@@ -1,0 +1,20 @@
+<p>
+  users works!
+</p>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">User Name</th>
+      <th scope="col">Roles</th>
+
+
+    </tr>
+  </thead>
+<tbody>
+  <tr *ngFor="let user of userList">
+    <td>{{user.userName}}</td>
+    <td>{{user.rolesList}}</td>
+   
+  </tr>
+</tbody>
+</table>

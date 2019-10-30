@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { CustomerListComponent } from './customer-list/customer-list.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { LoginComponent } from './login/login.component';
+import { UserListComponent } from './user-list/user-list.component';
 
 
 
@@ -24,6 +25,7 @@ import { LoginComponent } from './login/login.component';
     CustomerListComponent,
     PaginationComponent,
     LoginComponent,
+    UserListComponent,
    
     
   ],
@@ -38,6 +40,7 @@ import { LoginComponent } from './login/login.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
       { path: 'customers', component: CustomerListComponent },
+      { path: 'users', component: UserListComponent },
 
     ])
   ],

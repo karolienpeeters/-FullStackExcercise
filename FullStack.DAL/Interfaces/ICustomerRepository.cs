@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using FullStack.DAL.Models.Entities;
 
 
 namespace FullStack.DAL.Interfaces
@@ -11,6 +12,6 @@ namespace FullStack.DAL.Interfaces
         IEnumerable<Customer> GetCustomers();
         CustomerFilterPagination GetCustomersPage(int skip, int take,string filter);
 
-        int GetTotalNumberCustomers();
+
     }
 }

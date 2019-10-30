@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,8 +31,8 @@ namespace FullStack.BLL.Services
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("fullstack_951357456"));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
                 var tokeOptions = new JwtSecurityToken(
-                    issuer: "https://localhost:44354",
-                    audience: "https://localhost:44354",
+                    issuer: "https://localhost:44318",
+                    audience: "*",
                     claims: new List<Claim>(),
                     expires: DateTime.Now.AddMinutes(5),
                     signingCredentials: signinCredentials
@@ -44,6 +45,15 @@ namespace FullStack.BLL.Services
 
             return "";
 
+        }
+
+        public List<UserDto> GetUsersWithRoles()
+        {
+            var usersWithRoles = _userRepository.GetApplicationUsersAndRoles();
+
+            var listUsers = usersWithRoles.Select(userItem => new UserDto(userItem)).ToList();
+
+            return listUsers;
         }
 
 

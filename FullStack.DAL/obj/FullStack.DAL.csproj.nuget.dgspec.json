@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\admin\\Documents\\dotnetacademy\\FullStackExercise\\FullStack\\FullStack.DAL\\FullStack.DAL.csproj": {}
+    "C:\\Users\\admin\\Documents\\dotnetacademy\\FullStack\\FullStackExercise\\FullStack.DAL\\FullStack.DAL.csproj": {}
   },
   "projects": {
-    "C:\\Users\\admin\\Documents\\dotnetacademy\\FullStackExercise\\FullStack\\FullStack.DAL\\FullStack.DAL.csproj": {
+    "C:\\Users\\admin\\Documents\\dotnetacademy\\FullStack\\FullStackExercise\\FullStack.DAL\\FullStack.DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\admin\\Documents\\dotnetacademy\\FullStackExercise\\FullStack\\FullStack.DAL\\FullStack.DAL.csproj",
+        "projectUniqueName": "C:\\Users\\admin\\Documents\\dotnetacademy\\FullStack\\FullStackExercise\\FullStack.DAL\\FullStack.DAL.csproj",
         "projectName": "FullStack.DAL",
-        "projectPath": "C:\\Users\\admin\\Documents\\dotnetacademy\\FullStackExercise\\FullStack\\FullStack.DAL\\FullStack.DAL.csproj",
+        "projectPath": "C:\\Users\\admin\\Documents\\dotnetacademy\\FullStack\\FullStackExercise\\FullStack.DAL\\FullStack.DAL.csproj",
         "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\admin\\Documents\\dotnetacademy\\FullStackExercise\\FullStack\\FullStack.DAL\\obj\\",
+        "outputPath": "C:\\Users\\admin\\Documents\\dotnetacademy\\FullStack\\FullStackExercise\\FullStack.DAL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

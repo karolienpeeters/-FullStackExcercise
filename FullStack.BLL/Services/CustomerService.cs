@@ -49,12 +49,7 @@ namespace FullStack.BLL.Services
         public CustomerFilterPaginationDto GetListCustomersPage(int skip, int take,string filter)
         {
 
-            
-
-
             var paginationFilterModel = skip == 0 ? _customerRepository.GetCustomersPage(skip, take,filter) : _customerRepository.GetCustomersPage(((skip-1)*take), take,filter);
-
-
 
             var filterPaginationDto = new CustomerFilterPaginationDto(paginationFilterModel);
 

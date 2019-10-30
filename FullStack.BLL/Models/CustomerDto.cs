@@ -3,6 +3,7 @@ using FullStack.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using FullStack.DAL.Models.Entities;
 
 namespace FullStack.BLL.Models
 {
