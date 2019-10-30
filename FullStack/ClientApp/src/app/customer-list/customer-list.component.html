@@ -1,0 +1,50 @@
+
+
+<div>
+  <mat-form-field>
+    <input matInput #item placeholder="Input" type="text" [(ngModel)]="searchText">
+    
+  </mat-form-field>
+
+  <button mat-button (click)="Filter(0)">Search</button>
+
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Account number</th>
+      <th scope="col">Firstname</th>
+      <th scope="col">Lastname</th>
+      <th scope="col">Sum total due</th>
+
+    </tr>
+  </thead>
+<tbody>
+  <tr *ngFor="let customer of customerlist">
+    <td>{{customer.accountNumber}}</td>
+    <td>{{customer.firstName}}</td>
+    <td>{{customer.lastName}}</td>
+    <td>{{customer.sumTotalDue}}</td>
+  </tr>
+</tbody>
+</table>
+
+<ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+  <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item first-item">
+       <a (click)="setPage(1)" class="page-link">First</a>
+   </li>
+  <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item previous-item">
+       <a (click)="setPage(pager.currentPage - 1)" class="page-link">Previous</a>
+   </li>
+   <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}" class="page-item number-item">
+       <a (click)="setPage(page)" class="page-link">{{page}}</a>
+   </li>
+   <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item next-item">
+      <a (click)="setPage(pager.currentPage + 1)" class="page-link">Next</a>
+   </li>
+   <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item last-item">
+       <a (click)="setPage(pager.totalPages)" class="page-link">Last</a>
+  </li>
+</ul>
+
