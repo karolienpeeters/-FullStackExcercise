@@ -7,11 +7,16 @@ import { environment } from 'src/environments/environment';
 })
 export class AuthService {
   public authResponse:any;
+  isLoggedIn = false;
+  redirectUrl: string;
+
   constructor(private http: HttpClient) { }
 
   Login(user) {
-    console.log(user);
-    return this.http.post(this.createRoute("api/account/login",environment.urlAddress), user);
+       let result = this.http.post(this.createRoute("api/account/login",environment.urlAddress), user);
+        console.log(result, "login")
+      
+       return result;
   }
 
   private createRoute(route:string, envAddress:string){

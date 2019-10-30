@@ -14,6 +14,7 @@ import { CustomerListComponent } from './customer-list/customer-list.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { LoginComponent } from './login/login.component';
 import { UserListComponent } from './user-list/user-list.component';
+import { AuthGuard } from './guards/auth.guard';
 
 
 
@@ -37,10 +38,11 @@ import { UserListComponent } from './user-list/user-list.component';
     //JwPaginationComponent ,
     BrowserAnimationsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '', component: LoginComponent, pathMatch: 'full' },
+      { path:'home', component:HomeComponent},
       { path: 'login', component: LoginComponent },
-      { path: 'customers', component: CustomerListComponent },
-      { path: 'users', component: UserListComponent },
+      { path: 'customers', component: CustomerListComponent,canActivate: [AuthGuard], },
+      { path: 'users', component: UserListComponent, canActivate: [AuthGuard], },
 
     ])
   ],
