@@ -19,19 +19,40 @@
             <th scope="col">Firstname</th>
             <th scope="col">Lastname</th>
             <th scope="col">Sum total due</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let customer of customerlist">
-            <td>{{customer.accountNumber}}</td>
-            <td>{{customer.firstName}}</td>
-            <td>{{customer.lastName}}</td>
+            <td *ngIf="!customer.showForm">
+              {{customer.accountNumber}}
+          </td>
+          <td *ngIf="customer.showForm">
+            <input type="text" class="form-control" name="accountNumber" [(ngModel)]="customer.accountNumber" placeholder="customer.accountNumber">
+          </td>
+          <td *ngIf="!customer.showForm">
+              {{customer.firstName}}
+            </td>
+            <td *ngIf="customer.showForm">
+                <input *ngIf="customer.showForm" type="text" class="form-control" name="firstName" [(ngModel)]="customer.firstName" placeholder="customer.firstName">
+              </td>
+              <td *ngIf="!customer.showForm">
+              {{customer.lastName}}
+            </td>
+            <td  *ngIf="customer.showForm">
+                <input *ngIf="customer.showForm" type="text" class="form-control" name="lastName" [(ngModel)]="customer.lastName" placeholder="customer.lastName">
+              </td>
             <td>{{customer.sumTotalDue}}</td>
+            <td >
+              <i *ngIf="!customer.showForm" class="far fa-edit" (click)="EditCustomer(customer)"></i>
+              <i *ngIf="customer.showForm" class="far fa-save" (click)="SaveCustomer(customer)"></i>
+
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="coll">
+    <div class="coll  align-self-center">
       <form>
         <div class="form-group">
           <label for="firstName">Search on firstname</label>

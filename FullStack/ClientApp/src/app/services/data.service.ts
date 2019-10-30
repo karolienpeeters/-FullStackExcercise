@@ -53,7 +53,7 @@ export class DataService {
 
   
   private createPageRoute(route:string, envAddress:string,page:number, items:number){
-    return `${envAddress}/${route}?skip=${page}&take=${items}`;
+    return `${envAddress}/${route}?currentpage=${page}&pagesize=${items}`;
   }
 
   private createFilterPageRoute(route:string, envAddress:string,page:number, items:number,filterFirstName:string,filterAccountNumber:string,filterLastName:string,filterSumTotalDueHigher:number,filterSumTotalDueLower:number){

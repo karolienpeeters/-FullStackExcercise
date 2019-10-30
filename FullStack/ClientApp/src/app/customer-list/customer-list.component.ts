@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { Pagination } from '../interfaces/pagination';
 import { CustomerFilterPagination } from '../interfaces/customerFilterPagination';
+import { Customer } from '../interfaces/customer';
 
 @Component({
   selector: 'app-customer-list',
@@ -17,6 +18,7 @@ export class CustomerListComponent implements OnInit {
   public filterAccountNumber:string="";
   public filterSumTotalDueHigher:number=0;
   public filterSumTotalDueLower:number=0;
+
  
   pager: any = {};
   pageSize = 15;
@@ -24,9 +26,7 @@ export class CustomerListComponent implements OnInit {
   initialPage = 0;
 
 
-  constructor(private service: DataService) { 
-   
-  }
+  constructor(private service: DataService) { }
 
   ngOnInit() {
    
@@ -39,7 +39,6 @@ export class CustomerListComponent implements OnInit {
     if (page !== 0) {
       this.GetListCustomer(page, 15,this.filterFirstName,this.filterAccountNumber,this.filterLastName,this.filterSumTotalDueHigher,this.filterSumTotalDueLower);
     }
-
   }
 
   GetListCustomer(pageNumber: number, pageItems: number,filterFirstName:string,filterAccountNumber:string,filterLastName:string,filterSumTotalDueHigher:number,filterSumTotalDueLower) {
@@ -47,7 +46,6 @@ export class CustomerListComponent implements OnInit {
       console.log(result);
       this.customerPagination = result as Pagination;
       this.customerlist = this.customerPagination.customerItemList;
-      //this.paginate(this.customerPagination.totalItems, 1, this.customerPagination.pageSize, this.maxPages);
       console.log(this.customerPagination, "result from GetListCustomer");
 
 
@@ -85,6 +83,16 @@ export class CustomerListComponent implements OnInit {
     this.filterSumTotalDueHigher = 0;
     this.filterSumTotalDueLower=0;
    this.GetListCustomer(this.initialPage, this.pageSize,this.filterFirstName,this.filterAccountNumber,this.filterLastName,this.filterSumTotalDueHigher,this.filterSumTotalDueLower);
+  }
+
+  EditCustomer(customer:Customer){
+    console.log(customer);
+    customer.showForm = true;
+  }
+
+  SaveCustomer(customer:Customer){
+    console.log(customer);
+    
   }
 
 

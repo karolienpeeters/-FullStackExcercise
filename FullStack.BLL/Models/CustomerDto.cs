@@ -17,6 +17,7 @@ namespace FullStack.BLL.Models
             FirstName = firstName;
             LastName = lastName;
             SumTotalDue = 0;
+            ShowForm = false;
         }
 
         public CustomerDto(Customer customer)
@@ -26,6 +27,7 @@ namespace FullStack.BLL.Models
             FirstName = customer.Person.FirstName;
             LastName = customer.Person.LastName;
             SumTotalDue = 0;
+            ShowForm = false;
         }
 
         public int Id { get; set; }
@@ -33,6 +35,7 @@ namespace FullStack.BLL.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public decimal SumTotalDue { get; set; }
+        public bool ShowForm { get; set; }
 
 
 

@@ -23,10 +23,9 @@ namespace FullStack.BLL.Models
         public string FilterFirstName { get; set; }
         public string FilterLastName { get; set; }
         public string FilterAccountNumber { get; set; }
-        public decimal FilterSumTotalDue { get; set; }
-        public bool Higher { get; set; }
-        public bool Lower { get; set; }
-        
+        public decimal FilterSumTotalDueHigher { get; set; }
+        public decimal FilterSumTotalDueLower { get; set; }
+
         public List<CustomerDto> CustomerItemList { get; set; }
     }
 }
