@@ -18,25 +18,19 @@ namespace FullStack.API.Controllers
     public class CustomersController : ControllerBase
     {
         private readonly ICustomerService _customerService;
-        //private readonly IUserService _userService;
 
         public CustomersController(ICustomerService customerService)
         {
             _customerService = customerService;
-           
         }
-        
-     
 
         [HttpGet, Authorize]
         public IActionResult Get(int skip, int take, string filterFirstName, string filterLastName, string filterAccountNumber, decimal filterSumTotalDueHigher, decimal filterSumTotalDueLower)
         {
-            
             var customers = _customerService.GetListCustomersPage(skip,take,filterFirstName,filterLastName,filterAccountNumber,filterSumTotalDueHigher,filterSumTotalDueLower);
             //var customers = _customerService.GetListCustomersPage(model.CurrentPage, model.PageSize, model.FilterFirstName, model.FilterLastName, model.FilterAccountNumber, model.FilterSumTotalDueHigher, model.FilterSumTotalDueLower);
             return Ok(customers);
         }
-
 
         [HttpPut,Authorize, Route("updatecustomer")]
         public IActionResult UpdateCustomer([FromBody]CustomerDto customerDto)

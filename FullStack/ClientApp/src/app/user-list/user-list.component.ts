@@ -9,6 +9,7 @@ import { DataService } from '../services/data.service';
 export class UserListComponent implements OnInit {
 
   public userList;
+
   constructor(private service: DataService) { }
 
   ngOnInit() {
@@ -21,6 +22,16 @@ export class UserListComponent implements OnInit {
       this.userList =result;
       console.log(this.userList, "result from Getusers");
     }));
+  }
+
+  registerUser(form){
+    this.service.registerUser(form.value).subscribe((result => {
+      console.log(result,"register user");
+      this.getListUser();
+     
+    }));
+    
+
   }
 
 }

@@ -1,18 +1,93 @@
 
+<div class="container">
+    <div class="row justify-content-around">
+        <div class="col-md-6 ">
+            <div class="col-md-12">
+
+
+
 <table class="table">
   <thead>
     <tr>
       <th scope="col">User Name</th>
       <th scope="col">Roles</th>
-
-
+      <th></th>
     </tr>
   </thead>
-<tbody>
-  <tr *ngFor="let user of userList">
-    <td>{{user.userName}}</td>
-    <td>{{user.rolesList}}</td>
-   
-  </tr>
-</tbody>
-</table>
+  <tbody>
+    <tr *ngFor="let user of userList">
+      <td>{{user.userName}}</td>
+      <td>{{user.rolesList}}</td>
+      <td>
+          <i *ngIf="!showForm" class="far fa-edit" (click)="editCustomer(customer)"></i>
+          <i *ngIf="showForm" class="far fa-save" (click)="saveCustomer(customer)"></i>
+          <i *ngIf="showForm" class="far fa-times-circle" (click)="exitLine(customer)"></i>
+        </td>
+    </tr>
+  </tbody>
+</table>  
+      </div>
+        </div>
+ <div class="coll-md-6  align-self-end">
+    <div class="col-md-12">
+
+    <!-- <form>
+      <div class="form-group">
+        <label for="email">email</label>
+        <input type="text" class="form-control" id="email" name="email" >
+      </div>
+
+      <div class="form-group">
+        <label for="password">password</label>
+        <input type="text" class="form-control" id="password" name="password" >
+      </div>
+
+      <button type="submit" class="btn btn-primary mr-3" (click)="filter(0)">Add user</button>
+      <button type="submit" class="btn btn-primary" (click)="clearForm()">Reset</button>
+    </form>
+
+    <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title>Create a new user</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+    <form #myform="ngForm" (ngSubmit)="registerUser(myform)">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input  type="email" name="UserName" ngModel class="form-control"   placeholder="Enter email">
+        </div>
+        <div class="form-group">
+          <label for="PassWord">Password</label>
+          <input type="password" name="Password" ngModel class="form-control"  placeholder="Password">
+        </div>
+       
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </mat-card-content>
+    
+    
+    </mat-card>  -->
+    <div class="card">
+        <h5 class="card-header">Create a new user</h5>
+        <div class="card-body">
+            <form #myform="ngForm" (ngSubmit)="registerUser(myform)">
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input  type="text" name="UserName" ngModel class="form-control"   placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                  <label for="PassWord">Password</label>
+                  <input type="text" name="Password" ngModel class="form-control"  placeholder="Password">
+                </div>
+               
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+        </div>
+      </div>
+
+
+
+  </div>
+</div>
+</div>
+</div>

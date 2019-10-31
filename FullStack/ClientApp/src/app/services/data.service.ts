@@ -5,6 +5,7 @@ import { Pagination } from '../interfaces/pagination';
 import { AuthService } from './auth.service';
 import { CustomerFilterPagination } from '../interfaces/customerFilterPagination';
 import { Customer } from '../interfaces/customer';
+import { User } from '../interfaces/user';
 
 
 @Injectable({
@@ -44,6 +45,10 @@ export class DataService {
     console.log(customer, "service update customer")
     return this.http.put(this.createRoute("api/customers/updatecustomer", environment.urlAddress), customer, this.httpOptions);
 
+  }
+
+  registerUser(user:User){
+    return this.http.post(this.createRoute("api/users/register", environment.urlAddress), user, this.httpOptions);
   }
 
 
