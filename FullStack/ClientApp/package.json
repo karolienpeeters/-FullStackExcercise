@@ -30,6 +30,7 @@
     "core-js": "^2.5.4",
     "jquery": "3.3.1",
     "jw-angular-pagination": "^1.1.0",
+    "moment": "^2.24.0",
     "popper.js": "^1.14.3",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"

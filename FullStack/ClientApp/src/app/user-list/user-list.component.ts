@@ -12,11 +12,11 @@ export class UserListComponent implements OnInit {
   constructor(private service: DataService) { }
 
   ngOnInit() {
-    this.GetListUser();
+    this.getListUser();
   }
 
-  GetListUser() {
-    this.service.GetUsers("api/users", ).subscribe((result => {
+  getListUser() {
+    this.service.getUsers("api/users", ).subscribe((result => {
       console.log(result);
       this.userList =result;
       console.log(this.userList, "result from Getusers");

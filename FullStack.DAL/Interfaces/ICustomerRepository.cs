@@ -12,6 +12,7 @@ namespace FullStack.DAL.Interfaces
         IEnumerable<Customer> GetCustomers();
         CustomerFilterPagination GetCustomersPage(int skip, int take, string filterFirstName, string filterLastName, string filterAccountNumber, decimal filterSumTotalDueHigher, decimal filterSumTotalDueLower);
 
-
+        Customer GetCustomer(int customerId);
+        void UpdateCustomer(Customer customer);
     }
 }

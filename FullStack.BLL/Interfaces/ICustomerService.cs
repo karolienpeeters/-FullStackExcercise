@@ -9,6 +9,6 @@ namespace FullStack.BLL.Interfaces
     {
         List<CustomerDto> GetListCustomers();
         CustomerFilterPaginationDto GetListCustomersPage(int skip, int take, string filterFirstName, string filterLastName, string filterAccountNumber, decimal filterSumTotalDueHigher, decimal filterSumTotalDueLower);
-
+        void UpdateCustomer(CustomerDto customerDto);
     }
 }

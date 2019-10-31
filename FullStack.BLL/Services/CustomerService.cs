@@ -64,10 +64,18 @@ namespace FullStack.BLL.Services
 
            }
 
-           
-
            return filterPaginationDto;
 
+        }
+
+        public void UpdateCustomer(CustomerDto customerDto)
+        {
+            var customer = _customerRepository.GetCustomer(customerDto.Id);
+            customer.AccountNumber = customerDto.AccountNumber;
+            customer.Person.FirstName = customerDto.FirstName;
+            customer.Person.LastName = customerDto.LastName;
+
+            _customerRepository.UpdateCustomer(customer);
         }
     }
 }

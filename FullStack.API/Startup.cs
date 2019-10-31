@@ -43,7 +43,7 @@ namespace FullStack.API
                 .AddDefaultTokenProviders();
             services.AddRepositories();
             services.AddServices();
-            services.AddCors(c => { c.AddPolicy("AllowOrigin", options => options.WithOrigins(LocalHost).AllowAnyHeader()); });
+            services.AddCors(c => { c.AddPolicy("AllowOrigin", options => options.WithOrigins(LocalHost).AllowAnyHeader().AllowAnyMethod()); });
            
 
             //services.AddIdentity<IdentityUser, IdentityRole>()
@@ -76,7 +76,8 @@ namespace FullStack.API
 
                         ValidIssuer = "https://localhost:44318",
                         ValidAudience = "*",
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("fullstack_951357456"))
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("fullstack_951357456")),
+                        ClockSkew = TimeSpan.Zero
                     };
                 });
 
@@ -106,7 +107,7 @@ namespace FullStack.API
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
-            app.UseCors(options => options.WithOrigins(LocalHost).AllowAnyHeader());
+            app.UseCors(options => options.WithOrigins(LocalHost).AllowAnyHeader().AllowAnyMethod());
             
             CreateUserRoles(services).Wait();
         }

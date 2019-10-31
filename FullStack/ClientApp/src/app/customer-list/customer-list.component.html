@@ -1,14 +1,3 @@
-<!-- 
-
-<div>
-  <mat-form-field>
-    <input matInput #item placeholder="Input" type="text" [(ngModel)]="searchText">
-    
-  </mat-form-field>
-
-  <button mat-button (click)="Filter(0)">Search</button>
-
-</div> -->
 <div class="container">
   <div class="row">
     <div class="col-lg">
@@ -24,69 +13,76 @@
         </thead>
         <tbody>
           <tr *ngFor="let customer of customerlist">
+
             <td *ngIf="!customer.showForm">
               {{customer.accountNumber}}
-          </td>
-          <td *ngIf="customer.showForm">
-            <input type="text" class="form-control" name="accountNumber" [(ngModel)]="customer.accountNumber" placeholder="customer.accountNumber">
-          </td>
-          <td *ngIf="!customer.showForm">
+            </td>
+            <td *ngIf="customer.showForm">
+              <input type="text" class="form-control" name="accountNumber" [(ngModel)]="customer.accountNumber"
+                placeholder="customer.accountNumber">
+            </td>
+
+            <td *ngIf="!customer.showForm">
               {{customer.firstName}}
             </td>
             <td *ngIf="customer.showForm">
-                <input *ngIf="customer.showForm" type="text" class="form-control" name="firstName" [(ngModel)]="customer.firstName" placeholder="customer.firstName">
-              </td>
-              <td *ngIf="!customer.showForm">
+              <input *ngIf="customer.showForm" type="text" class="form-control" name="firstName"
+                [(ngModel)]="customer.firstName" placeholder="customer.firstName">
+            </td>
+
+            <td *ngIf="!customer.showForm">
               {{customer.lastName}}
             </td>
-            <td  *ngIf="customer.showForm">
-                <input *ngIf="customer.showForm" type="text" class="form-control" name="lastName" [(ngModel)]="customer.lastName" placeholder="customer.lastName">
-              </td>
-            <td>{{customer.sumTotalDue}}</td>
-            <td >
-              <i *ngIf="!customer.showForm" class="far fa-edit" (click)="EditCustomer(customer)"></i>
-              <i *ngIf="customer.showForm" class="far fa-save" (click)="SaveCustomer(customer)"></i>
-
+            <td *ngIf="customer.showForm">
+              <input *ngIf="customer.showForm" type="text" class="form-control" name="lastName"
+                [(ngModel)]="customer.lastName" placeholder="customer.lastName">
             </td>
+
+            <td>{{customer.sumTotalDue}}</td>
+
+            <td>
+              <i *ngIf="!customer.showForm" class="far fa-edit" (click)="editCustomer(customer)"></i>
+              <i *ngIf="customer.showForm" class="far fa-save" (click)="saveCustomer(customer)"></i>
+              <i *ngIf="customer.showForm" class="far fa-times-circle" (click)="exitLine(customer)"></i>
+            </td>
+      
           </tr>
         </tbody>
       </table>
     </div>
+
     <div class="coll  align-self-center">
       <form>
         <div class="form-group">
           <label for="firstName">Search on firstname</label>
           <input type="text" class="form-control" id="firstName" name="filterFirstName" [(ngModel)]="filterFirstName">
         </div>
+
         <div class="form-group">
           <label for="lastName">Search on lastname</label>
           <input type="text" class="form-control" id="lastName" name="filterLastName" [(ngModel)]="filterLastName">
         </div>
+
         <div class="form-group">
           <label for="accountNumber">Search on account number</label>
           <input type="text" class="form-control" id="accountnumber" name="filterAccountNumber"
             [(ngModel)]="filterAccountNumber">
         </div>
+
         <div class="form-group">
           <label for="sumTotalDue">Search sum total due lower then</label>
           <input type="text" class="form-control" id="sumtotaldueLower" name="filterSumTotalDueLower"
             [(ngModel)]="filterSumTotalDueLower">
-
         </div>
 
-     
-      <div class="form-group">
-        <label for="sumTotalDue">Search sum total due higher then</label>
-        <input type="text" class="form-control" id="sumtotaldueHigher" name="filterSumTotalDueHigher"
-          [(ngModel)]="filterSumTotalDueHigher">
-
-      </div>
-      
-
-        <button type="submit" class="btn btn-primary mr-3" (click)="Filter(0)">Search</button>
-        <button type="submit" class="btn btn-primary" (click)="ClearForm()">Reset</button>
+        <div class="form-group">
+          <label for="sumTotalDue">Search sum total due higher then</label>
+          <input type="text" class="form-control" id="sumtotaldueHigher" name="filterSumTotalDueHigher"
+            [(ngModel)]="filterSumTotalDueHigher">
+        </div>
+        <button type="submit" class="btn btn-primary mr-3" (click)="filter(0)">Search</button>
+        <button type="submit" class="btn btn-primary" (click)="clearForm()">Reset</button>
       </form>
-
     </div>
   </div>
 </div>

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using FullStack.DAL.Models.Entities;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace FullStack.DAL.Repositories
 {
@@ -63,6 +64,17 @@ namespace FullStack.DAL.Repositories
             paginationFilterModel.CustomerItemList = query.Skip(skip).Take(take).ToList();
 
             return paginationFilterModel;
+        }
+
+        public void UpdateCustomer(Customer customer)
+        {
+            _context.Customers.Update(customer);
+            _context.SaveChanges();
+        }
+
+        public Customer GetCustomer(int customerId)
+        {
+            return  _context.Customers.Include(c=>c.Person).AsNoTracking().FirstOrDefault(d=>d.CustomerId ==customerId);
         }
 
       

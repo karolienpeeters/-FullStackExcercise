@@ -15,9 +15,11 @@ export class AuthService {
   Login(user) {
        let result = this.http.post(this.createRoute("api/account/login",environment.urlAddress), user);
         console.log(result, "login")
-      
+       
        return result;
   }
+
+  
 
   private createRoute(route:string, envAddress:string){
     return `${envAddress}/${route}`;

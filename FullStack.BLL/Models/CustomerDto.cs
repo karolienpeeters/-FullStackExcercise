@@ -10,6 +10,8 @@ namespace FullStack.BLL.Models
 
     public class CustomerDto
     {
+        public CustomerDto() { }
+
         public CustomerDto(int id, string firstName, string lastName, string accountNumber)
         {
             Id = id;

@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Pagination } from '../interfaces/pagination';
 import { AuthService } from './auth.service';
 import { CustomerFilterPagination } from '../interfaces/customerFilterPagination';
+import { Customer } from '../interfaces/customer';
 
 
 @Injectable({
@@ -11,58 +12,51 @@ import { CustomerFilterPagination } from '../interfaces/customerFilterPagination
 })
 export class DataService {
 
- 
+  httpOptions = {
+    headers: new HttpHeaders({
+      "Authorization": "bearer " + this.auth.authResponse.token,
+      "Content-Type": "application/json"
+    })
+  };
 
-  constructor(private http:HttpClient,private auth: AuthService) { }
+  constructor(private http: HttpClient, private auth: AuthService) { }
 
-  // GetAllCustomers(route:string){
-  //   return this.http.get<Pagination>(this.createCompleteRoute(route,environment.urlAddress));
+
+  getCustomersPage(route: string, page: number, items: number, filterFirstName: string, filterAccountNumber: string, filterLastName: string,
+    filterSumTotalDueHigher: number, filterSumTotalDueLower: number) {
+
+    return this.http.get(this.createFilterPageRoute(route, environment.urlAddress, page, items, filterFirstName, filterAccountNumber,
+      filterLastName, filterSumTotalDueHigher, filterSumTotalDueLower), this.httpOptions);
+  }
+
+  // FilterCustomers(route: string, page: number, items: number, filterFirstName: string, filterAccountNumber: string, filterLastName: string,
+  //   filterSumTotalDueHigher: number, filterSumTotalDueLower: number) {
+
+  //   return this.http.get(this.createFilterPageRoute(route, environment.urlAddress, page, items, filterFirstName, filterAccountNumber,
+  //     filterLastName, filterSumTotalDueHigher, filterSumTotalDueLower), this.httpOptions);
   // }
 
-  GetCustomersPage(route:string,page:number, items:number,filterFirstName:string,filterAccountNumber:string,filterLastName:string,filterSumTotalDueHigher:number,filterSumTotalDueLower:number){
-    
-    return this.http.get(this.createFilterPageRoute(route,environment.urlAddress,page,items,filterFirstName,filterAccountNumber,filterLastName,filterSumTotalDueHigher,filterSumTotalDueLower),{
-      headers: new HttpHeaders({
-        "Authorization": "bearer " + this.auth.authResponse.token,
-        "Content-Type": "application/json"
-      })
-    })
+  getUsers(route: string) {
+    return this.http.get(this.createRoute(route, environment.urlAddress), this.httpOptions);
   }
 
- FilterCustomers(route:string,page:number, items:number,filterFirstName:string,filterAccountNumber:string,filterLastName:string,filterSumTotalDueHigher:number,filterSumTotalDueLower:number){
-    
-    return this.http.get(this.createFilterPageRoute(route,environment.urlAddress,page,items,filterFirstName,filterAccountNumber,filterLastName,filterSumTotalDueHigher,filterSumTotalDueLower),{
-      headers: new HttpHeaders({
-        "Authorization": "bearer " + this.auth.authResponse.token,
-        "Content-Type": "application/json"
-      })
-    })
+ updateCustomer(customer: Customer) {
+    console.log(customer, "service update customer")
+    return this.http.put(this.createRoute("api/customers/updatecustomer", environment.urlAddress), customer, this.httpOptions);
+
   }
 
-  GetUsers(route:string){
- 
-    return this.http.get(this.createRoute(route,environment.urlAddress),{
-      headers: new HttpHeaders({
-        "Authorization": "bearer " + this.auth.authResponse.token,
-        "Content-Type": "application/json"
-      })
-    })
-  
- 
-}
 
-  
-  private createPageRoute(route:string, envAddress:string,page:number, items:number){
-    return `${envAddress}/${route}?currentpage=${page}&pagesize=${items}`;
-  }
 
-  private createFilterPageRoute(route:string, envAddress:string,page:number, items:number,filterFirstName:string,filterAccountNumber:string,filterLastName:string,filterSumTotalDueHigher:number,filterSumTotalDueLower:number){
-    let filterroute= `${envAddress}/${route}?skip=${page}&take=${items}&filterfirstname=${filterFirstName}&filterlastname=${filterLastName}&filteraccountnumber=${filterAccountNumber}&filtersumtotalduehigher=${filterSumTotalDueHigher}&filtersumtotalduelower=${filterSumTotalDueLower}`;
+
+  private createFilterPageRoute(route: string, envAddress: string, page: number, items: number, filterFirstName: string, filterAccountNumber: string,
+    filterLastName: string, filterSumTotalDueHigher: number, filterSumTotalDueLower: number) {
+    let filterroute = `${envAddress}/${route}?skip=${page}&take=${items}&filterfirstname=${filterFirstName}&filterlastname=${filterLastName}&filteraccountnumber=${filterAccountNumber}&filtersumtotalduehigher=${filterSumTotalDueHigher}&filtersumtotalduelower=${filterSumTotalDueLower}`;
     console.log(filterroute);
     return filterroute;
   }
 
-  private createRoute(route:string, envAddress:string){
+  private createRoute(route: string, envAddress: string) {
     return `${envAddress}/${route}`;
   }
 

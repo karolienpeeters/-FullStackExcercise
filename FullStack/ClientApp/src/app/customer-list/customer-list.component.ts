@@ -13,13 +13,13 @@ export class CustomerListComponent implements OnInit {
 
   public customerlist;
   public customerPagination: Pagination;
-  public filterFirstName:string="";
-  public filterLastName:string="";
-  public filterAccountNumber:string="";
-  public filterSumTotalDueHigher:number=0;
-  public filterSumTotalDueLower:number=0;
+  public filterFirstName: string = "";
+  public filterLastName: string = "";
+  public filterAccountNumber: string = "";
+  public filterSumTotalDueHigher: number = 0;
+  public filterSumTotalDueLower: number = 0;
 
- 
+
   pager: any = {};
   pageSize = 15;
   maxPages = 10;
@@ -29,70 +29,61 @@ export class CustomerListComponent implements OnInit {
   constructor(private service: DataService) { }
 
   ngOnInit() {
-   
-    this.GetListCustomer(this.initialPage, this.pageSize,this.filterFirstName,this.filterAccountNumber,this.filterLastName,this.filterSumTotalDueHigher,this.filterSumTotalDueLower);
-
+    this.getListCustomer(this.initialPage, this.pageSize, this.filterFirstName, this.filterAccountNumber, this.filterLastName, this.filterSumTotalDueHigher, this.filterSumTotalDueLower);
   }
 
   setPage(page: number) {
     this.pager = this.paginate(this.customerPagination.totalItems, page, this.pageSize, this.maxPages);
     if (page !== 0) {
-      this.GetListCustomer(page, 15,this.filterFirstName,this.filterAccountNumber,this.filterLastName,this.filterSumTotalDueHigher,this.filterSumTotalDueLower);
+      this.getListCustomer(page, this.pageSize, this.filterFirstName, this.filterAccountNumber, this.filterLastName, this.filterSumTotalDueHigher, this.filterSumTotalDueLower);
     }
   }
 
-  GetListCustomer(pageNumber: number, pageItems: number,filterFirstName:string,filterAccountNumber:string,filterLastName:string,filterSumTotalDueHigher:number,filterSumTotalDueLower) {
-    this.service.GetCustomersPage("api/customers", pageNumber, pageItems,filterFirstName,filterAccountNumber,filterLastName,filterSumTotalDueHigher,filterSumTotalDueLower).subscribe((result => {
-      console.log(result);
-      this.customerPagination = result as Pagination;
-      this.customerlist = this.customerPagination.customerItemList;
-      console.log(this.customerPagination, "result from GetListCustomer");
+  getListCustomer(pageNumber: number, pageItems: number, filterFirstName: string, filterAccountNumber: string, filterLastName: string, filterSumTotalDueHigher: number, filterSumTotalDueLower) {
+    this.service.getCustomersPage("api/customers", pageNumber, pageItems, filterFirstName, filterAccountNumber, filterLastName, filterSumTotalDueHigher, filterSumTotalDueLower)
+      .subscribe((result => {
+        console.log(result);
+        this.customerPagination = result as Pagination;
+        this.customerlist = this.customerPagination.customerItemList;
+        console.log(this.customerPagination, "result from GetListCustomer");
 
+        if (pageNumber === 0) {
+          this.setPage(pageNumber);
+        }
 
-      if (pageNumber === 0) {
-        this.setPage(pageNumber);
-      }
-
-    }));
+      }));
 
   }
 
-  Filter(pageNumber: number) {
+  filter(pageNumber: number) {
     console.log("in filter method");
-
-    this.service.FilterCustomers("api/customers", pageNumber, 15, this.filterFirstName,this.filterAccountNumber,this.filterLastName,this.filterSumTotalDueHigher,this.filterSumTotalDueLower).subscribe((result => {
-      console.log(result);
-      this.customerPagination = result as Pagination;
-      this.customerlist = this.customerPagination.customerItemList;
-      this.paginate(this.customerPagination.totalItems, 1, this.customerPagination.pageSize, this.maxPages);
-      console.log(this.customerPagination, "result from GetListCustomer");
-
-
-      if (pageNumber === 0) {
-        this.setPage(pageNumber);
-      }
-
-    }));
-
+    this.getListCustomer(pageNumber, this.pageSize, this.filterFirstName, this.filterAccountNumber, this.filterLastName, this.filterSumTotalDueHigher, this.filterSumTotalDueLower);
   }
 
-  ClearForm(){
-    this.filterAccountNumber="";
-    this.filterFirstName="";
-    this.filterLastName="";
+  clearForm() {
+    this.filterAccountNumber = "";
+    this.filterFirstName = "";
+    this.filterLastName = "";
     this.filterSumTotalDueHigher = 0;
-    this.filterSumTotalDueLower=0;
-   this.GetListCustomer(this.initialPage, this.pageSize,this.filterFirstName,this.filterAccountNumber,this.filterLastName,this.filterSumTotalDueHigher,this.filterSumTotalDueLower);
+    this.filterSumTotalDueLower = 0;
+    this.getListCustomer(this.initialPage, this.pageSize, this.filterFirstName, this.filterAccountNumber, this.filterLastName, this.filterSumTotalDueHigher, this.filterSumTotalDueLower);
   }
 
-  EditCustomer(customer:Customer){
-    console.log(customer);
+  editCustomer(customer: Customer) {
+    console.log(customer, "editcustomer");
     customer.showForm = true;
   }
 
-  SaveCustomer(customer:Customer){
-    console.log(customer);
-    
+  saveCustomer(customer: Customer) {
+    console.log(customer, "savecustomer");
+    this.service.updateCustomer(customer).subscribe((result => {
+      console.log(result);
+      customer.showForm = false;
+    }));
+  }
+
+  exitLine(customer: Customer) {
+    customer.showForm = false;
   }
 
 
