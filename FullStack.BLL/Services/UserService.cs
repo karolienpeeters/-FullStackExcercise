@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using FullStack.BLL.Interfaces;
 using FullStack.BLL.Models;
 using FullStack.DAL.Interfaces;
+using FullStack.DAL.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -78,6 +79,26 @@ namespace FullStack.BLL.Services
             try
             {
                 var result = await _userRepository.DeleteUser(userId);
+                return result;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+
+        }
+
+        public async Task<IdentityResult> UpdateUser(UserDto userDto)
+        {
+            var user = _userRepository.FindById(userDto.UserId).Result;
+            user.Email = userDto.Email;
+            user.UserName = userDto.Email;
+
+            try
+            {
+                var result = await _userRepository.UpdateUser(user, userDto.RolesList);
                 return result;
             }
             catch (Exception e)

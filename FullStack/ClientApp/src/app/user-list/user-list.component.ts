@@ -80,6 +80,7 @@ export class UserListComponent implements OnInit {
     this.service.updateUser(user).subscribe((result => {
       console.log(result);
       user.showForm = false;
+     
     }));
   }
 

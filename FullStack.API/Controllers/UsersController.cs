@@ -57,10 +57,11 @@ namespace FullStack.API.Controllers
         }
 
         [HttpPut("updateuser/{uid}")]
-        public IActionResult UpdateUser([FromBody]UserDto userDto, string uid)
+        public async Task<IActionResult> UpdateUser([FromBody]UserDto userDto, string uid)
         {
+            var result = await _userService.UpdateUser(userDto);
 
-            return Ok();
+            return Ok(result);
         }
 
 
