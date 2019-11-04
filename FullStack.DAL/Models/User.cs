@@ -8,6 +8,12 @@ namespace FullStack.DAL.Models
     public class User
     {
 
+        public User(string userId,string email)
+        {
+            UserId = userId;
+            Email = email;
+        }
+
 
         public User(IdentityUser identityUser, List<string> userRoles)
         {

@@ -12,11 +12,13 @@ namespace FullStack.DAL.Repositories
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UserRepository(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public UserRepository(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
         }
 
 
@@ -77,22 +79,23 @@ namespace FullStack.DAL.Repositories
 
         }
 
-        //public void AddRolesToUser(string userId, string[] roles)
-        //{
-        //    var user = _userManager.FindByIdAsync(userId).Result;
+        public async Task<IdentityResult> UpdateUser(IdentityUser iUser, List<string> roles)
+        {
 
-        //    foreach (var role in roles)
-        //    {
-        //        var roleCheck = _roleManager.RoleExistsAsync(role);
+            foreach (var role in roles)
+            {
+                var roleCheck = await _roleManager.RoleExistsAsync(role);
 
-        //        if (roleCheck.Result)
-        //        {
-        //            _userManager.AddToRoleAsync(user, role);
-        //        }
+                if (roleCheck && !_userManager.IsInRoleAsync(iUser,role).Result )
+                {
+                    await _userManager.AddToRoleAsync(iUser, role);
+                }
 
 
-        //    }
-        //}
+            }
+
+            return await _userManager.UpdateAsync(iUser);
+        }
 
     }
 }
