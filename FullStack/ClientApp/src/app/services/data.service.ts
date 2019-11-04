@@ -47,8 +47,8 @@ export class DataService {
 
   }
 
- createUser(user:User){
-    return this.http.post(this.createRoute("api/users/create", environment.urlAddress), user, this.httpOptions);
+  registerUser(user:User){
+    return this.http.post(this.createRoute("api/users/register", environment.urlAddress), user, this.httpOptions);
   }
 
   deleteUser(user:User){
@@ -66,6 +66,7 @@ export class DataService {
 
 
 
+
   private createFilterPageRoute(route: string, envAddress: string, page: number, items: number, filterFirstName: string, filterAccountNumber: string,
     filterLastName: string, filterSumTotalDueHigher: number, filterSumTotalDueLower: number) {
     let filterroute = `${envAddress}/${route}?skip=${page}&take=${items}&filterfirstname=${filterFirstName}&filterlastname=${filterLastName}&filteraccountnumber=${filterAccountNumber}&filtersumtotalduehigher=${filterSumTotalDueHigher}&filtersumtotalduelower=${filterSumTotalDueLower}`;
@@ -79,11 +80,6 @@ export class DataService {
 
   private createRouteDelete(route: string, envAddress: string,userId:string){
     return `${envAddress}/${route}?userid=${userId}`;
-
-  }
-
-  private createRouteUpdate(route: string, envAddress: string,userId:string,roles:string[]){
-    return `${envAddress}/${route}?userid=${userId}&roles=${roles}`;
 
   }
 

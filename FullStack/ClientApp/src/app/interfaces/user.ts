@@ -1,6 +1,6 @@
 export interface User{
     userId:string;
-    email:string;
+    userName:string;
     rolesList: string[];
     showForm:boolean;
    

@@ -26,7 +26,7 @@ namespace FullStack.BLL.Services
         public async Task<string> HandleLogin(LoginDto login)
         {
             
-            var theUser = await _userRepository.FindByEmail(login.Email);
+            var theUser = await _userRepository.FindByName(login.UserName);
             if (theUser != null && await _userRepository.CheckPassword(theUser,login.PassWord))
             {
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("fullstack_951357456"));
@@ -61,7 +61,7 @@ namespace FullStack.BLL.Services
         {
             try
             {
-                var result = await _userRepository.Create(loginDto.Email, loginDto.PassWord);
+                var result = await _userRepository.Create(loginDto.UserName, loginDto.PassWord);
                 return result;
             }
             catch (Exception e)
@@ -88,8 +88,6 @@ namespace FullStack.BLL.Services
 
 
         }
-
-
 
     }
 }

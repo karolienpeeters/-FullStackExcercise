@@ -1,54 +1,58 @@
+
 <div class="container">
-  <div class="row justify-content-around">
-    <div class="col-md-6 ">
-      <div class="col-md-12">
+    <div class="row justify-content-around">
+        <div class="col-md-6 ">
+            <div class="col-md-12">
 
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Email</th>
-              <th scope="col">Roles</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let user of userList">
-              <td *ngIf="!user.showForm ">{{user.email}}</td>
-              <td *ngIf="user.showForm ">
-                <input type="email" class="form-control" name="email" [(ngModel)]="user.email"
-                  placeholder="user.email">
-              
-              </td>
-            
-              <td *ngIf="!user.showForm">{{user.rolesList}}</td>
 
-             
-                <td *ngIf="user.showForm ">
-                    <small id="rolesHelp" class="form-text text-muted">Available roles are User & Admin. Use a comma when adding more roles</small>
-                    <input *ngIf="user.rolesList.length > 0" type="text" class="form-control" name="rolesList" [(ngModel)]="user.rolesList"
-                      placeholder="user.rolesList">
-                      <input *ngIf="user.rolesList.length === 0" type="text" class="form-control" name="rolesList" [(ngModel)]="user.rolesList"
-                      placeholder="add roles">
-                  </td>
-              <td>
-                <i *ngIf="!user.showForm" class="far fa-edit" (click)="editUser(user)"></i>
-                <i *ngIf="user.showForm" class="far fa-save" (click)="saveUser(user)"></i>
-              
-              </td>
-              <td>
-                <i  *ngIf="!user.showForm" class="fa fa-trash" aria-hidden="true" (click)="deleteUser(user)"></i>
-                <i *ngIf="user.showForm" class="fa fa-times" aria-hidden="true" (click)="exitLine(user)"></i>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">User Name</th>
+      <th scope="col">Roles</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of userList">
+      <td *ngIf="!user.showForm ">{{user.email}}</td>
+      <td *ngIf="user.showForm ">
+        <input type="email" class="form-control" name="email" [(ngModel)]="user.email"
+          placeholder="user.email">
+      
+      </td>
+    
+      <td *ngIf="!user.showForm">{{user.rolesList}}</td>
+
+     
+        <td *ngIf="user.showForm ">
+            <input *ngIf="user.rolesList.length > 0" type="text" class="form-control" name="rolesList" [(ngModel)]="user.rolesList"
+              placeholder="user.rolesList">
+              <input *ngIf="user.rolesList.length === 0" type="text" class="form-control" name="rolesList" [(ngModel)]="user.rolesList"
+              placeholder="add roles">
+            <small id="rolesHelp" class="form-text text-muted">Available roles are User & Admin. Use a comma when adding more roles</small>
+
+          </td>
+      <td>
+        <i *ngIf="!user.showForm" class="far fa-edit" (click)="editUser(user)"></i>
+        <i *ngIf="user.showForm" class="far fa-save" (click)="saveUser(user)"></i>
+      
+      </td>
+      <td>
+        <i  *ngIf="!user.showForm" class="fa fa-trash" aria-hidden="true" (click)="deleteUser(user)"></i>
+        <i *ngIf="user.showForm" class="fa fa-times" aria-hidden="true" (click)="exitLine(user)"></i>
+      </td>
+    </tr>
+  </tbody>
+</table>  
       </div>
-    </div>
-    <div class="coll-md-6  align-self-end">
-      <div class="col-md-12">
+        </div>
+ <div class="coll-md-6  align-self-end">
+    <div class="col-md-12">
 
-        <!-- <form>
+    <!-- <form>
       <div class="form-group">
         <label for="email">email</label>
         <input type="text" class="form-control" id="email" name="email" >
@@ -80,27 +84,52 @@
        
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
-    </mat-card-content>  
+    </mat-card-content>
+    
     
     </mat-card>  -->
-        <div class="card">
-          <h5 class="card-header">Create a new user</h5>
-          <div class="card-body">
-            <form #myform="ngForm" (ngSubmit)="createUser(myform)">
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input type="text" name="email" ngModel class="form-control" placeholder="Enter email">
-              </div>
-              <div class="form-group">
-                <label for="PassWord">Password</label>
-                <input type="text" name="Password" ngModel class="form-control" placeholder="Password">
-              </div>
-
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-          </div>
+    <div class="card">
+        <h5 class="card-header">Create a new user</h5>
+        <div class="card-body">
+            <form #myform="ngForm" (ngSubmit)="registerUser(myform)">
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input  type="text" name="UserName" ngModel class="form-control"   placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                  <label for="PassWord">Password</label>
+                  <input type="text" name="Password" ngModel class="form-control"  placeholder="Password">
+                </div>
+               
+                <button type="submit" class="btn btn-primary  mr-3">Submit</button>
+                <button class="btn btn-primary" (click)="clearForm(myform)">Reset</button>
+              </form>
         </div>
       </div>
-    </div>
+<!-- 
+      <div class="card">
+        <h5 class="card-header">Create a new user</h5>
+        <div class="card-body">
+            <form #myform="ngForm">
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input  type="text" name="UserName"  class="form-control"   placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                  <label for="PassWord">Password</label>
+                  <input type="text" name="Password"  class="form-control"  placeholder="Password">
+                </div>
+               
+                <button  class="btn btn-primary  mr-3" (click)="createUser()">Submit</button>
+                <button class="btn btn-primary" (click)="clearForm(myform)">Reset</button>
+              </form>
+        </div>
+      </div> -->
+
+
+
+
   </div>
+</div>
+</div>
 </div>

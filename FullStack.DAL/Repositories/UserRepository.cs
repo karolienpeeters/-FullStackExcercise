@@ -12,19 +12,17 @@ namespace FullStack.DAL.Repositories
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly RoleManager<IdentityUser> _roleManager;
 
-        public UserRepository(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, RoleManager<IdentityUser> roleManager)
+        public UserRepository(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _roleManager = roleManager;
         }
 
 
-        public async Task<IdentityUser> FindByEmail(string email)
+        public async Task<IdentityUser> FindByName(string userName)
         {
-            return await _userManager.FindByEmailAsync(email);
+            return await _userManager.FindByNameAsync(userName);
         }
 
         public async Task<bool> CheckPassword(IdentityUser user, string password)
@@ -32,13 +30,19 @@ namespace FullStack.DAL.Repositories
             return await _userManager.CheckPasswordAsync(user, password);
         }
 
-        public async Task<IdentityResult> Create(string email, string password)
+        public async Task<IdentityResult> Create(string userName, string password)
         {
             try
             {
-                var user = new IdentityUser { UserName = email, Email = email};
+                var user = new IdentityUser { UserName = userName, Email = userName};
                 var result =  await _userManager.CreateAsync(user, password);
-             
+                if (result.Succeeded)
+                { 
+
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                   
+                }
+
                 return result;
             }
             catch (Exception e)
@@ -46,7 +50,8 @@ namespace FullStack.DAL.Repositories
                 Console.WriteLine(e);
                 throw;
             }
- 
+           
+             
         }
 
         // GET: ApplicationUserRoles
@@ -57,14 +62,13 @@ namespace FullStack.DAL.Repositories
 
             foreach (var user in identityUsers)
             {
-                var roles = _userManager.GetRolesAsync(user).Result.ToArray();
+                var roles = _userManager.GetRolesAsync(user).Result.ToList();
                 usersWithRoles.Add(new User(user, roles));
 
             }
 
             return usersWithRoles;
         }
-
 
         public async Task<IdentityResult> DeleteUser (string userId)
         {
@@ -73,22 +77,22 @@ namespace FullStack.DAL.Repositories
 
         }
 
-        public void AddRolesToUser(string userId, string[] roles)
-        {
-            var user = _userManager.FindByIdAsync(userId).Result;
+        //public void AddRolesToUser(string userId, string[] roles)
+        //{
+        //    var user = _userManager.FindByIdAsync(userId).Result;
 
-            foreach (var role in roles)
-            {
-                var roleCheck = _roleManager.RoleExistsAsync(role);
+        //    foreach (var role in roles)
+        //    {
+        //        var roleCheck = _roleManager.RoleExistsAsync(role);
 
-                if (roleCheck.Result)
-                {
-                    _userManager.AddToRoleAsync(user, role);
-                }
+        //        if (roleCheck.Result)
+        //        {
+        //            _userManager.AddToRoleAsync(user, role);
+        //        }
 
 
-            }
-        }
+        //    }
+        //}
 
     }
 }

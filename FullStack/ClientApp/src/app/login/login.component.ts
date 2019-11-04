@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   
   login(form) {
     this.auth.Login(form.value).subscribe(result => {
-      console.log(result,"login")
+      console.log(result)
       this.auth.authResponse = result;
       localStorage.setItem("userToken",JSON.stringify(result));
       //navigate to project data

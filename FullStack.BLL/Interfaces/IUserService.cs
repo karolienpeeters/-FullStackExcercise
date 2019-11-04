@@ -13,5 +13,6 @@ namespace FullStack.BLL.Interfaces
         List<UserDto> GetUsersWithRoles();
         Task<IdentityResult> RegisterNewUser(LoginDto loginDto);
         Task<IdentityResult> DeleteUser(string userId);
+
     }
 }

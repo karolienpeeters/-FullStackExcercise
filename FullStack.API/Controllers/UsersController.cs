@@ -32,10 +32,19 @@ namespace FullStack.API.Controllers
         }
 
         [HttpPost]
+        [Route("register")]
+        public async Task<IActionResult> Register([FromBody]LoginDto loginDto)
+        {
+          var result =  await _userService.RegisterNewUser(loginDto);
+            return Ok(result);
+
+        }
+
+        [HttpPost]
         [Route("create")]
         public async Task<IActionResult> Create([FromBody]LoginDto loginDto)
         {
-          var result =  await _userService.RegisterNewUser(loginDto);
+            var result = await _userService.RegisterNewUser(loginDto);
             return Ok(result);
 
         }
@@ -50,9 +59,11 @@ namespace FullStack.API.Controllers
         [HttpPut("updateuser/{uid}")]
         public IActionResult UpdateUser([FromBody]UserDto userDto, string uid)
         {
-          
+
             return Ok();
         }
+
+
 
     }
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { User } from '../interfaces/user';
-import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-user-list',
@@ -11,7 +10,9 @@ import { ThrowStmt } from '@angular/compiler';
 export class UserListComponent implements OnInit {
 
   public userList;
-  
+  public  userName:string;
+  public passWord:string;
+  public user:User;
 
   constructor(private service: DataService) { }
 
@@ -27,8 +28,23 @@ export class UserListComponent implements OnInit {
     }));
   }
 
+  registerUser(form){
+   
+    this.service.registerUser(form.value).subscribe((result => {
+      console.log(result,"register user");
+      form.reset();
+
+      console.log(form.value)
+      this.getListUser();
+     
+    }));
+    
+
+  }
+
+
   createUser(form){
-    this.service.createUser(form.value).subscribe((result => {
+    this.service.registerUser(form.value).subscribe((result => {
       console.log(result,"register user");
       this.getListUser();
      
@@ -65,6 +81,10 @@ export class UserListComponent implements OnInit {
       console.log(result);
       user.showForm = false;
     }));
+  }
+
+  clearForm(myform){
+    console.log(myform, "myform create user");
   }
 
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -10,19 +10,11 @@ export class AuthService {
   isLoggedIn = false;
   redirectUrl: string;
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      
-      "Content-Type": "application/json"
-    })
-  };
-
-
   constructor(private http: HttpClient) { }
 
   Login(user) {
-       let result = this.http.post(this.createRoute("api/account/login",environment.urlAddress), user,this.httpOptions);
-        console.log(result, "auth service")
+       let result = this.http.post(this.createRoute("api/account/login",environment.urlAddress), user);
+        console.log(result, "login")
        
        return result;
   }

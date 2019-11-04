@@ -44,7 +44,7 @@ namespace FullStack.API
                 .AddDefaultTokenProviders();
             services.AddRepositories();
             services.AddServices();
-            services.AddCors(c => { c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()); });
+            services.AddCors(c => { c.AddPolicy("AllowOrigin", options => options.WithOrigins(LocalHost).AllowAnyHeader().AllowAnyMethod()); });
            
 
             //services.AddIdentity<IdentityUser, IdentityRole>()
@@ -108,7 +108,7 @@ namespace FullStack.API
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
-            app.UseCors("AllowOrigin");
+            app.UseCors(options => options.WithOrigins(LocalHost).AllowAnyHeader().AllowAnyMethod());
             
             CreateUserRoles(services).Wait();
         }
@@ -118,23 +118,13 @@ namespace FullStack.API
             var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
-            //Adding Admin Role & User Role
-            var roleCheckAdmin = await RoleManager.RoleExistsAsync("Admin");
-            if (!roleCheckAdmin)
+            //Adding Admin Role 
+            var roleCheck = await RoleManager.RoleExistsAsync("Admin");
+            if (!roleCheck)
             {
                 //create the roles and seed them to the database 
                 await RoleManager.CreateAsync(new IdentityRole("Admin"));
             }
-
-            var roleCheckUser = await RoleManager.RoleExistsAsync("User");
-            if (!roleCheckUser)
-            {
-                //create the roles and seed them to the database 
-                await RoleManager.CreateAsync(new IdentityRole("User"));
-            }
-
-
-
             //Create adminuser and assign the user the adminrole
 
             var user = new IdentityUser { UserName = "admin@mail.com", Email = "admin@mail.com" };
