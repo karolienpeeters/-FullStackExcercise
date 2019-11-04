@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using FullStack.BLL.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace FullStack.BLL.Interfaces
 {
@@ -10,5 +11,8 @@ namespace FullStack.BLL.Interfaces
     {
         Task<string> HandleLogin(LoginDto login);
         List<UserDto> GetUsersWithRoles();
+        Task<IdentityResult> RegisterNewUser(LoginDto loginDto);
+        Task<IdentityResult> DeleteUser(string userId);
+
     }
 }

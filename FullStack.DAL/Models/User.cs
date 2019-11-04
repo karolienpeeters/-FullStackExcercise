@@ -7,15 +7,15 @@ namespace FullStack.DAL.Models
 {
     public class User
     {
-        public User(IdentityUser identyUser, List<string> userRoles)
+
+
+        public User(IdentityUser identityUser, List<string> userRoles)
         {
-            UserId = identyUser.Id;
-            UserName = identyUser.UserName;
+            UserId = identityUser.Id;
+            UserName = identityUser.UserName;
             RolesList = userRoles;
-            Email = identyUser.Email;
-            EmailConfirmed = identyUser.EmailConfirmed;
-            LockoutEnabled = identyUser.LockoutEnabled;
-            AccessFailedCount = identyUser.AccessFailedCount;
+            Email = identityUser.Email;
+
         }
 
 
@@ -23,8 +23,6 @@ namespace FullStack.DAL.Models
         public string UserName { get; set; }
         public List<string> RolesList { get; set; }
         public string Email { get; set; }
-        public bool EmailConfirmed { get; set; }
-        public bool LockoutEnabled { get; set; }
-        public int AccessFailedCount { get; set; }
+
     }
 }

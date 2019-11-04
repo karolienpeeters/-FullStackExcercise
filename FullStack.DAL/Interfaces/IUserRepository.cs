@@ -13,6 +13,10 @@ namespace FullStack.DAL.Interfaces
         Task<bool> CheckPassword(IdentityUser user, string password);
         List<User> GetApplicationUsersAndRoles();
 
+        Task<IdentityResult> Create(string userName, string password);
+
+        Task<IdentityResult> DeleteUser(string userId);
+
 
 
     }

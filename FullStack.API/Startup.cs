@@ -39,6 +39,7 @@ namespace FullStack.API
             services.AddContext(Configuration);
             services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()
+                
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
             services.AddRepositories();

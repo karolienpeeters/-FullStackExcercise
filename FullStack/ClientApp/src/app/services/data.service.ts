@@ -5,6 +5,7 @@ import { Pagination } from '../interfaces/pagination';
 import { AuthService } from './auth.service';
 import { CustomerFilterPagination } from '../interfaces/customerFilterPagination';
 import { Customer } from '../interfaces/customer';
+import { User } from '../interfaces/user';
 
 
 @Injectable({
@@ -46,6 +47,23 @@ export class DataService {
 
   }
 
+  registerUser(user:User){
+    return this.http.post(this.createRoute("api/users/register", environment.urlAddress), user, this.httpOptions);
+  }
+
+  deleteUser(user:User){
+    return this.http.delete(this.createRouteDelete("api/users/delete", environment.urlAddress,user.userId), this.httpOptions);
+  }
+
+  updateUser(user: User) {
+   
+
+    console.log(user, "service update user")
+    return this.http.put(this.createRoute("api/users/updateuser/" + user.userId, environment.urlAddress), user, this.httpOptions);
+
+  }
+
+
 
 
 
@@ -58,6 +76,11 @@ export class DataService {
 
   private createRoute(route: string, envAddress: string) {
     return `${envAddress}/${route}`;
+  }
+
+  private createRouteDelete(route: string, envAddress: string,userId:string){
+    return `${envAddress}/${route}?userid=${userId}`;
+
   }
 
 

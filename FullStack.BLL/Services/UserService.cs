@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using FullStack.BLL.Interfaces;
 using FullStack.BLL.Models;
 using FullStack.DAL.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
@@ -56,6 +57,37 @@ namespace FullStack.BLL.Services
             return listUsers;
         }
 
+        public async Task<IdentityResult> RegisterNewUser(LoginDto loginDto)
+        {
+            try
+            {
+                var result = await _userRepository.Create(loginDto.UserName, loginDto.PassWord);
+                return result;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+           
+        }
+
+        public async Task<IdentityResult> DeleteUser(string userId)
+        {
+            try
+            {
+                var result = await _userRepository.DeleteUser(userId);
+                return result;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+
+        }
 
     }
 }
