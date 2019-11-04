@@ -9,6 +9,7 @@
             <th scope="col">Lastname</th>
             <th scope="col">Sum total due</th>
             <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -43,7 +44,11 @@
             <td>
               <i *ngIf="!customer.showForm" class="far fa-edit" (click)="editCustomer(customer)"></i>
               <i *ngIf="customer.showForm" class="far fa-save" (click)="saveCustomer(customer)"></i>
-              <i *ngIf="customer.showForm" class="far fa-times-circle" (click)="exitLine(customer)"></i>
+             
+            </td>
+            <td>
+              <i *ngIf="customer.showForm" class="fa fa-times" aria-hidden="true" (click)="exitLine(customer)"></i>
+
             </td>
       
           </tr>

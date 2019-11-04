@@ -47,8 +47,20 @@ export class DataService {
 
   }
 
-  registerUser(user:User){
-    return this.http.post(this.createRoute("api/users/register", environment.urlAddress), user, this.httpOptions);
+ createUser(user:User){
+    return this.http.post(this.createRoute("api/users/create", environment.urlAddress), user, this.httpOptions);
+  }
+
+  deleteUser(user:User){
+    return this.http.delete(this.createRouteDelete("api/users/delete", environment.urlAddress,user.userId), this.httpOptions);
+  }
+
+  updateUser(user: User) {
+   
+
+    console.log(user, "service update user")
+    return this.http.put(this.createRoute("api/users/updateuser/" + user.userId, environment.urlAddress), user, this.httpOptions);
+
   }
 
 
@@ -63,6 +75,16 @@ export class DataService {
 
   private createRoute(route: string, envAddress: string) {
     return `${envAddress}/${route}`;
+  }
+
+  private createRouteDelete(route: string, envAddress: string,userId:string){
+    return `${envAddress}/${route}?userid=${userId}`;
+
+  }
+
+  private createRouteUpdate(route: string, envAddress: string,userId:string,roles:string[]){
+    return `${envAddress}/${route}?userid=${userId}&roles=${roles}`;
+
   }
 
 

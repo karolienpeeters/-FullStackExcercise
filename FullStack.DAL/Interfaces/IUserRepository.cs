@@ -9,11 +9,12 @@ namespace FullStack.DAL.Interfaces
 {
     public interface IUserRepository
     {
-        Task<IdentityUser> FindByName(string userName);
+        Task<IdentityUser> FindByEmail(string email);
         Task<bool> CheckPassword(IdentityUser user, string password);
         List<User> GetApplicationUsersAndRoles();
 
         Task<IdentityResult> Create(string userName, string password);
+        Task<IdentityResult> DeleteUser(string userId);
 
 
 

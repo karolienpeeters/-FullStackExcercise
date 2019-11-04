@@ -6,7 +6,7 @@ namespace FullStack.BLL.Models
 {
     public class LoginDto
     {
-        public string UserName { get; set; }
+        public string Email { get; set; }
         public string PassWord { get; set; }
     }
 }

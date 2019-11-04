@@ -7,7 +7,10 @@ namespace FullStack.BLL.Models
 {
     public class UserDto
     {
-
+        public UserDto()
+        {
+            
+        }
 
         public UserDto(User user)
         {
@@ -21,7 +24,7 @@ namespace FullStack.BLL.Models
 
         public string UserId { get; set; }
         public string UserName { get; set; }
-        public List<string> RolesList { get; set; }
+        public string [] RolesList { get; set; }
         public string Email { get; set; }
         public bool ShowForm { get; set; }
    

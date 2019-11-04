@@ -32,12 +32,27 @@ namespace FullStack.API.Controllers
         }
 
         [HttpPost]
-        [Route("register")]
-        public async Task<IActionResult> Register([FromBody]LoginDto loginDto)
+        [Route("create")]
+        public async Task<IActionResult> Create([FromBody]LoginDto loginDto)
         {
           var result =  await _userService.RegisterNewUser(loginDto);
             return Ok(result);
 
         }
+
+        [Route("delete")]
+        public async Task<IActionResult> Delete(string userId)
+        {
+            var result = await _userService.DeleteUser(userId);
+            return Ok(result);
+        }
+
+        [HttpPut("updateuser/{uid}")]
+        public IActionResult UpdateUser([FromBody]UserDto userDto, string uid)
+        {
+          
+            return Ok();
+        }
+
     }
 }

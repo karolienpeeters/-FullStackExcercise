@@ -9,7 +9,7 @@ namespace FullStack.DAL.Models
     {
 
 
-        public User(IdentityUser identityUser, List<string> userRoles)
+        public User(IdentityUser identityUser, string [] userRoles)
         {
             UserId = identityUser.Id;
             UserName = identityUser.UserName;
@@ -21,7 +21,7 @@ namespace FullStack.DAL.Models
 
         public string UserId { get; set; }
         public string UserName { get; set; }
-        public List<string> RolesList { get; set; }
+        public string [] RolesList { get; set; }
         public string Email { get; set; }
 
     }
