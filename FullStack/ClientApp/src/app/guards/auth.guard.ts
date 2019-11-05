@@ -22,7 +22,7 @@ export class AuthGuard implements CanActivate {
 
   
   checkLogin(url: string): boolean {
-    if (this.authService.authResponse !== undefined) { return true; }
+    if (this.authService.authResponse !== undefined && !this.authService.isTokenExpired()) { return true; }
 
     // Store the attempted URL for redirecting
     this.authService.redirectUrl = url;

@@ -41,23 +41,21 @@ export class DataService {
     return this.http.get(this.createRoute(route, environment.urlAddress), this.httpOptions);
   }
 
- updateCustomer(customer: Customer) {
+  updateCustomer(customer: Customer) {
     console.log(customer, "service update customer")
     return this.http.put(this.createRoute("api/customers/updatecustomer", environment.urlAddress), customer, this.httpOptions);
 
   }
 
-  registerUser(user:User){
+  registerUser(user) {
     return this.http.post(this.createRoute("api/users/register", environment.urlAddress), user, this.httpOptions);
   }
 
-  deleteUser(user:User){
-    return this.http.delete(this.createRouteDelete("api/users/delete", environment.urlAddress,user.userId), this.httpOptions);
+  deleteUser(user: User) {
+    return this.http.delete(this.createRouteDelete("api/users/delete", environment.urlAddress, user.userId), this.httpOptions);
   }
 
   updateUser(user: User) {
-   
-
     console.log(user, "service update user")
     return this.http.put(this.createRoute("api/users/updateuser/" + user.userId, environment.urlAddress), user, this.httpOptions);
 
@@ -78,7 +76,7 @@ export class DataService {
     return `${envAddress}/${route}`;
   }
 
-  private createRouteDelete(route: string, envAddress: string,userId:string){
+  private createRouteDelete(route: string, envAddress: string, userId: string) {
     return `${envAddress}/${route}?userid=${userId}`;
 
   }

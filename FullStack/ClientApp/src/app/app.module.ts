@@ -9,7 +9,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
 import { CustomerListComponent } from './customer-list/customer-list.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { LoginComponent } from './login/login.component';
@@ -18,18 +17,17 @@ import { AuthGuard } from './guards/auth.guard';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
-    HomeComponent,
     CustomerListComponent,
     PaginationComponent,
     LoginComponent,
-    UserListComponent,
-   
-    
+    UserListComponent
   ],
+
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
@@ -39,9 +37,8 @@ import { AuthGuard } from './guards/auth.guard';
     BrowserAnimationsModule,
     RouterModule.forRoot([
       { path: '', component: LoginComponent, pathMatch: 'full' },
-      { path:'home', component:HomeComponent},
       { path: 'login', component: LoginComponent },
-      { path: 'customers', component: CustomerListComponent,canActivate: [AuthGuard], },
+      { path: 'customers', component: CustomerListComponent, canActivate: [AuthGuard], },
       { path: 'users', component: UserListComponent, canActivate: [AuthGuard], },
 
     ])

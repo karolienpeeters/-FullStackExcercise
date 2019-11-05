@@ -24,11 +24,11 @@ namespace FullStack.BLL.Services
             _userRepository = userRepository;
         }
 
-        public async Task<string> HandleLogin(LoginDto login)
+        public async Task<string> HandleLogin(LoginDto loginDto)
         {
             
-            var theUser = await _userRepository.FindByName(login.UserName);
-            if (theUser != null && await _userRepository.CheckPassword(theUser,login.PassWord))
+            var theUser = await _userRepository.FindByName(loginDto.Email);
+            if (theUser != null && await _userRepository.CheckPassword(theUser,loginDto.PassWord))
             {
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("fullstack_951357456"));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
@@ -36,7 +36,7 @@ namespace FullStack.BLL.Services
                     issuer: "https://localhost:44318",
                     audience: "*",
                     claims: new List<Claim>(),
-                    expires: DateTime.Now.AddMinutes(60),
+                    expires: DateTime.Now.AddMinutes(1),
                     signingCredentials: signinCredentials
                 );
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
@@ -62,7 +62,7 @@ namespace FullStack.BLL.Services
         {
             try
             {
-                var result = await _userRepository.Create(loginDto.UserName, loginDto.PassWord);
+                var result = await _userRepository.Create(loginDto.Email, loginDto.PassWord);
                 return result;
             }
             catch (Exception e)
