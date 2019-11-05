@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from "./modules/material.module";
 //import {JwPaginationComponent } from 'jw-angular-pagination';
@@ -14,8 +14,9 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { LoginComponent } from './login/login.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { AuthGuard } from './guards/auth.guard';
-import { AuthRequestOptions } from './requestHandlers/auth-request';
 import { RequestOptions } from '@angular/http';
+import { JwtInterceptor } from './_helpers/jwt.interceptor';
+import { ErrorInterceptor } from './_helpers/error.interceptor';
 
 
 
@@ -43,15 +44,13 @@ import { RequestOptions } from '@angular/http';
       { path: '', component: LoginComponent, pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
       { path: 'customers', component: CustomerListComponent, canActivate: [AuthGuard] },
-      { path: 'users', component: UserListComponent, canActivate: [AuthGuard] },
+      { path: 'users', component: UserListComponent, canActivate: [AuthGuard],data: { roles: ["Admin"] } },
 
     ])
   ],
   providers: [
-    {
-      provide: RequestOptions, 
-      useClass: AuthRequestOptions
-    }
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

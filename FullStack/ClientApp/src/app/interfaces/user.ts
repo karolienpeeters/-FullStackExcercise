@@ -3,5 +3,6 @@ export interface User {
     email: string;
     rolesList: string[];
     showForm: boolean;
+    token?:string;
 
 }

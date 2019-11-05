@@ -43,12 +43,7 @@ namespace FullStack.DAL.Repositories
             {
                 var user = new IdentityUser { UserName = userName, Email = userName};
                 var result =  await _userManager.CreateAsync(user, password);
-                if (result.Succeeded)
-                { 
-
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                   
-                }
+                await AddRole(user, "User");
 
                 return result;
             }
@@ -99,13 +94,18 @@ namespace FullStack.DAL.Repositories
 
                 if (roleCheck.Result)
                 {
-                   await _userManager.AddToRoleAsync(iUser, role);
+                   await AddRole(iUser, role);
                 }
 
 
             }
 
             return await _userManager.UpdateAsync(iUser);
+        }
+
+        public async Task<IdentityResult> AddRole(IdentityUser iUser, string role)
+        {
+            return await _userManager.AddToRoleAsync(iUser, role);
         }
 
     }

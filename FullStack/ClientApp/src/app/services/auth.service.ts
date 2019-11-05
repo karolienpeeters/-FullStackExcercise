@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 import * as jwt_decode from 'jwt-decode';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { User } from '../interfaces/user';
+import { map } from 'rxjs/operators';
 
 export const TOKEN_NAME: string = 'jwt_token';
 
@@ -11,40 +14,55 @@ export const TOKEN_NAME: string = 'jwt_token';
   providedIn: 'root'
 })
 export class AuthService {
-  public authResponse:any;
-  isLoggedIn = false;
-  redirectUrl: string;
 
-  constructor(private http: HttpClient) { }
+  private currentUserSubject: BehaviorSubject<User>;
+  public currentUser: Observable<User>;
 
-  Login(user) {
-       let result = this.http.post(this.createRoute("api/account/login",environment.urlAddress), user);
-        console.log(result, "login")
-       
-       return result;
+  constructor(private http: HttpClient) {
+      this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+      this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  
-
-  private createRoute(route:string, envAddress:string){
-    return `${envAddress}/${route}`;
+  public get currentUserValue(): User {
+      return this.currentUserSubject.value;
   }
 
-  
-  private url: string = 'api/auth';
-  private headers = new Headers({ 'Content-Type': 'application/json' });
+  login(user) {
+      return this.http.post<any>(`${environment.urlAddress}/api/account/login`, user)
+          .pipe(map(user => {
+              // login successful if there's a jwt token in the response
+              if (user && user.token) {
+                console.log(user,"test login");
+                  // store user details and jwt token in local storage to keep user logged in between page refreshes
+                 
+                  
+                  localStorage.setItem('currentUser', JSON.stringify(user));
+                  this.currentUserSubject.next(user);
+              }
 
+              return user;
+          }));
+  }
+
+  logout() {
+      // remove user from local storage to log user out
+      localStorage.removeItem('currentUser');
+      this.currentUserSubject.next(null);
+  }
+
+  getRoles(){
  
-
-  getToken(): string {
-    console.log(localStorage.getItem(TOKEN_NAME));
-    return localStorage.getItem(TOKEN_NAME);
+    var decoded = jwt_decode(this.currentUserSubject.value.token);
+    this.currentUserSubject.value.rolesList = decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+console.log(this.currentUserSubject.value.rolesList ,"current user roles")
+   
+   
   }
+  
 
-  setToken(token: string): void {
-    localStorage.setItem(TOKEN_NAME, token);
-  }
 
+
+  
   getTokenExpirationDate(token: string): Date {
     const decoded = jwt_decode(token);
 
@@ -56,8 +74,8 @@ export class AuthService {
   }
 
   isTokenExpired(token?: string): boolean {
-    if(!token) token = this.getToken();
-    console.log(token)
+    if(!token) token = this.currentUserSubject.value.token;
+    console.log(token,"isTokenExpired")
     if(!token) return true;
 
     const date = this.getTokenExpirationDate(token);
