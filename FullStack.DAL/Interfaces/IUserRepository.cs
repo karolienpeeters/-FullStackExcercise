@@ -19,6 +19,7 @@ namespace FullStack.DAL.Interfaces
         Task<IdentityResult> DeleteUser(string userId);
 
         Task<IdentityResult> UpdateUser(IdentityUser iUser, List<string> roles);
+        Task<IList<string>> GetRolesUser(IdentityUser iUser);
 
 
 

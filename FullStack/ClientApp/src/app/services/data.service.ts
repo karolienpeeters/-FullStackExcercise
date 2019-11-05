@@ -14,17 +14,20 @@ import { User } from '../interfaces/user';
 })
 export class DataService {
 
- token = JSON.parse(localStorage.getItem(TOKEN_NAME)); 
-
-  httpOptions = {
-    headers: new HttpHeaders({
-      "Authorization": "bearer " + this.token.token,
-      "Content-Type": "application/json"
-    })
-  };
+ 
+  
 
   constructor(private http: HttpClient, private auth: AuthService) { 
-    console.log(this.token,"data service token")
+   
+  }
+
+  getHeader(){
+    return  {
+      headers: new HttpHeaders({
+        "Authorization": "bearer " + JSON.parse(localStorage.getItem(TOKEN_NAME)).token,
+        "Content-Type": "application/json"
+      })
+    };
   }
 
 
@@ -32,32 +35,32 @@ export class DataService {
     filterSumTotalDueHigher: number, filterSumTotalDueLower: number) {
 
     return this.http.get(this.createFilterPageRoute(route, environment.urlAddress, page, items, filterFirstName, filterAccountNumber,
-      filterLastName, filterSumTotalDueHigher, filterSumTotalDueLower),this.httpOptions);
+      filterLastName, filterSumTotalDueHigher, filterSumTotalDueLower),this.getHeader());
   }
 
   
 
   getUsers(route: string) {
-    return this.http.get(this.createRoute(route, environment.urlAddress),this.httpOptions);
+    return this.http.get(this.createRoute(route, environment.urlAddress),this.getHeader());
   }
 
   updateCustomer(customer: Customer) {
     console.log(customer, "service update customer")
-    return this.http.put(this.createRoute("api/customers/updatecustomer", environment.urlAddress), customer,this.httpOptions);
+    return this.http.put(this.createRoute("api/customers/updatecustomer", environment.urlAddress), customer,this.getHeader());
 
   }
 
   registerUser(user) {
-    return this.http.post(this.createRoute("api/users/register", environment.urlAddress), user,this.httpOptions);
+    return this.http.post(this.createRoute("api/users/register", environment.urlAddress), user,this.getHeader());
   }
 
   deleteUser(user: User) {
-    return this.http.delete(this.createRouteDelete("api/users/delete", environment.urlAddress, user.userId),this.httpOptions);
+    return this.http.delete(this.createRouteDelete("api/users/delete", environment.urlAddress, user.userId),this.getHeader());
   }
 
   updateUser(user: User) {
     console.log(user, "service update user")
-    return this.http.put(this.createRoute("api/users/updateuser/" + user.userId, environment.urlAddress), user,this.httpOptions);
+    return this.http.put(this.createRoute("api/users/updateuser/" + user.userId, environment.urlAddress), user,this.getHeader());
 
   }
 

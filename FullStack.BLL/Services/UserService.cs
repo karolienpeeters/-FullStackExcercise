@@ -32,10 +32,17 @@ namespace FullStack.BLL.Services
             {
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("fullstack_951357456"));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+                var roles = await _userRepository.GetRolesUser(theUser);
+                var claims = new List<Claim>();
+                claims.Add(new Claim(ClaimTypes.Name, loginDto.Email));
+                foreach (string item in roles)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, item));
+                }
                 var tokeOptions = new JwtSecurityToken(
                     issuer: "https://localhost:44318",
                     audience: "*",
-                    claims: new List<Claim>(),
+                    claims: claims,
                     expires: DateTime.Now.AddMinutes(5),
                     signingCredentials: signinCredentials
                 );

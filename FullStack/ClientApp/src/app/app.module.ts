@@ -42,8 +42,8 @@ import { RequestOptions } from '@angular/http';
     RouterModule.forRoot([
       { path: '', component: LoginComponent, pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
-      { path: 'customers', component: CustomerListComponent, canActivate: [AuthGuard], },
-      { path: 'users', component: UserListComponent, canActivate: [AuthGuard], },
+      { path: 'customers', component: CustomerListComponent, canActivate: [AuthGuard] },
+      { path: 'users', component: UserListComponent, canActivate: [AuthGuard] },
 
     ])
   ],

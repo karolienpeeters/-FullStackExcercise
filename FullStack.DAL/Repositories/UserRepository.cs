@@ -69,12 +69,17 @@ namespace FullStack.DAL.Repositories
 
             foreach (var user in identityUsers)
             {
-                var roles = _userManager.GetRolesAsync(user).Result.ToList();
+                var roles = GetRolesUser(user).Result.ToList();
                 usersWithRoles.Add(new User(user, roles));
 
             }
 
             return usersWithRoles;
+        }
+
+        public async Task<IList<string>> GetRolesUser(IdentityUser iUser)
+        {
+            return await _userManager.GetRolesAsync(iUser);
         }
 
         public async Task<IdentityResult> DeleteUser (string userId)
