@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
-//import * as jwt_decode from 'jwt-decode';
+import * as jwt_decode from 'jwt-decode';
 
 export const TOKEN_NAME: string = 'jwt_token';
 
@@ -37,6 +37,7 @@ export class AuthService {
  
 
   getToken(): string {
+    console.log(localStorage.getItem(TOKEN_NAME));
     return localStorage.getItem(TOKEN_NAME);
   }
 
@@ -56,6 +57,7 @@ export class AuthService {
 
   isTokenExpired(token?: string): boolean {
     if(!token) token = this.getToken();
+    console.log(token)
     if(!token) return true;
 
     const date = this.getTokenExpirationDate(token);

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import{Headers,RequestOptions} from '@angular/http';
 import { environment } from 'src/environments/environment';
 import { Pagination } from '../interfaces/pagination';
-import { AuthService } from './auth.service';
+import { AuthService, TOKEN_NAME } from './auth.service';
 import { CustomerFilterPagination } from '../interfaces/customerFilterPagination';
 import { Customer } from '../interfaces/customer';
 import { User } from '../interfaces/user';
@@ -13,51 +14,50 @@ import { User } from '../interfaces/user';
 })
 export class DataService {
 
+ token = JSON.parse(localStorage.getItem(TOKEN_NAME)); 
+
   httpOptions = {
     headers: new HttpHeaders({
-      "Authorization": "bearer " + this.auth.authResponse.token,
+      "Authorization": "bearer " + this.token.token,
       "Content-Type": "application/json"
     })
   };
 
-  constructor(private http: HttpClient, private auth: AuthService) { }
+  constructor(private http: HttpClient, private auth: AuthService) { 
+    console.log(this.token,"data service token")
+  }
 
 
   getCustomersPage(route: string, page: number, items: number, filterFirstName: string, filterAccountNumber: string, filterLastName: string,
     filterSumTotalDueHigher: number, filterSumTotalDueLower: number) {
 
     return this.http.get(this.createFilterPageRoute(route, environment.urlAddress, page, items, filterFirstName, filterAccountNumber,
-      filterLastName, filterSumTotalDueHigher, filterSumTotalDueLower), this.httpOptions);
+      filterLastName, filterSumTotalDueHigher, filterSumTotalDueLower),this.httpOptions);
   }
 
-  // FilterCustomers(route: string, page: number, items: number, filterFirstName: string, filterAccountNumber: string, filterLastName: string,
-  //   filterSumTotalDueHigher: number, filterSumTotalDueLower: number) {
-
-  //   return this.http.get(this.createFilterPageRoute(route, environment.urlAddress, page, items, filterFirstName, filterAccountNumber,
-  //     filterLastName, filterSumTotalDueHigher, filterSumTotalDueLower), this.httpOptions);
-  // }
+  
 
   getUsers(route: string) {
-    return this.http.get(this.createRoute(route, environment.urlAddress), this.httpOptions);
+    return this.http.get(this.createRoute(route, environment.urlAddress),this.httpOptions);
   }
 
   updateCustomer(customer: Customer) {
     console.log(customer, "service update customer")
-    return this.http.put(this.createRoute("api/customers/updatecustomer", environment.urlAddress), customer, this.httpOptions);
+    return this.http.put(this.createRoute("api/customers/updatecustomer", environment.urlAddress), customer,this.httpOptions);
 
   }
 
   registerUser(user) {
-    return this.http.post(this.createRoute("api/users/register", environment.urlAddress), user, this.httpOptions);
+    return this.http.post(this.createRoute("api/users/register", environment.urlAddress), user,this.httpOptions);
   }
 
   deleteUser(user: User) {
-    return this.http.delete(this.createRouteDelete("api/users/delete", environment.urlAddress, user.userId), this.httpOptions);
+    return this.http.delete(this.createRouteDelete("api/users/delete", environment.urlAddress, user.userId),this.httpOptions);
   }
 
   updateUser(user: User) {
     console.log(user, "service update user")
-    return this.http.put(this.createRoute("api/users/updateuser/" + user.userId, environment.urlAddress), user, this.httpOptions);
+    return this.http.put(this.createRoute("api/users/updateuser/" + user.userId, environment.urlAddress), user,this.httpOptions);
 
   }
 

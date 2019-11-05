@@ -14,6 +14,10 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { LoginComponent } from './login/login.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { AuthGuard } from './guards/auth.guard';
+import { AuthRequestOptions } from './requestHandlers/auth-request';
+import { RequestOptions } from '@angular/http';
+
+
 
 
 
@@ -43,7 +47,12 @@ import { AuthGuard } from './guards/auth.guard';
 
     ])
   ],
-  providers: [],
+  providers: [
+    {
+      provide: RequestOptions, 
+      useClass: AuthRequestOptions
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
