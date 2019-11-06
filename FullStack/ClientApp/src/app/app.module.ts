@@ -17,6 +17,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { RequestOptions } from '@angular/http';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
+import { AdminGuard } from './guards/admin.guard';
 
 
 
@@ -44,7 +45,8 @@ import { ErrorInterceptor } from './_helpers/error.interceptor';
       { path: '', component: LoginComponent, pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
       { path: 'customers', component: CustomerListComponent, canActivate: [AuthGuard] },
-      { path: 'users', component: UserListComponent, canActivate: [AuthGuard],data: { roles: ["Admin"] } },
+      { path: 'users', component: UserListComponent, canActivate: [AuthGuard, AdminGuard], data: { role: "Admin" } },
+      { path: '**', component: LoginComponent }
 
     ])
   ],

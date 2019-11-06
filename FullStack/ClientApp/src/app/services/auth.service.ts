@@ -38,6 +38,16 @@ export class AuthService {
                   
                   localStorage.setItem('currentUser', JSON.stringify(user));
                   this.currentUserSubject.next(user);
+                  var decoded = jwt_decode(user.token);
+                  this.currentUserSubject.value.rolesList = decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+                  console.log(this.currentUserSubject.value.rolesList.length);
+                  if(typeof this.currentUserSubject.value.rolesList === "string")
+                  {
+                    this.currentUserSubject.value.rolesList = [this.currentUserSubject.value.rolesList];
+                  }
+                 this.isAdmin();
+                  //this.currentUserSubject.value.email = ;
+
               }
 
               return user;
@@ -47,7 +57,10 @@ export class AuthService {
   logout() {
       // remove user from local storage to log user out
       localStorage.removeItem('currentUser');
+      //this.currentUserSubject.unsubscribe();
       this.currentUserSubject.next(null);
+      console.log(this.currentUser,'currentUser after log out');
+      console.log(this.currentUserSubject.value, "currentusersubject after log out")
   }
 
   getRoles(){
@@ -59,7 +72,19 @@ console.log(this.currentUserSubject.value.rolesList ,"current user roles")
    
   }
   
-
+  isAdmin()
+  {
+    console.log(this.currentUserValue)
+    this.currentUserSubject.value.isAdmin = false;
+    this.currentUserValue.rolesList.forEach(role => {
+      if(role === "Admin")
+      {
+        this.currentUserValue.isAdmin = true;
+      }
+      
+    });
+    
+  }
 
 
   
