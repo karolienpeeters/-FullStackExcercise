@@ -25,10 +25,10 @@ namespace FullStack.API.Controllers
         }
 
         [HttpGet, Authorize]
-        public IActionResult Get([FromBody]CustomerFilterPaginationDto model)
+        public IActionResult Get(int skip, int take, string filterFirstName, string filterLastName, string filterAccountNumber, decimal filterSumTotalDueHigher, decimal filterSumTotalDueLower)
         {
-            //var customers = _customerService.GetListCustomersPage(skip,take,filterFirstName,filterLastName,filterAccountNumber,filterSumTotalDueHigher,filterSumTotalDueLower);
-            var customers = _customerService.GetListCustomersPage(model.CurrentPage, model.PageSize, model.FilterFirstName, model.FilterLastName, model.FilterAccountNumber, model.FilterSumTotalDueHigher, model.FilterSumTotalDueLower);
+            var customers = _customerService.GetListCustomersPage(skip,take,filterFirstName,filterLastName,filterAccountNumber,filterSumTotalDueHigher,filterSumTotalDueLower);
+            //var customers = _customerService.GetListCustomersPage(model.CurrentPage, model.PageSize, model.FilterFirstName, model.FilterLastName, model.FilterAccountNumber, model.FilterSumTotalDueHigher, model.FilterSumTotalDueLower);
             return Ok(customers);
         }
 

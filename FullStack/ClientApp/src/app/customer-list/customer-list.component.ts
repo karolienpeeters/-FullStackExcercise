@@ -24,6 +24,7 @@ export class CustomerListComponent implements OnInit {
 
   constructor(private customerService: CustomerDataService, authService: AuthService) {
     this.currentUser = authService.currentUserValue;
+    console.log(this.currentUser)
 
   }
 

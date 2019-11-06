@@ -14,6 +14,7 @@ namespace FullStack.DAL.Models
             FilterLastName = filterLastName;
             FilterAccountNumber = filterAccountNumber;
             FilterSumTotalDueHigher = filterSumTotalDueHigher;
+            FilterSumTotalDueLower = filterSumTotalDueLower;
             PageSize = numberItems;
             CurrentPage = pageNumber;
             CustomerItemList = new List<Customer>();

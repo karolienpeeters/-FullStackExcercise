@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 import * as jwt_decode from 'jwt-decode';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../interfaces/user';
-import { map } from 'rxjs/operators';
+import { map, distinctUntilChanged } from 'rxjs/operators';
 
 export const TOKEN_NAME: string = 'jwt_token';
 
@@ -20,7 +20,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) {
       this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
-      this.currentUser = this.currentUserSubject.asObservable();
+      this.currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
   }
 
   public get currentUserValue(): User {
