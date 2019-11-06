@@ -28,12 +28,7 @@ export class DataService {
   // }
 
 
-  getCustomersPage(route: string, page: number, items: number, filterFirstName: string, filterAccountNumber: string, filterLastName: string,
-    filterSumTotalDueHigher: number, filterSumTotalDueLower: number) {
-
-    return this.http.get(this.createFilterPageRoute(route, environment.urlAddress, page, items, filterFirstName, filterAccountNumber,
-      filterLastName, filterSumTotalDueHigher, filterSumTotalDueLower));
-  }
+ 
 
   
 
@@ -41,11 +36,7 @@ export class DataService {
     return this.http.get(this.createRoute(route, environment.urlAddress));
   }
 
-  updateCustomer(customer: Customer) {
-    console.log(customer, "service update customer")
-    return this.http.put(this.createRoute("api/customers/updatecustomer", environment.urlAddress), customer);
-
-  }
+ 
 
   registerUser(user) {
     console.log(user,"registeruser")
@@ -66,12 +57,7 @@ export class DataService {
 
 
 
-  private createFilterPageRoute(route: string, envAddress: string, page: number, items: number, filterFirstName: string, filterAccountNumber: string,
-    filterLastName: string, filterSumTotalDueHigher: number, filterSumTotalDueLower: number) {
-    let filterroute = `${envAddress}/${route}?skip=${page}&take=${items}&filterfirstname=${filterFirstName}&filterlastname=${filterLastName}&filteraccountnumber=${filterAccountNumber}&filtersumtotalduehigher=${filterSumTotalDueHigher}&filtersumtotalduelower=${filterSumTotalDueLower}`;
-    console.log(filterroute);
-    return filterroute;
-  }
+  
 
   private createRoute(route: string, envAddress: string) {
     return `${envAddress}/${route}`;

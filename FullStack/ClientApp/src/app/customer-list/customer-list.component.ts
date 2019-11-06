@@ -5,6 +5,7 @@ import { CustomerFilterPagination } from '../interfaces/customerFilterPagination
 import { Customer } from '../interfaces/customer';
 import { AuthService } from '../services/auth.service';
 import { User } from '../interfaces/user';
+import { CustomerDataService } from '../services/customer-data.service';
 
 @Component({
   selector: 'app-customer-list',
@@ -13,64 +14,80 @@ import { User } from '../interfaces/user';
 })
 export class CustomerListComponent implements OnInit {
 
-  public customerlist;
-  public customerPagination: Pagination;
-  public filterFirstName: string = "";
-  public filterLastName: string = "";
-  public filterAccountNumber: string = "";
-  public filterSumTotalDueHigher: number = 0;
-  public filterSumTotalDueLower: number = 0;
- currentUser :User;
+  
+  public customerFilterPagination: CustomerFilterPagination;
+  currentUser: User;
 
   pager: any = {};
-  pageSize = 15;
-  maxPages = 10;
-  initialPage = 0;
+ 
 
 
-  constructor(private service: DataService, authService:AuthService) { 
+  constructor(private customerService: CustomerDataService, authService: AuthService) {
     this.currentUser = authService.currentUserValue;
+
   }
 
   ngOnInit() {
-    this.getListCustomer(this.initialPage, this.pageSize, this.filterFirstName, this.filterAccountNumber, this.filterLastName, this.filterSumTotalDueHigher, this.filterSumTotalDueLower);
+    this.customerFilterPagination =
+      {
+        filterFirstName:"",
+        filterLastName:"",
+        filterAccountNumber: "",
+        filterSumTotalDueHigher: 0,
+        filterSumTotalDueLower: 0,
+        pageSize: 15,
+        currentPage: 0,
+        totalItems: 0,
+        customerItemList: [],
+        maxPages:10
+      };
+    this.getListCustomer();
+
   }
 
   setPage(page: number) {
-    this.pager = this.paginate(this.customerPagination.totalItems, page, this.pageSize, this.maxPages);
+    console.log(page, "page of method set page")
+    this.pager = this.paginate(this.customerFilterPagination.totalItems, page, this.customerFilterPagination.pageSize, this.customerFilterPagination.maxPages);
+    console.log(this.pager, "pager of method set page")
+    
     if (page !== 0) {
-      this.getListCustomer(page, this.pageSize, this.filterFirstName, this.filterAccountNumber, this.filterLastName, this.filterSumTotalDueHigher, this.filterSumTotalDueLower);
+      this.getListCustomer();
     }
   }
 
-  getListCustomer(pageNumber: number, pageItems: number, filterFirstName: string, filterAccountNumber: string, filterLastName: string, filterSumTotalDueHigher: number, filterSumTotalDueLower) {
-    this.service.getCustomersPage("api/customers", pageNumber, pageItems, filterFirstName, filterAccountNumber, filterLastName, filterSumTotalDueHigher, filterSumTotalDueLower)
+  getInitialListCustomer() {
+
+  }
+
+  getListCustomer() {
+    this.customerService.getCustomersPage("api/customers", this.customerFilterPagination)
       .subscribe((result => {
         console.log(result);
-        this.customerPagination = result as Pagination;
-        this.customerlist = this.customerPagination.customerItemList;
-        console.log(this.customerPagination, "result from GetListCustomer");
+        this.customerFilterPagination = result as CustomerFilterPagination;
+        
+        console.log(this.customerFilterPagination, "result from GetListCustomer");
 
-        if (pageNumber === 0) {
-          this.setPage(pageNumber);
+        if (this.customerFilterPagination.currentPage === 0) {
+          this.setPage(this.customerFilterPagination.currentPage);
         }
 
       }));
 
   }
 
-  filter(pageNumber: number) {
+  filter() {
     console.log("in filter method");
-    this.getListCustomer(pageNumber, this.pageSize, this.filterFirstName, this.filterAccountNumber, this.filterLastName, this.filterSumTotalDueHigher, this.filterSumTotalDueLower);
+    this.customerFilterPagination.currentPage = 0;
+    this.getListCustomer();
   }
 
   clearForm() {
-    this.filterAccountNumber = "";
-    this.filterFirstName = "";
-    this.filterLastName = "";
-    this.filterSumTotalDueHigher = 0;
-    this.filterSumTotalDueLower = 0;
-    this.getListCustomer(this.initialPage, this.pageSize, this.filterFirstName, this.filterAccountNumber, this.filterLastName, this.filterSumTotalDueHigher, this.filterSumTotalDueLower);
+    this.customerFilterPagination.filterFirstName = "";
+    this.customerFilterPagination.filterLastName = "";
+    this.customerFilterPagination.filterAccountNumber = "";
+    this.customerFilterPagination.filterSumTotalDueHigher = 0;
+    this.customerFilterPagination.filterSumTotalDueLower = 0;
+    this.getListCustomer();
   }
 
   editCustomer(customer: Customer) {
@@ -80,7 +97,7 @@ export class CustomerListComponent implements OnInit {
 
   saveCustomer(customer: Customer) {
     console.log(customer, "savecustomer");
-    this.service.updateCustomer(customer).subscribe((result => {
+    this.customerService.updateCustomer(customer).subscribe((result => {
       console.log(result);
       customer.showForm = false;
     }));
@@ -134,6 +151,11 @@ export class CustomerListComponent implements OnInit {
     // create an array of pages to ng-repeat in the pager control
     var pages = Array.from(Array((endPage + 1) - startPage).keys()).map(function (i) { return startPage + i; });
     // return object with all pager properties required by the view
+    this.customerFilterPagination.currentPage = currentPage;
+    this.customerFilterPagination.totalItems = totalItems;
+    this.customerFilterPagination.pageSize = pageSize;
+    
+    
     return {
       totalItems: totalItems,
       currentPage: currentPage,

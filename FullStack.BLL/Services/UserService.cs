@@ -43,7 +43,7 @@ namespace FullStack.BLL.Services
                     issuer: "https://localhost:44318",
                     audience: "*",
                     claims: claims,
-                    expires: DateTime.Now.AddMinutes(1),
+                    expires: DateTime.Now.AddMinutes(60),
                     signingCredentials: signinCredentials
                 );
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);

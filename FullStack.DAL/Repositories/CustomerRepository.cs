@@ -32,17 +32,17 @@ namespace FullStack.DAL.Repositories
                 .Where(c => c.Person != null);
 
 
-            if (filterFirstName != null)
+            if (!string.IsNullOrEmpty(filterFirstName) && filterFirstName != "null")
             {
                 query = query.Where(c => c.Person.FirstName.ToLower().Contains(filterFirstName.ToLower()));
             }
 
-            if (filterLastName != null)
+            if (!string.IsNullOrEmpty(filterLastName) && filterLastName != "null")
             {
                 query = query.Where(c => c.Person.LastName.ToLower().Contains(filterLastName.ToLower()));
             }
 
-            if (filterAccountNumber != null)
+            if (!string.IsNullOrEmpty(filterAccountNumber ) && filterAccountNumber != "null")
             {
                 query = query.Where(c => c.AccountNumber.ToLower().Contains(filterAccountNumber.ToString().ToLower()));
             }

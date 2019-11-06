@@ -7,10 +7,10 @@ export interface CustomerFilterPagination{
      filterFirstName:string;
      filterLastName:string;
      filterAccountNumber:string;
-     filterSumTotalDue:number;
-     higher:boolean;
-     lower:boolean;
-     customerItemList:Customer;
+     filterSumTotalDueHigher:number;
+     filterSumTotalDueLower:number;
+     maxPages:number;
+     customerItemList:Customer[];
    
     
   
