@@ -8,13 +8,13 @@ namespace FullStack.DAL.Models
 {
     public class CustomerFilterPagination
     {
-        public CustomerFilterPagination(int pageNumber, int numberItems,string filterFirstName,string filterLastName,string filterAccountNumber, decimal filterSumTotalDueHigher,decimal filterSumTotalDueLower)
+        public CustomerFilterPagination(int pageNumber, int numberItems)
         {
-            FilterFirstName = filterFirstName;
-            FilterLastName = filterLastName;
-            FilterAccountNumber = filterAccountNumber;
-            FilterSumTotalDueHigher = filterSumTotalDueHigher;
-            FilterSumTotalDueLower = filterSumTotalDueLower;
+            FilterFirstName = "";
+            FilterLastName = "";
+            FilterAccountNumber = "";
+            FilterSumTotalDueHigher = 0;
+            FilterSumTotalDueLower = 0;
             PageSize = numberItems;
             CurrentPage = pageNumber;
             CustomerItemList = new List<Customer>();
@@ -26,9 +26,7 @@ namespace FullStack.DAL.Models
         public string FilterAccountNumber { get; set; }
         public decimal FilterSumTotalDueHigher{ get; set; }
         public decimal FilterSumTotalDueLower { get; set; }
-        public bool Higher { get; set; }
-        public bool Lower { get; set; }
-
+      
         public int TotalItems { get; set; }
         public int CurrentPage { get; set; }
         public int PageSize { get; set; }

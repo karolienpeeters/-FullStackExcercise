@@ -10,7 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { CustomerListComponent } from './customer-list/customer-list.component';
-import { PaginationComponent } from './pagination/pagination.component';
+
 import { LoginComponent } from './login/login.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { AuthGuard } from './guards/auth.guard';
@@ -18,6 +18,7 @@ import { RequestOptions } from '@angular/http';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { AdminGuard } from './guards/admin.guard';
+import { PaginationComponent } from './pagination/pagination.component';
 
 
 
@@ -29,9 +30,10 @@ import { AdminGuard } from './guards/admin.guard';
     AppComponent,
     NavMenuComponent,
     CustomerListComponent,
-    PaginationComponent,
+
     LoginComponent,
-    UserListComponent
+    UserListComponent,
+    PaginationComponent
   ],
 
   imports: [

@@ -17,11 +17,9 @@
               <td *ngIf="!user.showForm ">{{user.email}}</td>
               <td *ngIf="user.showForm ">
                 <input type="email" class="form-control" name="email" [(ngModel)]="user.email" placeholder="user.email">
-
               </td>
 
               <td *ngIf="!user.showForm">{{user.rolesList}}</td>
-
 
               <td *ngIf="user.showForm ">
                 <input *ngIf="user.rolesList.length > 0" type="text" class="form-control" name="rolesList"
@@ -64,11 +62,9 @@
               </div>
 
               <button type="submit" class="btn btn-primary  mr-3">Submit</button>
-
             </form>
           </div>
         </div>
-
       </div>
     </div>
   </div>

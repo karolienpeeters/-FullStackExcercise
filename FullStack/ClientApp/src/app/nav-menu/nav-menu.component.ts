@@ -15,8 +15,6 @@ export class NavMenuComponent {
   constructor(private router: Router,private authService: AuthService) {
 
     this.authService.currentUser.subscribe(x => this.currentUser = x);
-   
-    console.log(this.currentUser.rolesList,"nav menu component")
   }
 
   logout() {
