@@ -3,6 +3,8 @@ import { DataService } from '../services/data.service';
 import { Pagination } from '../interfaces/pagination';
 import { CustomerFilterPagination } from '../interfaces/customerFilterPagination';
 import { Customer } from '../interfaces/customer';
+import { AuthService } from '../services/auth.service';
+import { User } from '../interfaces/user';
 
 @Component({
   selector: 'app-customer-list',
@@ -18,7 +20,7 @@ export class CustomerListComponent implements OnInit {
   public filterAccountNumber: string = "";
   public filterSumTotalDueHigher: number = 0;
   public filterSumTotalDueLower: number = 0;
-
+ currentUser :User;
 
   pager: any = {};
   pageSize = 15;
@@ -26,7 +28,9 @@ export class CustomerListComponent implements OnInit {
   initialPage = 0;
 
 
-  constructor(private service: DataService) { }
+  constructor(private service: DataService, authService:AuthService) { 
+    this.currentUser = authService.currentUserValue;
+  }
 
   ngOnInit() {
     this.getListCustomer(this.initialPage, this.pageSize, this.filterFirstName, this.filterAccountNumber, this.filterLastName, this.filterSumTotalDueHigher, this.filterSumTotalDueLower);

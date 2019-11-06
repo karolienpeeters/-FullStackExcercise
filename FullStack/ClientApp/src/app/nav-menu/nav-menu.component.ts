@@ -10,15 +10,11 @@ import { Router } from '@angular/router';
 })
 export class NavMenuComponent {
   isExpanded = false;
-
   currentUser: User;
 
   constructor(private router: Router,private authService: AuthService) {
     this.authService.currentUser.subscribe(x => this.currentUser = x);
-    
   }
-
-  
 
   logout() {
     this.authService.logout();

@@ -8,8 +8,8 @@
             <th scope="col">Firstname</th>
             <th scope="col">Lastname</th>
             <th scope="col">Sum total due</th>
-            <th></th>
-            <th></th>
+            <th *ngIf="currentUser.isAdmin"></th>
+            <th *ngIf="currentUser.isAdmin"></th>
           </tr>
         </thead>
         <tbody>
@@ -41,11 +41,11 @@
 
             <td>{{customer.sumTotalDue}}</td>
 
-            <td>
+            <td *ngIf="currentUser.isAdmin">
               <i *ngIf="!customer.showForm" class="far fa-edit" (click)="editCustomer(customer)"></i>
               <i *ngIf="customer.showForm" class="far fa-save" (click)="saveCustomer(customer)"></i>
             </td>
-            <td>
+            <td *ngIf="currentUser.isAdmin">
               <i *ngIf="customer.showForm" class="far fa-times-circle" (click)="exitLine(customer)"></i>
 
             </td>
