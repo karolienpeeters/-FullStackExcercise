@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../services/data.service';
-import { Pagination } from '../interfaces/pagination';
 import { CustomerFilterPagination } from '../interfaces/customerFilterPagination';
 import { Customer } from '../interfaces/customer';
 import { AuthService } from '../services/auth.service';
@@ -14,13 +12,10 @@ import { CustomerDataService } from '../services/customer-data.service';
 })
 export class CustomerListComponent implements OnInit {
 
-  
   public customerFilterPagination: CustomerFilterPagination;
   currentUser: User;
 
   pager: any = {};
- 
-
 
   constructor(private customerService: CustomerDataService, authService: AuthService) {
     this.currentUser = authService.currentUserValue;
@@ -40,17 +35,16 @@ export class CustomerListComponent implements OnInit {
         currentPage: 0,
         totalItems: 0,
         customerItemList: [],
-        maxPages:10
+        maxPages:10,
+        totalPages:0,
+        pages:[]
       };
     this.getListCustomer();
 
   }
 
   setPage(page: number) {
-    console.log(page, "page of method set page")
-    this.pager = this.paginate(this.customerFilterPagination.totalItems, page, this.customerFilterPagination.pageSize, this.customerFilterPagination.maxPages);
-    console.log(this.pager, "pager of method set page")
-    
+    this.pager = this.paginate(this.customerFilterPagination.totalItems, page, this.customerFilterPagination.pageSize, this.customerFilterPagination.maxPages);   
     if (page !== 0) {
       this.getListCustomer();
     }
@@ -63,11 +57,7 @@ export class CustomerListComponent implements OnInit {
   getListCustomer() {
     this.customerService.getCustomersPage("api/customers", this.customerFilterPagination)
       .subscribe((result => {
-        console.log(result);
         this.customerFilterPagination = result as CustomerFilterPagination;
-        
-        console.log(this.customerFilterPagination, "result from GetListCustomer");
-
         if (this.customerFilterPagination.currentPage === 0) {
           this.setPage(this.customerFilterPagination.currentPage);
         }
@@ -77,7 +67,6 @@ export class CustomerListComponent implements OnInit {
   }
 
   filter() {
-    console.log("in filter method");
     this.customerFilterPagination.currentPage = 0;
     this.getListCustomer();
   }
@@ -92,15 +81,12 @@ export class CustomerListComponent implements OnInit {
   }
 
   editCustomer(customer: Customer) {
-    console.log(customer, "editcustomer");
     customer.showForm = true;
   }
 
   saveCustomer(customer: Customer) {
-    console.log(customer, "savecustomer");
-    this.customerService.updateCustomer(customer).subscribe((result => {
-      console.log(result);
-      customer.showForm = false;
+   this.customerService.updateCustomer(customer).subscribe((result => {
+     customer.showForm = false;
     }));
   }
 
@@ -155,6 +141,8 @@ export class CustomerListComponent implements OnInit {
     this.customerFilterPagination.currentPage = currentPage;
     this.customerFilterPagination.totalItems = totalItems;
     this.customerFilterPagination.pageSize = pageSize;
+    this.customerFilterPagination.totalPages = totalPages;
+    this.customerFilterPagination.pages = pages;
     
     
     return {

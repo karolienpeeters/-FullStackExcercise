@@ -11,6 +11,8 @@ export interface CustomerFilterPagination{
      filterSumTotalDueLower:number;
      maxPages:number;
      customerItemList:Customer[];
+     totalPages:number;
+     pages:any [];
    
     
   

@@ -34,7 +34,4 @@ export class UserDataService {
     return `${envAddress}/${route}?userid=${userId}`;
 
   }
-
-
-
 }
