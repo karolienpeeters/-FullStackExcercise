@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { MaterialModule } from "./modules/material.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
@@ -24,7 +23,6 @@ import { CustomerSearchComponent } from './customer-search/customer-search.compo
     AppComponent,
     NavMenuComponent,
     CustomerListComponent,
-
     LoginComponent,
     UserListComponent,
     PaginationComponent,
@@ -35,7 +33,6 @@ import { CustomerSearchComponent } from './customer-search/customer-search.compo
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    MaterialModule,
     BrowserAnimationsModule,
     RouterModule.forRoot([
       { path: '', component: CustomerListComponent, pathMatch: 'full', canActivate: [AuthGuard] },

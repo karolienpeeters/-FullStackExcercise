@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
 import { CustomerFilterPagination } from '../interfaces/customerFilterPagination';
-//import { EventEmitter } from 'events';
 
 @Component({
   selector: 'app-pagination',
@@ -18,7 +17,6 @@ export class PaginationComponent implements OnInit {
 
   ngOnInit() {
     this.setPage(this.customerFilterPagination.currentPage);
-
   }
 
    setPage(page: number,) {

@@ -8,10 +8,7 @@ import { UserDataService } from '../services/user-data.service';
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
-
   public userList;
-  public userName:string;
-  public passWord:string;
   public user:User;
 
   constructor(private userService: UserDataService) { }
@@ -22,9 +19,7 @@ export class UserListComponent implements OnInit {
 
   getListUser() {
     this.userService.getUsers("api/users", ).subscribe((result => {
-      console.log(result);
       this.userList =result;
-      console.log(this.userList, "result from Getusers");
     }));
   }
 
@@ -33,16 +28,6 @@ export class UserListComponent implements OnInit {
       form.reset();
       this.getListUser();   
     }));
-  }
-
-  exitLine(user:User)
-  {
-    user.showForm = false;
-  }
-
-  editUser(user:User)
-  {
-    user.showForm=true;
   }
 
   deleteUser(user:User)

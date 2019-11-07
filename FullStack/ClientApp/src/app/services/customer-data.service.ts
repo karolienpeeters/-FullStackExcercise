@@ -20,9 +20,7 @@ export class CustomerDataService {
   }
 
   private createFilterPageRoute(route: string, envAddress: string, customerFP:CustomerFilterPagination) {
-    let filterroute = `${envAddress}/${route}?skip=${customerFP.currentPage}&take=${customerFP.pageSize}&filterfirstname=${customerFP.filterFirstName}&filterlastname=${customerFP.filterLastName}&filteraccountnumber=${customerFP.filterAccountNumber}&filtersumtotalduehigher=${customerFP.filterSumTotalDueHigher}&filtersumtotalduelower=${customerFP.filterSumTotalDueLower}`;
-    console.log(filterroute);
-    return filterroute;
+    return `${envAddress}/${route}?skip=${customerFP.currentPage}&take=${customerFP.pageSize}&filterfirstname=${customerFP.filterFirstName}&filterlastname=${customerFP.filterLastName}&filteraccountnumber=${customerFP.filterAccountNumber}&filtersumtotalduehigher=${customerFP.filterSumTotalDueHigher}&filtersumtotalduelower=${customerFP.filterSumTotalDueLower}`;
   }
 
   private createRoute(route: string, envAddress: string) {

@@ -31,13 +31,13 @@
 
               </td>
               <td>
-                <i *ngIf="!user.showForm" class="far fa-edit" (click)="editUser(user)"></i>
+                <i *ngIf="!user.showForm" class="far fa-edit" (click)="user.showForm = true"></i>
                 <i *ngIf="user.showForm" class="far fa-save" (click)="saveUser(user)"></i>
 
               </td>
               <td>
                 <i *ngIf="!user.showForm" class="fa fa-trash" aria-hidden="true" (click)="deleteUser(user)"></i>
-                <i *ngIf="user.showForm" class="fa fa-times" aria-hidden="true" (click)="exitLine(user)"></i>
+                <i *ngIf="user.showForm" class="fa fa-times" aria-hidden="true" (click)="user.showForm = false"></i>
               </td>
             </tr>
           </tbody>

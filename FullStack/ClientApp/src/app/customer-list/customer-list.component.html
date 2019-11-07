@@ -12,8 +12,9 @@
             <th *ngIf="currentUser.isAdmin"></th>
           </tr>
         </thead>
+       
         <tbody>
-          <tr  *ngFor="let customer of customerFilterPagination.customerItemList">
+          <tr *ngFor="let customer of customerFilterPagination.customerItemList">
 
             <td *ngIf="!customer.showForm">
               {{customer.accountNumber}}
@@ -42,23 +43,29 @@
             <td>{{customer.sumTotalDue}}</td>
 
             <td *ngIf="currentUser.isAdmin">
-              <i *ngIf="!customer.showForm" class="far fa-edit" (click)="editCustomer(customer)"></i>
+              <i *ngIf="!customer.showForm" class="far fa-edit" (click)="customer.showForm=true"></i>
               <i *ngIf="customer.showForm" class="far fa-save" (click)="saveCustomer(customer)"></i>
             </td>
             <td *ngIf="currentUser.isAdmin">
-              <i *ngIf="customer.showForm" class="far fa-times-circle" (click)="exitLine(customer)"></i>
-
+              <i *ngIf="customer.showForm" class="far fa-times-circle" (click)="customer.showForm=false"></i>
             </td>
-      
           </tr>
         </tbody>
+
       </table>
     </div>
 
     <div class="coll  align-self-center">
-          <app-customer-search [customerFilterPagination] = "customerFilterPagination" (onClicked)="clickedSearch()" ></app-customer-search>
+      <app-customer-search [customerFilterPagination]="customerFilterPagination" (onClicked)="clickedSearch()">
+      </app-customer-search>
+    </div>
+
+  </div>
+<div class="row justify-content-center">
+    <div class="col-lg ">
+  <app-pagination *ngIf="customerFilterPagination.totalItems > 0" [customerFilterPagination]="customerFilterPagination"
+    (onClicked)="clickedPage()"></app-pagination>
     </div>
   </div>
 </div>
 
-<app-pagination *ngIf="customerFilterPagination.totalItems > 0" [customerFilterPagination] = "customerFilterPagination" (onClicked)="clickedPage()"></app-pagination>

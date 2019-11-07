@@ -34,7 +34,6 @@ export class AuthService {
       .pipe(map(userToken => {
         // login successful if there's a jwt token in the response
         if (userToken && userToken.token) {
-          console.log(userToken, "test login");
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('currentUser', JSON.stringify(userToken));
           this.currentUserSubject.next(this.getCurrentUserFromToken(userToken.token));
@@ -47,7 +46,6 @@ export class AuthService {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
-    console.log("logout", this.currentUserValue);
   }
 
 
@@ -77,7 +75,6 @@ export class AuthService {
 
   isTokenExpired(token?: string): boolean {
     if (!token) token = this.currentUserSubject.value.token;
-    console.log(token, "isTokenExpired")
     if (!token) return true;
 
     const date = this.getTokenExpirationDate(token);

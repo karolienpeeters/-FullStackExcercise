@@ -15,19 +15,17 @@ export class CustomerListComponent implements OnInit {
 
   public customerFilterPagination: CustomerFilterPagination;
   currentUser: User;
-  @ViewChild(PaginationComponent) pagination:PaginationComponent;
+  @ViewChild(PaginationComponent) pagination: PaginationComponent;
 
   constructor(private customerService: CustomerDataService, authService: AuthService) {
     this.currentUser = authService.currentUserValue;
-    console.log(this.currentUser)
-
   }
 
   ngOnInit() {
     this.customerFilterPagination =
       {
-        filterFirstName:"",
-        filterLastName:"",
+        filterFirstName: "",
+        filterLastName: "",
         filterAccountNumber: "",
         filterSumTotalDueHigher: 0,
         filterSumTotalDueLower: 0,
@@ -36,50 +34,32 @@ export class CustomerListComponent implements OnInit {
         totalItems: 0,
         customerItemList: [],
       };
-     
+
     this.getListCustomer();
   }
-   
+
   async getListCustomer() {
-   await this.customerService.getCustomersPage("api/customers", this.customerFilterPagination)
-      .toPromise().then((result => {
-        console.log(result);
+    this.customerService.getCustomersPage("api/customers", this.customerFilterPagination)
+      .subscribe((result => {
         this.customerFilterPagination.customerItemList = result.customerItemList;
         this.customerFilterPagination.totalItems = result.totalItems;
-        console.log("getListCustomer", this.customerFilterPagination);       
       }));
   }
 
-
-  editCustomer(customer: Customer) {
-    customer.showForm = true;
-  }
-
   saveCustomer(customer: Customer) {
-   this.customerService.updateCustomer(customer).subscribe((result => {
-     customer.showForm = false;
+    this.customerService.updateCustomer(customer).subscribe((() => {
+      customer.showForm = false;
     }));
   }
 
-  exitLine(customer: Customer) {
-    customer.showForm = false;
-  }
-
- async clickedSearch() {
-    console.log(this.customerFilterPagination,"clicked event")
+  async clickedSearch() {
     await this.getListCustomer();
     this.pagination.setPage(this.customerFilterPagination.currentPage);
- }
 
- clickedPage(){
-   this.getListCustomer();
- }
+  }
 
-
- 
-
-
-
-
+  clickedPage() {
+    this.getListCustomer();
+  }
 
 }
