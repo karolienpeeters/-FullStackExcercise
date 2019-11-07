@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
 import { CustomerFilterPagination } from '../interfaces/customerFilterPagination';
+//import { EventEmitter } from 'events';
 
 @Component({
   selector: 'app-pagination',
@@ -8,21 +9,21 @@ import { CustomerFilterPagination } from '../interfaces/customerFilterPagination
 })
 export class PaginationComponent implements OnInit {
   @Input() customerFilterPagination: CustomerFilterPagination;
+  @Output() onClicked = new EventEmitter();
   pager: any = {};
+ 
+  maxPages = 10;
+ 
   constructor() { }
 
   ngOnInit() {
-    console.log(this.customerFilterPagination)
-    this.setPage(0);
+    this.setPage(this.customerFilterPagination.currentPage);
 
   }
 
-    setPage(page: number) {
-   console.log(page, "page of method set page")
-   this.pager = this.paginate(this.customerFilterPagination.totalItems, page, this.customerFilterPagination.pageSize, this.customerFilterPagination.maxPages);
-   console.log(this.pager, "pager of method set page")
-    
-  
+   setPage(page: number,) {
+     this.pager = this.paginate(this.customerFilterPagination.totalItems, page, this.customerFilterPagination.pageSize, this.maxPages);
+     this.onClicked.emit();
    }
 
   paginate(totalItems, currentPage, pageSize, maxPages) {
@@ -71,7 +72,6 @@ export class PaginationComponent implements OnInit {
     this.customerFilterPagination.currentPage = currentPage;
     this.customerFilterPagination.totalItems = totalItems;
     this.customerFilterPagination.pageSize = pageSize;
-
 
     return {
       totalItems: totalItems,

@@ -55,9 +55,9 @@ export class AuthService {
     var decoded = jwt_decode(token);
 
     let user = {
-      rolesList: decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'],
+      rolesList: decoded ['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'],
       userId: "",
-      email: decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'],
+      email: decoded ['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'],
       showForm: false,
       token: token,
       isAdmin: false

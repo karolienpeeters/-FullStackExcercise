@@ -12,14 +12,11 @@ export class CustomerDataService {
   constructor(private http: HttpClient) { }
 
   getCustomersPage(route: string, customerFP:CustomerFilterPagination) {
-    console.log(customerFP,"customerFP from getcustomerpage")
-    return this.http.get(this.createFilterPageRoute(route, environment.urlAddress, customerFP));
+    return this.http.get<CustomerFilterPagination>(this.createFilterPageRoute(route, environment.urlAddress, customerFP));
   }
 
   updateCustomer(customer: Customer) {
-    console.log(customer, "service update customer")
     return this.http.put(this.createRoute("api/customers/updatecustomer", environment.urlAddress), customer);
-
   }
 
   private createFilterPageRoute(route: string, envAddress: string, customerFP:CustomerFilterPagination) {

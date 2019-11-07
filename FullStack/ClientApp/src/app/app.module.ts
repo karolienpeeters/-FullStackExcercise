@@ -16,6 +16,7 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { AdminGuard } from './guards/admin.guard';
 import { PaginationComponent } from './pagination/pagination.component';
+import { CustomerSearchComponent } from './customer-search/customer-search.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { PaginationComponent } from './pagination/pagination.component';
 
     LoginComponent,
     UserListComponent,
-    PaginationComponent
+    PaginationComponent,
+    CustomerSearchComponent
   ],
 
   imports: [

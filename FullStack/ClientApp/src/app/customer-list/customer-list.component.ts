@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CustomerFilterPagination } from '../interfaces/customerFilterPagination';
 import { Customer } from '../interfaces/customer';
 import { AuthService } from '../services/auth.service';
 import { User } from '../interfaces/user';
 import { CustomerDataService } from '../services/customer-data.service';
+import { PaginationComponent } from '../pagination/pagination.component';
 
 @Component({
   selector: 'app-customer-list',
@@ -14,8 +15,7 @@ export class CustomerListComponent implements OnInit {
 
   public customerFilterPagination: CustomerFilterPagination;
   currentUser: User;
-
-  pager: any = {};
+  @ViewChild(PaginationComponent) pagination:PaginationComponent;
 
   constructor(private customerService: CustomerDataService, authService: AuthService) {
     this.currentUser = authService.currentUserValue;
@@ -35,50 +35,21 @@ export class CustomerListComponent implements OnInit {
         currentPage: 0,
         totalItems: 0,
         customerItemList: [],
-        maxPages:10,
-        totalPages:0,
-        pages:[]
       };
+     
     this.getListCustomer();
-
   }
-
-  setPage(page: number) {
-    this.pager = this.paginate(this.customerFilterPagination.totalItems, page, this.customerFilterPagination.pageSize, this.customerFilterPagination.maxPages);   
-    if (page !== 0) {
-      this.getListCustomer();
-    }
-  }
-
-  getInitialListCustomer() {
-
-  }
-
-  getListCustomer() {
-    this.customerService.getCustomersPage("api/customers", this.customerFilterPagination)
-      .subscribe((result => {
-        this.customerFilterPagination = result as CustomerFilterPagination;
-        if (this.customerFilterPagination.currentPage === 0) {
-          this.setPage(this.customerFilterPagination.currentPage);
-        }
-
+   
+  async getListCustomer() {
+   await this.customerService.getCustomersPage("api/customers", this.customerFilterPagination)
+      .toPromise().then((result => {
+        console.log(result);
+        this.customerFilterPagination.customerItemList = result.customerItemList;
+        this.customerFilterPagination.totalItems = result.totalItems;
+        console.log("getListCustomer", this.customerFilterPagination);       
       }));
-
   }
 
-  filter() {
-    this.customerFilterPagination.currentPage = 0;
-    this.getListCustomer();
-  }
-
-  clearForm() {
-    this.customerFilterPagination.filterFirstName = "";
-    this.customerFilterPagination.filterLastName = "";
-    this.customerFilterPagination.filterAccountNumber = "";
-    this.customerFilterPagination.filterSumTotalDueHigher = 0;
-    this.customerFilterPagination.filterSumTotalDueLower = 0;
-    this.getListCustomer();
-  }
 
   editCustomer(customer: Customer) {
     customer.showForm = true;
@@ -94,66 +65,18 @@ export class CustomerListComponent implements OnInit {
     customer.showForm = false;
   }
 
+ async clickedSearch() {
+    console.log(this.customerFilterPagination,"clicked event")
+    await this.getListCustomer();
+    this.pagination.setPage(this.customerFilterPagination.currentPage);
+ }
 
-  paginate(totalItems, currentPage, pageSize, maxPages) {
-    if (currentPage === void 0) { currentPage = 1; }
-    if (pageSize === void 0) { pageSize = 15; }
-    if (maxPages === void 0) { maxPages = 10; }
-    // calculate total pages
-    var totalPages = Math.ceil(totalItems / pageSize);
-    // ensure current page isn't out of range
-    if (currentPage < 1) {
-      currentPage = 1;
-    }
-    else if (currentPage > totalPages) {
-      currentPage = totalPages;
-    }
-    var startPage, endPage;
-    if (totalPages <= maxPages) {
-      // total pages less than max so show all pages
-      startPage = 1;
-      endPage = totalPages;
-    }
-    else {
-      // total pages more than max so calculate start and end pages
-      var maxPagesBeforeCurrentPage = Math.floor(maxPages / 2);
-      var maxPagesAfterCurrentPage = Math.ceil(maxPages / 2) - 1;
-      if (currentPage <= maxPagesBeforeCurrentPage) {
-        // current page near the start
-        startPage = 1;
-        endPage = maxPages;
-      }
-      else if (currentPage + maxPagesAfterCurrentPage >= totalPages) {
-        // current page near the end
-        startPage = totalPages - maxPages + 1;
-        endPage = totalPages;
-      }
-      else {
-        // current page somewhere in the middle
-        startPage = currentPage - maxPagesBeforeCurrentPage;
-        endPage = currentPage + maxPagesAfterCurrentPage;
-      }
-    }
+ clickedPage(){
+   this.getListCustomer();
+ }
 
-    // create an array of pages to ng-repeat in the pager control
-    var pages = Array.from(Array((endPage + 1) - startPage).keys()).map(function (i) { return startPage + i; });
-    // return object with all pager properties required by the view
-    this.customerFilterPagination.currentPage = currentPage;
-    this.customerFilterPagination.totalItems = totalItems;
-    this.customerFilterPagination.pageSize = pageSize;
-    this.customerFilterPagination.totalPages = totalPages;
-    this.customerFilterPagination.pages = pages;
-    
-    
-    return {
-      totalItems: totalItems,
-      currentPage: currentPage,
-      pageSize: pageSize,
-      totalPages: totalPages,
-      pages: pages
-    };
-  }
 
+ 
 
 
 

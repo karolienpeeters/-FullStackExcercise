@@ -56,56 +56,9 @@
     </div>
 
     <div class="coll  align-self-center">
-      <form>
-        <div class="form-group">
-          <label for="firstName">Search on firstname</label>
-          <input type="text" class="form-control" id="firstName" name="filterFirstName" [(ngModel)]="customerFilterPagination.filterFirstName">
-        </div>
-
-        <div class="form-group">
-          <label for="lastName">Search on lastname</label>
-          <input type="text" class="form-control" id="lastName" name="filterLastName" [(ngModel)]="customerFilterPagination.filterLastName">
-        </div>
-
-        <div class="form-group">
-          <label for="accountNumber">Search on account number</label>
-          <input type="text" class="form-control" id="accountnumber" name="accountNumber"
-            [(ngModel)]="customerFilterPagination.filterAccountNumber">
-        </div>
-
-        <div class="form-group">
-          <label for="sumTotalDue">Search sum total due lower then</label>
-          <input type="text" class="form-control" id="sumtotaldueLower" name="filterSumTotalDueLower"
-            [(ngModel)]="customerFilterPagination.filterSumTotalDueLower">
-        </div>
-
-        <div class="form-group">
-          <label for="sumTotalDue">Search sum total due higher then</label>
-          <input type="text" class="form-control" id="sumtotaldueHigher" name="filterSumTotalDueHigher"
-            [(ngModel)]="customerFilterPagination.filterSumTotalDueHigher">
-        </div>
-        <button type="submit" class="btn btn-primary mr-3" (click)="filter()">Search</button>
-        <button type="submit" class="btn btn-primary" (click)="clearForm()">Reset</button>
-      </form>
+          <app-customer-search [customerFilterPagination] = "customerFilterPagination" (onClicked)="clickedSearch()" ></app-customer-search>
     </div>
   </div>
 </div>
 
-
-<ul *ngIf="pager.pages && pager.pages.length" class="pagination">
-  <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item first-item">
-    <a (click)="setPage(1)" class="page-link">First</a>
-  </li>
-  <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item previous-item">
-    <a (click)="setPage(pager.currentPage - 1)" class="page-link">Previous</a>
-  </li>
-  <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}" class="page-item number-item">
-    <a (click)="setPage(page)" class="page-link">{{page}}</a>
-  </li>
-  <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item next-item">
-    <a (click)="setPage(pager.currentPage + 1)" class="page-link">Next</a>
-  </li>
-  <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item last-item">
-    <a (click)="setPage(pager.totalPages)" class="page-link">Last</a>
-  </li>
-</ul>
+<app-pagination *ngIf="customerFilterPagination.totalItems > 0" [customerFilterPagination] = "customerFilterPagination" (onClicked)="clickedPage()"></app-pagination>

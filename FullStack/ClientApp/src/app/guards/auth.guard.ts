@@ -12,6 +12,8 @@ export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) { }
   
   canActivate() {
+      console.log(this.authService.currentUserValue,"can activate auth guard")
+
     if (!this.authService.isTokenExpired() && this.authService.currentUserValue) {
       return true;
     }
