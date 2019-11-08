@@ -1,7 +1,5 @@
-﻿using System;
+﻿using FullStack.DAL.Models;
 using System.Collections.Generic;
-using System.Text;
-using FullStack.DAL.Models;
 
 namespace FullStack.BLL.Models
 {

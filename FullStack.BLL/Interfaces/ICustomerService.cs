@@ -1,7 +1,5 @@
 ﻿using FullStack.BLL.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace FullStack.BLL.Interfaces
 {

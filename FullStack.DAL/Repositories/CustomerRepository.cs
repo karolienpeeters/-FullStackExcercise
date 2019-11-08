@@ -1,10 +1,9 @@
 ﻿using FullStack.DAL.Interfaces;
 using FullStack.DAL.Models;
+using FullStack.DAL.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using FullStack.DAL.Models.Entities;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace FullStack.DAL.Repositories
 {
@@ -22,10 +21,10 @@ namespace FullStack.DAL.Repositories
             return _context.Customers.Include("Person").Include("SalesOrderHeader").Where(c => c.Person != null);
         }
 
-        public CustomerFilterPagination GetCustomersPage(int skip, int take, string filterFirstName, string filterLastName, 
+        public Pagination GetCustomersPage(int skip, int take, string filterFirstName, string filterLastName, 
             string filterAccountNumber, decimal filterSumTotalDueHigher, decimal filterSumTotalDueLower)
         {
-            var paginationFilterModel = new CustomerFilterPagination();
+            var paginationFilterModel = new Pagination();
             var query = _context.Customers
                 .Include("Person")
                 .Include("SalesOrderHeader")

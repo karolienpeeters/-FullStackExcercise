@@ -13,7 +13,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let user of userList">
+            <tr *ngFor="let user of pagination.userList">
               <td *ngIf="!user.showForm ">{{user.email}}</td>
               <td *ngIf="user.showForm ">
                 <input type="email" class="form-control" name="email" [(ngModel)]="user.email" placeholder="user.email">
@@ -50,6 +50,12 @@
 <app-user-create (onClicked)="clicked()"></app-user-create>
        
       </div>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-lg ">
+  <app-pagination *ngIf="pagination.totalItems > 0" [pagination]="pagination"
+    (onClickedPage)="clickedPage()"></app-pagination>
     </div>
   </div>
 </div>

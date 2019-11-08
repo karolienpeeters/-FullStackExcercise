@@ -55,19 +55,24 @@ namespace FullStack.DAL.Repositories
         }
 
         // GET: ApplicationUserRoles
-        public List<User> GetApplicationUsersAndRoles()
+        public Pagination GetApplicationUsersAndRoles(int skip, int take)
         {
-            List<User> usersWithRoles = new List<User>();
-            var identityUsers = _userManager.Users;
+
+            var userPage = new Pagination();
+          
+            //var identityUsers = _userManager.Users.Skip((skip ==0 ) ? skip : (skip-1)*take).Take(take);
+            var identityUsers = _userManager.Users.Skip((skip-1)*take).Take(take);
+            userPage.TotalItems = _userManager.Users.Count();
 
             foreach (var user in identityUsers)
             {
                 var roles = GetRolesUser(user).Result.ToList();
-                usersWithRoles.Add(new User(user, roles));
+                userPage.UserList.Add(new User(user, roles));
 
             }
+            
 
-            return usersWithRoles;
+            return userPage;
         }
 
         public async Task<IList<string>> GetRolesUser(IdentityUser iUser)

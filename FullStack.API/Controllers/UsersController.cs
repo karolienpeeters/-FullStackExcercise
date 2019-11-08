@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FullStack.BLL.Interfaces;
+﻿using FullStack.BLL.Interfaces;
 using FullStack.BLL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace FullStack.API.Controllers
 {
@@ -25,9 +21,9 @@ namespace FullStack.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(int skip, int take)
         {
-            var users = _userService.GetUsersWithRoles();
+            var users = _userService.GetUsersWithRoles(skip, take);
             return Ok(users);
         }
 

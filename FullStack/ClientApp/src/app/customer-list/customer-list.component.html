@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-lg">
-      <table *ngIf="customerFilterPagination.customerItemList.length > 0" class="table">
+      <table *ngIf="customerFilterPagination.pagination.customerList.length > 0" class="table">
         <thead>
           <tr>
             <th scope="col">Account number</th>
@@ -14,7 +14,7 @@
         </thead>
        
         <tbody>
-          <tr *ngFor="let customer of customerFilterPagination.customerItemList">
+          <tr *ngFor="let customer of customerFilterPagination.pagination.customerList">
 
             <td *ngIf="!customer.showForm">
               {{customer.accountNumber}}
@@ -63,8 +63,8 @@
   </div>
 <div class="row justify-content-center">
     <div class="col-lg ">
-  <app-pagination *ngIf="customerFilterPagination.totalItems > 0" [customerFilterPagination]="customerFilterPagination"
-    (onClicked)="clickedPage()"></app-pagination>
+  <app-pagination *ngIf="customerFilterPagination.pagination.totalItems > 0" [pagination]="customerFilterPagination.pagination"
+    (onClickedPage)="clickedPage()"></app-pagination>
     </div>
   </div>
 </div>

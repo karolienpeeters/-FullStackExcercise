@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { Pagination } from '../interfaces/pagination';
 
 
 @Injectable({
@@ -10,8 +11,8 @@ export class UserDataService {
 
   constructor(private http: HttpClient) { }
 
-  getUsers(route: string) {
-    return this.http.get(this.createRoute(route, environment.urlAddress));
+  getUsers(route: string,skip:number,  take:number) {
+    return this.http.get<Pagination>(this.createRoutePage(route, environment.urlAddress,skip,take));
   }
 
   registerUser(user) {
@@ -32,6 +33,11 @@ export class UserDataService {
   
   private createRouteDelete(route: string, envAddress: string, userId: string) {
     return `${envAddress}/${route}?userid=${userId}`;
+
+  }
+
+  private createRoutePage(route:string,envAddress:string,skip:number,take:number ){
+    return `${envAddress}/${route}?skip=${skip}&take=${take}`;
 
   }
 }

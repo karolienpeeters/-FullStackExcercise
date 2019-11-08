@@ -1,13 +1,12 @@
 import { Customer } from "./customer";
+import { Pagination } from "./pagination";
 
 export interface CustomerFilterPagination{
-     totalItems : number;
-     currentPage:number;
-     pageSize:number;
      filterFirstName:string;
      filterLastName:string;
      filterAccountNumber:string;
      filterSumTotalDueHigher:number;
      filterSumTotalDueLower:number;
-     customerItemList:Customer[];
+   
+     pagination:Pagination;
 }

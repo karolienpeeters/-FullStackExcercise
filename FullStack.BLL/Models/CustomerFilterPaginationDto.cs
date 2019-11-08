@@ -1,21 +1,20 @@
-﻿using System;
+﻿using FullStack.DAL.Models;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using FullStack.DAL.Models;
 
 namespace FullStack.BLL.Models
 {
     public class CustomerFilterPaginationDto
     {
-        public CustomerFilterPaginationDto(CustomerFilterPagination customerFilterPagination)
+        public CustomerFilterPaginationDto(Pagination pagination)
         {
-            TotalItems = customerFilterPagination.TotalItems;
-            CustomerItemList = new List<CustomerDto>();
+            TotalItems = pagination.TotalItems;
+            CustomerList = new List<CustomerDto>();
+            UserList = new List<UserDto>();
         }
 
         public int TotalItems { get; set; }
       
-        public List<CustomerDto> CustomerItemList { get; set; }
+        public List<CustomerDto> CustomerList { get; set; }
+        public List<UserDto> UserList { get; set; }
     }
 }

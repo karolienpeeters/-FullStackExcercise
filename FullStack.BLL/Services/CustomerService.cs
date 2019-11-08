@@ -49,8 +49,7 @@ namespace FullStack.BLL.Services
         public CustomerFilterPaginationDto GetListCustomersPage(int skip, int take, string filterFirstName, string filterLastName, string filterAccountNumber, decimal filterSumTotalDueHigher, decimal filterSumTotalDueLower)
         {
 
-            var paginationFilterModel = skip == 0 ? _customerRepository.GetCustomersPage(skip, take,filterFirstName,filterLastName,filterAccountNumber,filterSumTotalDueHigher,filterSumTotalDueLower) 
-                : _customerRepository.GetCustomersPage(((skip-1)*take), take, filterFirstName, filterLastName, filterAccountNumber, filterSumTotalDueHigher,filterSumTotalDueLower);
+            var paginationFilterModel = _customerRepository.GetCustomersPage(((skip-1)*take), take, filterFirstName, filterLastName, filterAccountNumber, filterSumTotalDueHigher,filterSumTotalDueLower);
 
             var filterPaginationDto = new CustomerFilterPaginationDto(paginationFilterModel);
 
@@ -60,7 +59,7 @@ namespace FullStack.BLL.Services
                {
                    SumTotalDue = customer.SalesOrderHeader.Sum(s => s.TotalDue)
                };
-               filterPaginationDto.CustomerItemList.Add(customerModel);
+               filterPaginationDto.CustomerList.Add(customerModel);
 
            }
 

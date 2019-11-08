@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
 import { CustomerFilterPagination } from '../interfaces/customerFilterPagination';
+import { Pagination } from '../interfaces/pagination';
 
 @Component({
   selector: 'app-pagination',
@@ -7,8 +8,9 @@ import { CustomerFilterPagination } from '../interfaces/customerFilterPagination
   styleUrls: ['./pagination.component.css']
 })
 export class PaginationComponent implements OnInit {
-  @Input() customerFilterPagination: CustomerFilterPagination;
-  @Output() onClicked = new EventEmitter();
+ 
+  @Input() pagination:Pagination;
+  @Output() onClickedPage = new EventEmitter();
   pager: any = {};
  
   maxPages = 10;
@@ -16,12 +18,16 @@ export class PaginationComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.setPage(this.customerFilterPagination.currentPage);
+    console.log("pagination on init")
+    this.setPage(this.pagination.currentPage);
   }
 
    setPage(page: number,) {
-     this.pager = this.paginate(this.customerFilterPagination.totalItems, page, this.customerFilterPagination.pageSize, this.maxPages);
-     this.onClicked.emit();
+     this.pager = this.paginate(this.pagination.totalItems, page, this.pagination.pageSize, this.maxPages);
+     console.log("Setpage activate:")
+     console.log("Pager - ",this.pager)
+     console.log("pagination - ",this.pagination)
+     this.onClickedPage.emit();
    }
 
   paginate(totalItems, currentPage, pageSize, maxPages) {
@@ -67,9 +73,9 @@ export class PaginationComponent implements OnInit {
     // create an array of pages to ng-repeat in the pager control
     var pages = Array.from(Array((endPage + 1) - startPage).keys()).map(function (i) { return startPage + i; });
     // return object with all pager properties required by the view
-    this.customerFilterPagination.currentPage = currentPage;
-    this.customerFilterPagination.totalItems = totalItems;
-    this.customerFilterPagination.pageSize = pageSize;
+    this.pagination.currentPage = currentPage;
+    this.pagination.totalItems = totalItems;
+    this.pagination.pageSize = pageSize;
 
     return {
       totalItems: totalItems,

@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using FullStack.BLL.Models;
+﻿using FullStack.BLL.Models;
 using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FullStack.BLL.Interfaces
 {
     public interface IUserService
     {
         Task<string> HandleLogin(UserDto userLogin);
-        List<UserDto> GetUsersWithRoles();
+        CustomerFilterPaginationDto GetUsersWithRoles(int skip, int take);
         Task<IdentityResult> RegisterNewUser(UserDto userLogin);
         Task<IdentityResult> DeleteUser(string userId);
         Task<IdentityResult> UpdateUser(UserDto userDto);

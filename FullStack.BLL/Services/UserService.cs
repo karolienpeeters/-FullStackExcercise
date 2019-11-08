@@ -1,17 +1,15 @@
-﻿using System;
+﻿using FullStack.BLL.Interfaces;
+using FullStack.BLL.Models;
+using FullStack.DAL.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using FullStack.BLL.Interfaces;
-using FullStack.BLL.Models;
-using FullStack.DAL.Interfaces;
-using FullStack.DAL.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 
 namespace FullStack.BLL.Services
 {
@@ -56,13 +54,16 @@ namespace FullStack.BLL.Services
 
         }
 
-        public List<UserDto> GetUsersWithRoles()
+        public CustomerFilterPaginationDto GetUsersWithRoles(int skip, int take)
         {
-            var usersWithRoles = _userRepository.GetApplicationUsersAndRoles();
+            
+            var usersPagination = _userRepository.GetApplicationUsersAndRoles(skip,take);
+            var usersPaginationDto = new CustomerFilterPaginationDto(usersPagination)
+            {
+                UserList = usersPagination.UserList.Select(userItem => new UserDto(userItem)).ToList()
+            };
 
-            var listUsers = usersWithRoles.Select(userItem => new UserDto(userItem)).ToList();
-
-            return listUsers;
+            return usersPaginationDto;
         }
 
         public async Task<IdentityResult> RegisterNewUser(UserDto userLogin)
