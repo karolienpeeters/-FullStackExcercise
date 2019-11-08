@@ -32,14 +32,14 @@ namespace FullStack.API.Controllers
 
 
         [HttpPost, Route("login")]
-        public async Task<IActionResult> LoginAsync([FromBody]LoginDto login)
+        public async Task<IActionResult> LoginAsync([FromBody]UserDto user)
         {
-            if (login == null)
+            if (user == null)
             {
                 return BadRequest("Invalid client request");
             }
 
-            var token = await _userService.HandleLogin(login);
+            var token = await _userService.HandleLogin(user);
             if (token.ToString() != "")
             {
                 return Ok(new { Token = token });

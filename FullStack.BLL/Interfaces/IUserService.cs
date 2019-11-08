@@ -9,9 +9,9 @@ namespace FullStack.BLL.Interfaces
 {
     public interface IUserService
     {
-        Task<string> HandleLogin(LoginDto login);
+        Task<string> HandleLogin(UserDto userLogin);
         List<UserDto> GetUsersWithRoles();
-        Task<IdentityResult> RegisterNewUser(LoginDto loginDto);
+        Task<IdentityResult> RegisterNewUser(UserDto userLogin);
         Task<IdentityResult> DeleteUser(string userId);
         Task<IdentityResult> UpdateUser(UserDto userDto);
 

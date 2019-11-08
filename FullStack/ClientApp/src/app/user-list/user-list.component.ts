@@ -23,27 +23,20 @@ export class UserListComponent implements OnInit {
     }));
   }
 
-  registerUser(form){
-    this.userService.registerUser(form.value).subscribe((result => {
-      form.reset();
-      this.getListUser();   
-    }));
-  }
-
   deleteUser(user:User)
   {
-     this.userService.deleteUser(user).subscribe((
-      result=>{this.getListUser();}))
+     this.userService.deleteUser(user).subscribe((()=>{this.getListUser();}))
   }
 
   saveUser(user){
-    var string = user.rolesList.toString();
-    user.rolesList = string.split(",");
-    this.userService.updateUser(user).subscribe((result => {
+    user.rolesList = [user.rolesList];
+    this.userService.updateUser(user).subscribe((() => {
        user.showForm = false;
     }));
   }
 
-
+  clicked(){
+    this.getListUser();
+  }
 
 }

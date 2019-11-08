@@ -18,14 +18,13 @@ namespace FullStack.BLL.Models
             UserId = user.UserId;
             RolesList = user.RolesList;
             Email = user.Email;
-            ShowForm = false;
         }
 
 
         public string UserId { get; set; }
         public List<string> RolesList { get; set; }
         public string Email { get; set; }
-        public bool ShowForm { get; set; }
-   
+        public string PassWord { get; set; }
+      
     }
 }

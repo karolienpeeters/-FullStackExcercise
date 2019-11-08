@@ -33,18 +33,18 @@ namespace FullStack.API.Controllers
 
         [HttpPost]
         [Route("register")]
-        public async Task<IActionResult> Register([FromBody]LoginDto loginDto)
+        public async Task<IActionResult> Register([FromBody]UserDto userDto)
         {
-          var result =  await _userService.RegisterNewUser(loginDto);
+          var result =  await _userService.RegisterNewUser(userDto);
             return Ok(result);
 
         }
 
         [HttpPost]
         [Route("create")]
-        public async Task<IActionResult> Create([FromBody]LoginDto loginDto)
+        public async Task<IActionResult> Create([FromBody]UserDto userDto)
         {
-            var result = await _userService.RegisterNewUser(loginDto);
+            var result = await _userService.RegisterNewUser(userDto);
             return Ok(result);
 
         }

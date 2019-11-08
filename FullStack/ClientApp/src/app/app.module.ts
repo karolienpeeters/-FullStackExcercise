@@ -16,6 +16,7 @@ import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { AdminGuard } from './guards/admin.guard';
 import { PaginationComponent } from './pagination/pagination.component';
 import { CustomerSearchComponent } from './customer-search/customer-search.component';
+import { UserCreateComponent } from './user-create/user-create.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { CustomerSearchComponent } from './customer-search/customer-search.compo
     LoginComponent,
     UserListComponent,
     PaginationComponent,
-    CustomerSearchComponent
+    CustomerSearchComponent,
+    UserCreateComponent
   ],
 
   imports: [

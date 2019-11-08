@@ -34,7 +34,6 @@ export class CustomerListComponent implements OnInit {
         totalItems: 0,
         customerItemList: [],
       };
-
     this.getListCustomer();
   }
 

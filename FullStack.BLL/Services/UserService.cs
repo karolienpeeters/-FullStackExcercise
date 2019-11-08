@@ -24,17 +24,17 @@ namespace FullStack.BLL.Services
             _userRepository = userRepository;
         }
 
-        public async Task<string> HandleLogin(LoginDto loginDto)
+        public async Task<string> HandleLogin(UserDto userLogin)
         {
             
-            var theUser = await _userRepository.FindByName(loginDto.Email);
-            if (theUser != null && await _userRepository.CheckPassword(theUser,loginDto.PassWord))
+            var theUser = await _userRepository.FindByName(userLogin.Email);
+            if (theUser != null && await _userRepository.CheckPassword(theUser, userLogin.PassWord))
             {
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("fullstack_951357456"));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
                 var roles = await _userRepository.GetRolesUser(theUser);
                 var claims = new List<Claim>();
-                claims.Add(new Claim(ClaimTypes.Name, loginDto.Email));
+                claims.Add(new Claim(ClaimTypes.Name, userLogin.Email));
                 foreach (string item in roles)
                 {
                     claims.Add(new Claim(ClaimTypes.Role, item));
@@ -65,11 +65,11 @@ namespace FullStack.BLL.Services
             return listUsers;
         }
 
-        public async Task<IdentityResult> RegisterNewUser(LoginDto loginDto)
+        public async Task<IdentityResult> RegisterNewUser(UserDto userLogin)
         {
             try
             {
-                var result = await _userRepository.Create(loginDto.Email, loginDto.PassWord);
+                var result = await _userRepository.Create(userLogin.Email, userLogin.PassWord);
                 return result;
             }
             catch (Exception e)
@@ -99,14 +99,12 @@ namespace FullStack.BLL.Services
 
         public async Task<IdentityResult> UpdateUser(UserDto userDto)
         {
-            var user = _userRepository.FindById(userDto.UserId).Result;
-            user.Email = userDto.Email;
-            user.UserName = userDto.Email;
-
             try
             {
-                var result = await _userRepository.UpdateUser(user, userDto.RolesList);
-                return result;
+                var user = _userRepository.FindById(userDto.UserId).Result;
+                user.Email = userDto.Email;
+                user.UserName = userDto.Email;
+                return await _userRepository.UpdateUser(user, userDto.RolesList); 
             }
             catch (Exception e)
             {
