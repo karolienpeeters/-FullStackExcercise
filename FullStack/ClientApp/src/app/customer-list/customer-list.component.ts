@@ -31,10 +31,10 @@ export class CustomerListComponent implements OnInit {
         filterSumTotalDueLower: 0,
         pagination:{
           pageSize:15,
-          currentPage: 1,
+          currentPage: 0,
           totalItems: 0,
-          customerList:[],
-          userList:[]
+          customerList:[] = [],
+          userList:[]=[]
 
         },
       
@@ -42,14 +42,16 @@ export class CustomerListComponent implements OnInit {
     this.getListCustomer();
   }
 
-  async getListCustomer() {
+ async getListCustomer() {
   
     this.customerService.getCustomersPage("api/customers", this.customerFilterPagination)
       .subscribe((result => {
         console.log("get list customer result", result)
         this.customerFilterPagination.pagination.customerList = result.customerList;
         this.customerFilterPagination.pagination.totalItems = result.totalItems;
+      
       }));
+      
   }
 
   saveCustomer(customer: Customer) {
@@ -59,12 +61,14 @@ export class CustomerListComponent implements OnInit {
   }
 
   async clickedSearch() {
+    console.log("clicked search activated")
     await this.getListCustomer();
-    this.pagination.setPage(this.customerFilterPagination.pagination.currentPage);
+    console.log("clicked search ", this.customerFilterPagination)
+    this.pagination.setPage(this.customerFilterPagination.pagination.currentPage,this.customerFilterPagination.pagination.totalItems);
 
   }
 
-  async clickedPage() {
+   clickedPage() {
     this.getListCustomer();
   }
 

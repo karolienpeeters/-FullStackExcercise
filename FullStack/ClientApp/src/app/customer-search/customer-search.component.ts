@@ -16,7 +16,8 @@ export class CustomerSearchComponent implements OnInit {
   }
 
   async filter() {
-    this.customerFilterPagination.pagination.currentPage = 1; 
+    console.log("filter method activated")
+    this.customerFilterPagination.pagination.currentPage = 0; 
     this.onClicked.emit();
   }
 
@@ -26,7 +27,7 @@ export class CustomerSearchComponent implements OnInit {
     this.customerFilterPagination.filterAccountNumber = "";
     this.customerFilterPagination.filterSumTotalDueHigher = 0;
     this.customerFilterPagination.filterSumTotalDueLower = 0;
-    this.customerFilterPagination.pagination.currentPage = 1; 
+    this.customerFilterPagination.pagination.currentPage = 0; 
     this.onClicked.emit();
   }
 

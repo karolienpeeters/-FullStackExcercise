@@ -19,11 +19,11 @@ export class PaginationComponent implements OnInit {
 
   ngOnInit() {
     console.log("pagination on init")
-    this.setPage(this.pagination.currentPage);
+    this.setPage(this.pagination.currentPage,this.pagination.totalItems);
   }
 
-   setPage(page: number,) {
-     this.pager = this.paginate(this.pagination.totalItems, page, this.pagination.pageSize, this.maxPages);
+   setPage(page: number,total:number) {
+     this.pager = this.paginate(total, page, this.pagination.pageSize, this.maxPages);
      console.log("Setpage activate:")
      console.log("Pager - ",this.pager)
      console.log("pagination - ",this.pagination)

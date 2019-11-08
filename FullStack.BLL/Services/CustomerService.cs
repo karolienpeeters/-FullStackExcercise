@@ -49,7 +49,17 @@ namespace FullStack.BLL.Services
         public CustomerFilterPaginationDto GetListCustomersPage(int skip, int take, string filterFirstName, string filterLastName, string filterAccountNumber, decimal filterSumTotalDueHigher, decimal filterSumTotalDueLower)
         {
 
-            var paginationFilterModel = _customerRepository.GetCustomersPage(((skip-1)*take), take, filterFirstName, filterLastName, filterAccountNumber, filterSumTotalDueHigher,filterSumTotalDueLower);
+            Pagination paginationFilterModel;
+
+            if (skip == 0)
+            {
+                paginationFilterModel = _customerRepository.GetCustomersPage(skip, take, filterFirstName, filterLastName, filterAccountNumber, filterSumTotalDueHigher, filterSumTotalDueLower);
+            }
+
+            else
+            {
+                paginationFilterModel = _customerRepository.GetCustomersPage(((skip - 1) * take), take, filterFirstName, filterLastName, filterAccountNumber, filterSumTotalDueHigher, filterSumTotalDueLower);
+            }
 
             var filterPaginationDto = new CustomerFilterPaginationDto(paginationFilterModel);
 

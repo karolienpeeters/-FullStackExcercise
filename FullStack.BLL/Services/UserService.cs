@@ -31,8 +31,10 @@ namespace FullStack.BLL.Services
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("fullstack_951357456"));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
                 var roles = await _userRepository.GetRolesUser(theUser);
-                var claims = new List<Claim>();
-                claims.Add(new Claim(ClaimTypes.Name, userLogin.Email));
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, userLogin.Email)
+                };
                 foreach (string item in roles)
                 {
                     claims.Add(new Claim(ClaimTypes.Role, item));
