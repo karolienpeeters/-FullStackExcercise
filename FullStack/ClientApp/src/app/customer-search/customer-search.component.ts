@@ -9,6 +9,7 @@ import { CustomerFilterPagination } from '../interfaces/customerFilterPagination
 export class CustomerSearchComponent implements OnInit {
   @Input() customerFilterPagination: CustomerFilterPagination;
   @Output() onClicked = new EventEmitter();
+  activatedNr: number = 0;
     
   constructor() { }
 
@@ -16,7 +17,10 @@ export class CustomerSearchComponent implements OnInit {
   }
 
   async filter() {
+    this.activatedNr +=1;
+    // console.log("filter activated",this.activatedNr);
     this.customerFilterPagination.pagination.currentPage = 1; 
+    // console.log(this.customerFilterPagination);
     this.onClicked.emit();
   }
 

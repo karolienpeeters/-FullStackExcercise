@@ -73,6 +73,10 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[2.2.4, )"
+            },
+            "Westwind.Utilities": {
+              "target": "Package",
+              "version": "[3.0.30, )"
             }
           },
           "imports": [
@@ -145,6 +149,10 @@
               "target": "Package",
               "version": "[2.2.0, )",
               "autoReferenced": true
+            },
+            "Westwind.Utilities": {
+              "target": "Package",
+              "version": "[3.0.30, )"
             }
           },
           "imports": [

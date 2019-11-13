@@ -759,6 +759,15 @@
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
       },
+      "Newtonsoft.Json/12.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        }
+      },
       "Remotion.Linq/2.2.0": {
         "type": "package",
         "dependencies": {
@@ -1317,6 +1326,19 @@
         },
         "compile": {
           "ref/netstandard1.3/System.Threading.Tasks.dll": {}
+        }
+      },
+      "Westwind.Utilities/3.0.30": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.2",
+          "System.Data.SqlClient": "4.6.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/Westwind.Utilities.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Westwind.Utilities.dll": {}
         }
       },
       "FullStack.DAL/1.0.0": {
@@ -2441,6 +2463,36 @@
         "lib/netstandard1.0/_._",
         "netstandard.library.2.0.3.nupkg.sha512",
         "netstandard.library.nuspec"
+      ]
+    },
+    "Newtonsoft.Json/12.0.2": {
+      "sha512": "rTK0s2EKlfHsQsH6Yx2smvcTCeyoDNgCW7FEYyV01drPlh2T243PR2DiDXqtC5N4GDm4Ma/lkxfW5a/4793vbA==",
+      "type": "package",
+      "path": "newtonsoft.json/12.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.xml",
+        "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.xml",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.xml",
+        "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
+        "lib/netstandard1.3/Newtonsoft.Json.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.xml",
+        "lib/netstandard2.0/Newtonsoft.Json.dll",
+        "lib/netstandard2.0/Newtonsoft.Json.xml",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "newtonsoft.json.12.0.2.nupkg.sha512",
+        "newtonsoft.json.nuspec"
       ]
     },
     "Remotion.Linq/2.2.0": {
@@ -4458,6 +4510,23 @@
         "system.threading.tasks.nuspec"
       ]
     },
+    "Westwind.Utilities/3.0.30": {
+      "sha512": "Aqy7FAeP6rhLMIYMmmVpmrWgYgd/QWW/BbKRSd6YUPDNpZNrchHOrV3uk7UyRw2eK0Zfgkdb6Si3RnVjZwfnBQ==",
+      "type": "package",
+      "path": "westwind.utilities/3.0.30",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net40/Westwind.Utilities.dll",
+        "lib/net40/Westwind.Utilities.xml",
+        "lib/net46/Westwind.Utilities.dll",
+        "lib/net46/Westwind.Utilities.xml",
+        "lib/netstandard2.0/Westwind.Utilities.dll",
+        "lib/netstandard2.0/Westwind.Utilities.xml",
+        "westwind.utilities.3.0.30.nupkg.sha512",
+        "westwind.utilities.nuspec"
+      ]
+    },
     "FullStack.DAL/1.0.0": {
       "type": "project",
       "path": "../FullStack.DAL/FullStack.DAL.csproj",
@@ -4471,7 +4540,8 @@
       "Microsoft.Extensions.Configuration.Abstractions >= 2.2.0",
       "Microsoft.Extensions.DependencyInjection.Abstractions >= 2.2.0",
       "Microsoft.Extensions.Identity.Stores >= 2.2.0",
-      "Microsoft.NETCore.App >= 2.2.0"
+      "Microsoft.NETCore.App >= 2.2.0",
+      "Westwind.Utilities >= 3.0.30"
     ]
   },
   "packageFolders": {
@@ -4540,6 +4610,10 @@
             "target": "Package",
             "version": "[2.2.0, )",
             "autoReferenced": true
+          },
+          "Westwind.Utilities": {
+            "target": "Package",
+            "version": "[3.0.30, )"
           }
         },
         "imports": [

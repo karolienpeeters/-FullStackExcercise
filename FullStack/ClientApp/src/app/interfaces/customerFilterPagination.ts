@@ -1,4 +1,3 @@
-import { Customer } from "./customer";
 import { Pagination } from "./pagination";
 
 export interface CustomerFilterPagination{
@@ -7,6 +6,5 @@ export interface CustomerFilterPagination{
      filterAccountNumber:string;
      filterSumTotalDueHigher:number;
      filterSumTotalDueLower:number;
-   
      pagination:Pagination;
 }

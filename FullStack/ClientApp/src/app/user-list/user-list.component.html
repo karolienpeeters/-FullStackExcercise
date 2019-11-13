@@ -42,20 +42,14 @@
             </tr>
           </tbody>
         </table>
+        <app-pagination [pagination]="pagination" (onClickedPage)="getListUser()"></app-pagination>
       </div>
     </div>
-    <div class="coll-md-6  align-self-end">
+    <div class="coll-md-6  align-self-top">
       <div class="col-md-12">
 
-<app-user-create (onClicked)="clicked()"></app-user-create>
-       
+        <app-user-create (onClicked)="getListUser()"></app-user-create>
+
       </div>
     </div>
   </div>
-  <div class="row justify-content-center">
-    <div class="col-lg ">
-  <app-pagination *ngIf="pagination.totalItems > 0" [pagination]="pagination"
-    (onClickedPage)="clickedPage()"></app-pagination>
-    </div>
-  </div>
-</div>

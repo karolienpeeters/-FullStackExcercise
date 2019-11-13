@@ -46,30 +46,31 @@ namespace FullStack.BLL.Services
 
         }
 
-        public CustomerFilterPaginationDto GetListCustomersPage(int skip, int take, string filterFirstName, string filterLastName, string filterAccountNumber, decimal filterSumTotalDueHigher, decimal filterSumTotalDueLower)
+        public PaginationDto GetListCustomersPage(int skip, int take, string filterFirstName, string filterLastName, string filterAccountNumber, decimal filterSumTotalDueHigher, decimal filterSumTotalDueLower)
         {
 
-            var paginationFilterModel = _customerRepository.GetCustomersPage(((skip-1)*take), take, filterFirstName, filterLastName, filterAccountNumber, filterSumTotalDueHigher,filterSumTotalDueLower);
+            var paginationModel = _customerRepository.GetCustomersPage(((skip-1)*take), take, filterFirstName, filterLastName, filterAccountNumber, filterSumTotalDueHigher,filterSumTotalDueLower);
 
-            var filterPaginationDto = new CustomerFilterPaginationDto(paginationFilterModel);
+            var paginationDto = new PaginationDto(paginationModel);
 
-           foreach (var customer in paginationFilterModel.CustomerItemList)
+           foreach (var customer in paginationModel.CustomerItemList)
            {
                var customerModel = new CustomerDto(customer)
                {
                    SumTotalDue = customer.SalesOrderHeader.Sum(s => s.TotalDue)
                };
-               filterPaginationDto.CustomerList.Add(customerModel);
+               paginationDto.CustomerList.Add(customerModel);
 
            }
 
-           return filterPaginationDto;
+           return paginationDto;
 
         }
 
         public void UpdateCustomer(CustomerDto customerDto)
         {
             var customer = _customerRepository.GetCustomer(customerDto.Id);
+            
             customer.AccountNumber = customerDto.AccountNumber;
             customer.Person.FirstName = customerDto.FirstName;
             customer.Person.LastName = customerDto.LastName;

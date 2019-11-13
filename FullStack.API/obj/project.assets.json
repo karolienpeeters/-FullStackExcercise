@@ -2859,7 +2859,7 @@
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
       },
-      "Newtonsoft.Json/11.0.2": {
+      "Newtonsoft.Json/12.0.2": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
@@ -4721,6 +4721,19 @@
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
       },
+      "Westwind.Utilities/3.0.30": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.2",
+          "System.Data.SqlClient": "4.6.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/Westwind.Utilities.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Westwind.Utilities.dll": {}
+        }
+      },
       "FullStack.BLL/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.2",
@@ -4729,7 +4742,8 @@
           "Microsoft.AspNetCore.Identity": "2.2.0",
           "Microsoft.Extensions.Configuration.Abstractions": "2.2.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "2.2.0",
-          "Microsoft.Extensions.Identity.Stores": "2.2.0"
+          "Microsoft.Extensions.Identity.Stores": "2.2.0",
+          "Westwind.Utilities": "3.0.30"
         },
         "compile": {
           "bin/placeholder/FullStack.BLL.dll": {}
@@ -8071,10 +8085,10 @@
         "netstandard.library.nuspec"
       ]
     },
-    "Newtonsoft.Json/11.0.2": {
-      "sha512": "IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ==",
+    "Newtonsoft.Json/12.0.2": {
+      "sha512": "rTK0s2EKlfHsQsH6Yx2smvcTCeyoDNgCW7FEYyV01drPlh2T243PR2DiDXqtC5N4GDm4Ma/lkxfW5a/4793vbA==",
       "type": "package",
-      "path": "newtonsoft.json/11.0.2",
+      "path": "newtonsoft.json/12.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -8097,7 +8111,7 @@
         "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.xml",
         "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.dll",
         "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.xml",
-        "newtonsoft.json.11.0.2.nupkg.sha512",
+        "newtonsoft.json.12.0.2.nupkg.sha512",
         "newtonsoft.json.nuspec"
       ]
     },
@@ -12958,6 +12972,23 @@
         "system.xml.xpath.xdocument.nuspec"
       ]
     },
+    "Westwind.Utilities/3.0.30": {
+      "sha512": "Aqy7FAeP6rhLMIYMmmVpmrWgYgd/QWW/BbKRSd6YUPDNpZNrchHOrV3uk7UyRw2eK0Zfgkdb6Si3RnVjZwfnBQ==",
+      "type": "package",
+      "path": "westwind.utilities/3.0.30",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net40/Westwind.Utilities.dll",
+        "lib/net40/Westwind.Utilities.xml",
+        "lib/net46/Westwind.Utilities.dll",
+        "lib/net46/Westwind.Utilities.xml",
+        "lib/netstandard2.0/Westwind.Utilities.dll",
+        "lib/netstandard2.0/Westwind.Utilities.xml",
+        "westwind.utilities.3.0.30.nupkg.sha512",
+        "westwind.utilities.nuspec"
+      ]
+    },
     "FullStack.BLL/1.0.0": {
       "type": "project",
       "path": "../FullStack.BLL/FullStack.BLL.csproj",
@@ -12977,7 +13008,8 @@
       "Microsoft.AspNetCore.Razor.Design >= 2.2.0",
       "Microsoft.EntityFrameworkCore >= 2.2.6",
       "Microsoft.NETCore.App >= 2.2.0",
-      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.2.4"
+      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.2.4",
+      "Westwind.Utilities >= 3.0.30"
     ]
   },
   "packageFolders": {
@@ -13053,6 +13085,10 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
             "target": "Package",
             "version": "[2.2.4, )"
+          },
+          "Westwind.Utilities": {
+            "target": "Package",
+            "version": "[3.0.30, )"
           }
         },
         "imports": [

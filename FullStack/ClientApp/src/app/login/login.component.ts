@@ -13,11 +13,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
   }
-  
+
   login(form) {
     this.auth.login(form.value).subscribe(() => {
       this.route.navigate(["/customers"]);
-    }, error => console.error(error));
+    }, error => console.error(error, "login error"));
   }
 
 }

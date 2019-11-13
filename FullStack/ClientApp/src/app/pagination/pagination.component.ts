@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
-import { CustomerFilterPagination } from '../interfaces/customerFilterPagination';
 import { Pagination } from '../interfaces/pagination';
 
 @Component({
@@ -12,22 +11,25 @@ export class PaginationComponent implements OnInit {
   @Input() pagination:Pagination;
   @Output() onClickedPage = new EventEmitter();
   pager: any = {};
- 
   maxPages = 10;
  
   constructor() { }
 
-  ngOnInit() {
-    console.log("pagination on init")
-    this.setPage(this.pagination.currentPage);
-  }
+  ngOnInit() {  }
 
-   setPage(page: number,) {
+   setPage(page: number) {
      this.pager = this.paginate(this.pagination.totalItems, page, this.pagination.pageSize, this.maxPages);
-     console.log("Setpage activate:")
-     console.log("Pager - ",this.pager)
-     console.log("pagination - ",this.pagination)
-     this.onClickedPage.emit();
+    //  console.log("Setpage activate:")
+    //  console.log("Pager - ",this.pager)
+    //  console.log("pagination - ",this.pagination)
+   }
+
+   goToPage(page:number){
+    this.pager = this.paginate(this.pagination.totalItems, page, this.pagination.pageSize, this.maxPages);
+    // console.log("goToPage activate:")
+    // console.log("Pager - ",this.pager)
+    // console.log("pagination - ",this.pagination)
+    this.onClickedPage.emit();
    }
 
   paginate(totalItems, currentPage, pageSize, maxPages) {

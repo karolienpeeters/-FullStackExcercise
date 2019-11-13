@@ -12,14 +12,15 @@ namespace FullStack.DAL.Interfaces
         Task<bool> CheckPassword(IdentityUser user, string password);
         Pagination GetApplicationUsersAndRoles(int skip, int take);
 
-        Task<IdentityResult> Create(string userName, string password);
+        Task<IdentityResult> CreateUser(string userName, string password);
 
-        Task<IdentityResult> DeleteUser(string userId);
-
-        Task<IdentityResult> UpdateUser(IdentityUser iUser, List<string> roles);
+        Task<IdentityResult> DeleteUser(IdentityUser iUser);
+        Task<IdentityResult> UpdateUser(IdentityUser iUser);
         Task<IList<string>> GetRolesUser(IdentityUser iUser);
-
-
+        //Task<IdentityResult> RemoveRole(IdentityUser iUser, string role);
+        Task<IdentityResult> AddRoles(IdentityUser iUser, IList<string> userRoles, List<string> roles);
+        Task<IdentityResult> RemoveRoles(IdentityUser iUser, IList<string> userRoles, List<string> roles);
+       // Task<IdentityResult> Update(IdentityUser iUser, IList<string> userRoles, List<string> roles);
 
     }
 }

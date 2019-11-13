@@ -35,23 +35,9 @@ namespace FullStack.DAL.Repositories
             return await _userManager.CheckPasswordAsync(user, password);
         }
 
-        public async Task<IdentityResult> Create(string userName, string password)
-        {
-            try
-            {
-                var user = new IdentityUser { UserName = userName, Email = userName};
-                var result =  await _userManager.CreateAsync(user, password);
-                await AddRole(user, "User");
-
-                return result;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-           
-             
+        public async Task<IdentityResult> CreateUser(string userName, string password)
+        { 
+            return await _userManager.CreateAsync(new IdentityUser { UserName = userName, Email = userName }, password);
         }
 
         // GET: ApplicationUserRoles
@@ -59,8 +45,7 @@ namespace FullStack.DAL.Repositories
         {
 
             var userPage = new Pagination();
-          
-            //var identityUsers = _userManager.Users.Skip((skip ==0 ) ? skip : (skip-1)*take).Take(take);
+           
             var identityUsers = _userManager.Users.Skip((skip-1)*take).Take(take);
             userPage.TotalItems = _userManager.Users.Count();
 
@@ -80,36 +65,41 @@ namespace FullStack.DAL.Repositories
             return await _userManager.GetRolesAsync(iUser);
         }
 
-        public async Task<IdentityResult> DeleteUser (string userId)
+        public async Task<IdentityResult> DeleteUser (IdentityUser iUser)
         {
-            var user = _userManager.FindByIdAsync(userId);
-            return await _userManager.DeleteAsync(user.Result);
-
+            return await _userManager.DeleteAsync(iUser);
         }
 
-        public async Task<IdentityResult> UpdateUser(IdentityUser iUser, List<string> roles)
+        public async Task<IdentityResult> UpdateUser(IdentityUser iUser)
         {
-           
-
-            foreach (var role in roles)
-            {
-                var roleCheck = _roleManager.RoleExistsAsync(role);
-
-                if (roleCheck.Result)
-                {
-                   await AddRole(iUser, role);
-                }
-
-
-            }
-
             return await _userManager.UpdateAsync(iUser);
         }
 
-        public async Task<IdentityResult> AddRole(IdentityUser iUser, string role)
+        public async Task<IdentityResult> AddRoles (IdentityUser iUser,IList<string> userRoles, List<string> roles)
         {
-            return await _userManager.AddToRoleAsync(iUser, role);
+            return await _userManager.AddToRolesAsync(iUser, roles.Except(userRoles).ToList());
         }
 
+        public async Task<IdentityResult> RemoveRoles(IdentityUser iUser, IList<string> userRoles, List<string> roles)
+        {
+            return  await _userManager.RemoveFromRolesAsync(iUser, userRoles.Except(roles).ToList());
+        }
+
+        //public async Task<IdentityResult> Update(IdentityUser iUser, IList<string> userRoles, List<string> roles)
+        //{
+        //    if (roles.Any())
+        //    {
+                
+        //    }
+        //    await _userManager.AddToRolesAsync(iUser, roles.Except(userRoles).ToList());
+
+        //    await _userManager.RemoveFromRolesAsync(iUser, userRoles.Except(roles).ToList());
+
+        //    return await _userManager.UpdateAsync(iUser);
+
+            
+        //}
+
+       
     }
 }

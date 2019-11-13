@@ -10,7 +10,7 @@ import { UserDataService } from '../services/user-data.service';
 export class UserCreateComponent implements OnInit {
   @Output() onClicked = new EventEmitter();
   public user: User;
-  
+
   constructor(private userService: UserDataService) { }
 
   ngOnInit() {

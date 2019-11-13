@@ -67,12 +67,18 @@ namespace FullStack.DAL.Repositories
         public void UpdateCustomer(Customer customer)
         {
             _context.Customers.Update(customer);
-            _context.SaveChanges();
+            SaveChanges();
+           
         }
 
         public Customer GetCustomer(int customerId)
         {
             return  _context.Customers.Include(c=>c.Person).AsNoTracking().FirstOrDefault(d=>d.CustomerId ==customerId);
+        }
+
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
         }
 
       

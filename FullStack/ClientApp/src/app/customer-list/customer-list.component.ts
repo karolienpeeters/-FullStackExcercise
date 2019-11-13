@@ -35,20 +35,19 @@ export class CustomerListComponent implements OnInit {
           totalItems: 0,
           customerList:[],
           userList:[]
-
         },
-      
       };
+
     this.getListCustomer();
   }
 
   async getListCustomer() {
-  
     this.customerService.getCustomersPage("api/customers", this.customerFilterPagination)
       .subscribe((result => {
-        console.log("get list customer result", result)
+        // console.log("get list customer result", result)
         this.customerFilterPagination.pagination.customerList = result.customerList;
         this.customerFilterPagination.pagination.totalItems = result.totalItems;
+        this.pagination.setPage(this.customerFilterPagination.pagination.currentPage);
       }));
   }
 
@@ -58,14 +57,6 @@ export class CustomerListComponent implements OnInit {
     }));
   }
 
-  async clickedSearch() {
-    await this.getListCustomer();
-    this.pagination.setPage(this.customerFilterPagination.pagination.currentPage);
-
-  }
-
-  async clickedPage() {
-    this.getListCustomer();
-  }
+ 
 
 }

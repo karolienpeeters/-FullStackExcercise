@@ -1,6 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-lg">
+      <p *ngIf ="customerFilterPagination.pagination.customerList.length == 0">No results found</p>
       <table *ngIf="customerFilterPagination.pagination.customerList.length > 0" class="table">
         <thead>
           <tr>
@@ -56,15 +57,15 @@
     </div>
 
     <div class="coll  align-self-center">
-      <app-customer-search [customerFilterPagination]="customerFilterPagination" (onClicked)="clickedSearch()">
+      <app-customer-search [customerFilterPagination]="customerFilterPagination" (onClicked)="getListCustomer()">
       </app-customer-search>
     </div>
 
   </div>
 <div class="row justify-content-center">
     <div class="col-lg ">
-  <app-pagination *ngIf="customerFilterPagination.pagination.totalItems > 0" [pagination]="customerFilterPagination.pagination"
-    (onClickedPage)="clickedPage()"></app-pagination>
+  <app-pagination [pagination]="customerFilterPagination.pagination"
+    (onClickedPage)="getListCustomer()"></app-pagination>
     </div>
   </div>
 </div>

@@ -66,6 +66,10 @@
               "target": "Package",
               "version": "[2.2.0, )",
               "autoReferenced": true
+            },
+            "Westwind.Utilities": {
+              "target": "Package",
+              "version": "[3.0.30, )"
             }
           },
           "imports": [

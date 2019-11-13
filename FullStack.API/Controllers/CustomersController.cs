@@ -1,4 +1,5 @@
-﻿using FullStack.BLL.Interfaces;
+﻿using System;
+using FullStack.BLL.Interfaces;
 using FullStack.BLL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -19,9 +20,9 @@ namespace FullStack.API.Controllers
         }
 
         [HttpGet, Authorize]
-        public IActionResult Get(int skip, int take, string filterFirstName, string filterLastName, string filterAccountNumber, decimal filterSumTotalDueHigher, decimal filterSumTotalDueLower)
+        public IActionResult Get(int skip, int take, string filterFirstName, string filterLastName, string filterAccountNumber, string filterSumTotalDueHigher, decimal filterSumTotalDueLower)
         {
-            var customers = _customerService.GetListCustomersPage(skip,take,filterFirstName,filterLastName,filterAccountNumber,filterSumTotalDueHigher,filterSumTotalDueLower);
+            var customers = _customerService.GetListCustomersPage(skip,take,filterFirstName,filterLastName,filterAccountNumber,decimal.Parse(filterSumTotalDueHigher), filterSumTotalDueLower);
             return Ok(customers);
         }
 

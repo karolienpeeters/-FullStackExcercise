@@ -31,7 +31,7 @@ namespace FullStack.API.Controllers
         [Route("register")]
         public async Task<IActionResult> Register([FromBody]UserDto userDto)
         {
-          var result =  await _userService.RegisterNewUser(userDto);
+            var result = await _userService.RegisterNewUser(userDto);
             return Ok(result);
 
         }
@@ -56,6 +56,7 @@ namespace FullStack.API.Controllers
         public async Task<IActionResult> UpdateUser([FromBody]UserDto userDto, string uid)
         {
             var result = await _userService.UpdateUser(userDto);
+            //var result = await _userService.Update(userDto);
 
             return Ok(result);
         }
