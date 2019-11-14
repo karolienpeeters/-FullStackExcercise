@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { User } from '../interfaces/user';
-import { UserDataService } from '../services/user-data.service';
+import { User } from '../_interfaces/user';
+import { UserDataService } from '../_services/user-data.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PatternValidator } from '../_validators/pattern-validator'
 
@@ -20,23 +20,12 @@ export class UserCreateComponent implements OnInit {
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, 
-                      Validators.minLength(6),
-                      PatternValidator(/\d/, { hasNumber: true }),
-                      PatternValidator(/[A-Z]/, {
-                        hasCapitalCase: true
-                      }),
-                      PatternValidator(/[a-z]/, {
-                        hasSmallCase: true
-                      }),
-                      PatternValidator(
-                        /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/,
-                        {
-                          hasSpecialCharacters: true
-                        }
-                      ),
-                    ]
-                ]
+      password: ['', [Validators.required, Validators.minLength(6),
+      PatternValidator(/\d/, { hasNumber: true }),
+      PatternValidator(/[A-Z]/, { hasCapitalCase: true }),
+      PatternValidator(/[a-z]/, { hasSmallCase: true }),
+      PatternValidator(/[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/, { hasSpecialCharacters: true })]
+      ]
     });
   }
 

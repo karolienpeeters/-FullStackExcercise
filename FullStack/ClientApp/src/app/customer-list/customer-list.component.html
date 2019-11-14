@@ -48,7 +48,7 @@
               <i *ngIf="customer.showForm" class="far fa-save" (click)="saveCustomer(customer)"></i>
             </td>
             <td *ngIf="currentUser.isAdmin">
-              <i *ngIf="customer.showForm" class="far fa-times-circle" (click)="customer.showForm=false"></i>
+              <i *ngIf="customer.showForm" class="far fa-times" aria-hidden="true" (click)="customer.showForm=false;getListCustomer()"></i>
             </td>
           </tr>
         </tbody>

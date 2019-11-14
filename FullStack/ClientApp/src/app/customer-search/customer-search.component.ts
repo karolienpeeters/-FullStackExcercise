@@ -13,48 +13,43 @@ export class CustomerSearchComponent implements OnInit {
   @Output() onClicked = new EventEmitter();
   searchForm: FormGroup;
   submitted = false;
-    
+
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.searchForm = this.formBuilder.group({
-      filterFirstName:[''],
-      filterLastName:[''],
-      filterAccountNumber:[''],
-      filterSumTotalDueHigher:[0,[PatternValidator(/\d+/,{hasNumber:true})]],
-      filterSumTotalDueLower:[0,[PatternValidator(/\d+/,{hasNumber:true})]],
+      filterFirstName: [''],
+      filterLastName: [''],
+      filterAccountNumber: [''],
+      filterSumTotalDueHigher: [0, [PatternValidator(/\d+/, { hasNumber: true })]],
+      filterSumTotalDueLower: [0, [PatternValidator(/\d+/, { hasNumber: true })]],
     })
   }
   get f() { return this.searchForm.controls; }
 
   filter(form) {
-    console.log(form);
     this.submitted = true;
-    if(this.searchForm.invalid)
-    {
+    if (this.searchForm.invalid) {
       return;
     }
-    this.customerFilterPagination.filterFirstName = form.value.filterFirstName;
-    this.customerFilterPagination.filterLastName = form.value.filterLastName;
-    this.customerFilterPagination.filterAccountNumber = form.value.filterAccountNumber;
-    this.customerFilterPagination.filterSumTotalDueHigher = form.value.filterSumTotalDueHigher;
-    this.customerFilterPagination.filterSumTotalDueLower = form.value.filterSumTotalDueLower;
-    this.customerFilterPagination.pagination.currentPage = 1; 
-
-     // console.log(this.customerFilterPagination);
+    this.setCustomerFilterPagination(form.value.filterFirstName, form.value.filterLastName, form.value.filterAccountNumber, form.value.filterSumTotalDueHigher, form.value.filterSumTotalDueLower, 1);
     this.onClicked.emit();
   }
 
- clearForm() {
-   this.submitted = false;
-   this.searchForm.reset({filterSumTotalDueHigher:0,filterSumTotalDueLower:0});
-    this.customerFilterPagination.filterFirstName = "";
-    this.customerFilterPagination.filterLastName = "";
-    this.customerFilterPagination.filterAccountNumber = "";
-    this.customerFilterPagination.filterSumTotalDueHigher = 0;
-    this.customerFilterPagination.filterSumTotalDueLower = 0;
-    this.customerFilterPagination.pagination.currentPage = 1; 
+  clearForm() {
+    this.submitted = false;
+    this.searchForm.reset({ filterSumTotalDueHigher: 0, filterSumTotalDueLower: 0 });
+    this.setCustomerFilterPagination("", "", "", 0, 0, 1);
     this.onClicked.emit();
+  }
+
+  setCustomerFilterPagination(filterFirstName: string, filterLastName: string, filterAccountNumber: string, filterSumTotalDueHigher: number, filterSumTotalDueLower: number, currentPage: number) {
+    this.customerFilterPagination.filterFirstName = filterFirstName;
+    this.customerFilterPagination.filterLastName = filterLastName;
+    this.customerFilterPagination.filterAccountNumber = filterAccountNumber;
+    this.customerFilterPagination.filterSumTotalDueHigher = filterSumTotalDueHigher;
+    this.customerFilterPagination.filterSumTotalDueLower = filterSumTotalDueLower;
+    this.customerFilterPagination.pagination.currentPage = currentPage;
   }
 
 }
