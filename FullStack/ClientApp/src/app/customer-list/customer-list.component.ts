@@ -41,7 +41,7 @@ export class CustomerListComponent implements OnInit {
     this.getListCustomer();
   }
 
-  async getListCustomer() {
+  getListCustomer() {
     this.customerService.getCustomersPage("api/customers", this.customerFilterPagination)
       .subscribe((result => {
         // console.log("get list customer result", result)

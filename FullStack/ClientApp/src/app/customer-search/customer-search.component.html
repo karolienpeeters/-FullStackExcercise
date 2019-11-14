@@ -1,31 +1,48 @@
-<form>
+<form [formGroup]="searchForm">
   <div class="form-group">
     <label for="firstName">Search on firstname</label>
-    <input type="text" class="form-control" id="firstName" name="filterFirstName" [(ngModel)]="customerFilterPagination.filterFirstName">
+    <input type="text" formControlName="filterFirstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.filterFirstName.errors }" />
+
+    <!-- <input type="text" class="form-control"  name="filterFirstName" [(ngModel)]="customerFilterPagination.filterFirstName"> -->
+    
   </div>
 
   <div class="form-group">
     <label for="lastName">Search on lastname</label>
-    <input type="text" class="form-control" id="lastName" name="filterLastName" [(ngModel)]="customerFilterPagination.filterLastName">
+    <!-- <input type="text" class="form-control" name="filterLastName" [(ngModel)]="customerFilterPagination.filterLastName"> -->
+    <input type="text" formControlName="filterLastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.filterLastName.errors }" />
+    
   </div>
 
   <div class="form-group">
     <label for="accountNumber">Search on account number</label>
-    <input type="text" class="form-control" id="accountnumber" name="accountNumber"
-      [(ngModel)]="customerFilterPagination.filterAccountNumber">
+    <!-- <input type="text" class="form-control"  name="accountNumber"
+      [(ngModel)]="customerFilterPagination.filterAccountNumber"> -->
+      <input type="text" formControlName="filterAccountNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.filterAccountNumber.errors }" />
+
   </div>
 
   <div class="form-group">
     <label for="sumTotalDue">Search sum total due lower then</label>
-    <input type="text" class="form-control" id="sumtotaldueLower" name="filterSumTotalDueLower"
-      [(ngModel)]="customerFilterPagination.filterSumTotalDueLower">
+    <!-- <input type="text" class="form-control"  name="filterSumTotalDueLower"
+      [(ngModel)]="customerFilterPagination.filterSumTotalDueLower"> -->
+      <input type="text" formControlName="filterSumTotalDueLower" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.filterSumTotalDueLower.errors }" />
+
+      <div *ngIf="submitted && f.filterSumTotalDueLower.errors" class="invalid-feedback">
+        <div *ngIf="f.filterSumTotalDueLower.errors.hasNumber">Can only contain numbers</div>
+    </div>
   </div>
 
   <div class="form-group">
     <label for="sumTotalDue">Search sum total due higher then</label>
-    <input type="text" class="form-control" id="sumtotaldueHigher" name="filterSumTotalDueHigher"
-      [(ngModel)]="customerFilterPagination.filterSumTotalDueHigher">
+    <input type="text" formControlName="filterSumTotalDueHigher" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.filterSumTotalDueHigher.errors }" />
+<!-- 
+    <input type="text" class="form-control"  name="filterSumTotalDueHigher"
+      [(ngModel)]="customerFilterPagination.filterSumTotalDueHigher"> -->
+      <div *ngIf="submitted && f.filterSumTotalDueHigher.errors" class="invalid-feedback">
+        <div *ngIf="f.filterSumTotalDueHigher.errors.hasNumber">Can only contain numbers</div>
+    </div>
   </div>
-  <button type="submit" class="btn btn-primary mr-3" (click)="filter()">Search</button>
+  <button type="submit" class="btn btn-primary mr-3" (click)="filter(searchForm)">Search</button>
   <button type="submit" class="btn btn-primary" (click)="clearForm()">Reset</button>
 </form>
