@@ -32,12 +32,12 @@
               </td>
               <td>
                 <i *ngIf="!user.showForm" class="far fa-edit" (click)="user.showForm = true"></i>
-                <i *ngIf="user.showForm" class="far fa-save" (click)="saveUser(user)"></i>
+                <i *ngIf="user.showForm" class="far fa-save" (click)="updateUser(user)"></i>
 
               </td>
               <td>
                 <i *ngIf="!user.showForm" class="fa fa-trash" aria-hidden="true" (click)="deleteUser(user)"></i>
-                <i *ngIf="user.showForm" class="fa fa-times" aria-hidden="true" (click)="user.showForm = false"></i>
+                <i *ngIf="user.showForm" class="fa fa-times" aria-hidden="true" (click)="user.showForm = false; getListUser()"></i>
               </td>
             </tr>
           </tbody>

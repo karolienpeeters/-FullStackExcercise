@@ -1,9 +1,13 @@
-﻿using FullStack.BLL.Interfaces;
+﻿using System.Linq;
+using FullStack.BLL.Interfaces;
 using FullStack.BLL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using FullStack.BLL.Common;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace FullStack.API.Controllers
 {
@@ -32,8 +36,7 @@ namespace FullStack.API.Controllers
         public async Task<IActionResult> Register([FromBody]UserDto userDto)
         {
             var result = await _userService.RegisterNewUser(userDto);
-            return Ok(result);
-
+            return !result.Succeeded ? StatusCode(500, result.Errors.First()) : Ok(result);
         }
 
         [HttpPost]
@@ -41,24 +44,24 @@ namespace FullStack.API.Controllers
         public async Task<IActionResult> Create([FromBody]UserDto userDto)
         {
             var result = await _userService.RegisterNewUser(userDto);
-            return Ok(result);
 
+            return !result.Succeeded ? StatusCode(500, result.Errors.First()) : Ok(result);
         }
 
         [Route("delete")]
         public async Task<IActionResult> Delete(string userId)
         {
             var result = await _userService.DeleteUser(userId);
-            return Ok(result);
+
+            return !result.Succeeded ? StatusCode(500, result.Errors.First()) : Ok(result);
         }
 
         [HttpPut("updateuser/{uid}")]
         public async Task<IActionResult> UpdateUser([FromBody]UserDto userDto, string uid)
         {
             var result = await _userService.UpdateUser(userDto);
-            //var result = await _userService.Update(userDto);
 
-            return Ok(result);
+            return !result.Succeeded ? StatusCode(500,result.Errors.First()) : Ok(result);
         }
 
 

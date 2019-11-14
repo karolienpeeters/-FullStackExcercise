@@ -20,9 +20,9 @@ namespace FullStack.API.Controllers
         }
 
         [HttpGet, Authorize]
-        public IActionResult Get(int skip, int take, string filterFirstName, string filterLastName, string filterAccountNumber, string filterSumTotalDueHigher, decimal filterSumTotalDueLower)
+        public IActionResult Get(int skip, int take, string filterFirstName, string filterLastName, string filterAccountNumber, decimal filterSumTotalDueHigher, decimal filterSumTotalDueLower)
         {
-            var customers = _customerService.GetListCustomersPage(skip,take,filterFirstName,filterLastName,filterAccountNumber,decimal.Parse(filterSumTotalDueHigher), filterSumTotalDueLower);
+            var customers = _customerService.GetListCustomersPage(skip,take,filterFirstName,filterLastName,filterAccountNumber,filterSumTotalDueHigher, filterSumTotalDueLower);
             return Ok(customers);
         }
 
@@ -30,6 +30,7 @@ namespace FullStack.API.Controllers
         public IActionResult UpdateCustomer([FromBody]CustomerDto customerDto)
         {
             _customerService.UpdateCustomer(customerDto);
+
             return Ok();
         }
 

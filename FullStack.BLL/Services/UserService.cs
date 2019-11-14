@@ -43,7 +43,7 @@ namespace FullStack.BLL.Services
                     issuer: "https://localhost:44318",
                     audience: "*",
                     claims: claims,
-                    expires: DateTime.Now.AddMinutes(5),
+                    expires: DateTime.Now.AddMinutes(1),
                     signingCredentials: signinCredentials
                 );
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
@@ -58,13 +58,22 @@ namespace FullStack.BLL.Services
 
         public PaginationDto GetUsersWithRoles(int skip, int take)
         {
-            var usersPagination = _userRepository.GetApplicationUsersAndRoles(skip,take);
-            var usersPaginationDto = new PaginationDto(usersPagination)
+            try
             {
-                UserList = usersPagination.UserList.Select(userItem => new UserDto(userItem)).ToList()
-            };
+                var usersPagination = _userRepository.GetApplicationUsersAndRoles(skip, take);
+                var usersPaginationDto = new PaginationDto(usersPagination)
+                {
+                    UserList = usersPagination.UserList.Select(userItem => new UserDto(userItem)).ToList()
+                };
 
-            return usersPaginationDto;
+                return usersPaginationDto;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
         }
 
         public async Task<IdentityResult> RegisterNewUser(UserDto userDto)
@@ -96,20 +105,20 @@ namespace FullStack.BLL.Services
 
         }
 
-        public async Task<List<IdentityResult>> UpdateUser(UserDto userDto)
+        public async Task<IdentityResult> UpdateUser(UserDto userDto)
         {
-            var listResult =new List<IdentityResult>();
+            
             try
             {
                 var user = _userRepository.FindById(userDto.UserId).Result;
                 user.Email = userDto.Email;
                 user.UserName = userDto.Email;
                 var userRoles = _userRepository.GetRolesUser(user).Result;
-                listResult.Add(await _userRepository.AddRoles(user, userRoles, userDto.RolesList));
-                listResult.Add(await _userRepository.RemoveRoles(user, userRoles, userDto.RolesList));
-                listResult.Add(await _userRepository.UpdateUser(user));
+                await _userRepository.RemoveRoles(user, userRoles, userDto.RolesList);
+                await _userRepository.UpdateUser(user);
 
-               return listResult;
+                return await _userRepository.AddRoles(user, userRoles, userDto.RolesList);
+                
             }
             catch (Exception e)
             {

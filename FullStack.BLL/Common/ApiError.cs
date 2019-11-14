@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Westwind.Utilities;
 
 namespace FullStack.BLL.Common
 
 {
-    public class ApiError
+    public class ApiError 
     {
         public string message { get; set; }
         public bool isError { get; set; }
@@ -34,5 +35,7 @@ namespace FullStack.BLL.Common
                 //errors = modelState.SelectMany(m => m.Value.Errors.Select(me => new ModelError { FieldName = m.Key, ErrorMessage = me.ErrorMessage }));
             }
         }
+
+       
     }
 }

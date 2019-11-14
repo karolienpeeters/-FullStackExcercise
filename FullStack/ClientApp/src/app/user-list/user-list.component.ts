@@ -3,6 +3,7 @@ import { User } from '../interfaces/user';
 import { UserDataService } from '../services/user-data.service';
 import { Pagination } from '../interfaces/pagination';
 import { PaginationComponent } from '../pagination/pagination.component';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-user-list',
@@ -11,52 +12,55 @@ import { PaginationComponent } from '../pagination/pagination.component';
 })
 export class UserListComponent implements OnInit {
   public userList;
-  public user:User;
-  public pagination:Pagination;
+  public user: User;
+  public pagination: Pagination;
   @ViewChild(PaginationComponent) paginationComponent: PaginationComponent;
-    
 
-  constructor(private userService: UserDataService) { }
+
+  constructor(private userService: UserDataService, private notificationService: NotificationService) { }
 
   ngOnInit() {
     // console.log("user list on init")
-    this.pagination={
-      pageSize:10,
+    this.pagination = {
+      pageSize: 10,
       currentPage: 1,
       totalItems: 0,
-      customerList:[],
-      userList:[]
+      customerList: [],
+      userList: []
     };
     this.getListUser();
   }
 
   getListUser() {
     // console.log("activated get list user")
-    this.userService.getUsers("api/users", this.pagination.currentPage,this.pagination.pageSize).subscribe((result => {
-     this.pagination.totalItems = result.totalItems;
-     this.pagination.userList = result.userList;
+    this.userService.getUsers("api/users", this.pagination.currentPage, this.pagination.pageSize).subscribe((result => {
+      this.pagination.totalItems = result.totalItems;
+      this.pagination.userList = result.userList;
       // console.log(this.pagination,"getListUser");
       this.paginationComponent.setPage(this.pagination.currentPage);
     }));
   }
 
-  deleteUser(user:User)
-  {
-     this.userService.deleteUser(user).subscribe((()=>{this.getListUser();}))
+  deleteUser(user: User) {
+    this.userService.deleteUser(user).subscribe((() => { 
+      this.notificationService.showSuccess(user.email + " deleted successful")
+      this.getListUser(); 
+    }))
   }
 
-  saveUser(user){
+  updateUser(user) {
     var string = user.rolesList.toString();
     user.rolesList = string.split(",");
     this.userService.updateUser(user).subscribe((result => {
-      // console.log(result,"save user");
-       user.showForm = false;
-       this.getListUser();
+      console.log(result, "save user");
+      this.notificationService.showSuccess(`update successful`)
+      user.showForm = false;
+      this.getListUser();
 
     }));
   }
 
 
-  
+
 
 }

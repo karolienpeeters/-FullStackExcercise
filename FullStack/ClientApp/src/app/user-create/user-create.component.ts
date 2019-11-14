@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { User } from '../interfaces/user';
 import { UserDataService } from '../services/user-data.service';
 
+
 @Component({
   selector: 'app-user-create',
   templateUrl: './user-create.component.html',
@@ -17,6 +18,7 @@ export class UserCreateComponent implements OnInit {
   }
 
   registerUser(form) {
+    console.log(form);
     this.userService.registerUser(form.value).subscribe((() => {
       form.reset();
       this.onClicked.emit();

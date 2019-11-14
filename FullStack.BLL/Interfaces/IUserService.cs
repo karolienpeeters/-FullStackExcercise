@@ -11,7 +11,7 @@ namespace FullStack.BLL.Interfaces
         PaginationDto GetUsersWithRoles(int skip, int take);
         Task<IdentityResult> RegisterNewUser(UserDto userLogin);
         Task<IdentityResult> DeleteUser(string userId);
-        Task<List<IdentityResult>> UpdateUser(UserDto userDto);
+        Task<IdentityResult> UpdateUser(UserDto userDto);
 
         //Task<IdentityResult> Update(UserDto userDto);
 

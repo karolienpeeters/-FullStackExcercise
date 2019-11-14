@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -17,6 +17,9 @@ import { AdminGuard } from './guards/admin.guard';
 import { PaginationComponent } from './pagination/pagination.component';
 import { CustomerSearchComponent } from './customer-search/customer-search.component';
 import { UserCreateComponent } from './user-create/user-create.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { GlobalErrorHandler } from './_helpers/global-error-handler';
+
 
 
 @NgModule({
@@ -36,6 +39,7 @@ import { UserCreateComponent } from './user-create/user-create.component';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
+    MatSnackBarModule,
     RouterModule.forRoot([
       { path: '', component: CustomerListComponent, pathMatch: 'full', canActivate: [AuthGuard] },
       { path: 'login', component: LoginComponent },
@@ -46,6 +50,7 @@ import { UserCreateComponent } from './user-create/user-create.component';
     ])
   ],
   providers: [
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
