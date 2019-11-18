@@ -37,13 +37,13 @@ namespace FullStack.API.ErrorHandling
 
                 context.HttpContext.Response.StatusCode = ex.StatusCode;
 
-                _logger.LogWarning($"Application thrown error: {ex.Message}", ex);
+                //_logger.LogWarning($"Application thrown error: {ex.Message}", ex);
             }
             else if (context.Exception is UnauthorizedAccessException)
             {
                 apiError = new ApiError("Unauthorized Access");
                 context.HttpContext.Response.StatusCode = 401;
-                _logger.LogWarning("Unauthorized Access in Controller Filter.");
+               // _logger.LogWarning("Unauthorized Access in Controller Filter.");
             }
             else
             {

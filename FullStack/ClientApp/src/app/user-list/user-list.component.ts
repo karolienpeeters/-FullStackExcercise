@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { User } from '../interfaces/user';
-import { UserDataService } from '../services/user-data.service';
-import { Pagination } from '../interfaces/pagination';
+import { User } from '../_interfaces/user';
+import { UserDataService } from '../_services/user-data.service';
+import { Pagination } from '../_interfaces/pagination';
 import { PaginationComponent } from '../pagination/pagination.component';
-import { NotificationService } from '../services/notification.service';
+import { NotificationService } from '../_services/notification.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalEditUserComponent } from '../modal-edit-user/modal-edit-user.component';
 
 @Component({
   selector: 'app-user-list',
@@ -17,7 +19,8 @@ export class UserListComponent implements OnInit {
   @ViewChild(PaginationComponent) paginationComponent: PaginationComponent;
 
 
-  constructor(private userService: UserDataService, private notificationService: NotificationService) { }
+  constructor(private userService: UserDataService, 
+    private notificationService: NotificationService,private modalService: NgbModal) { }
 
   ngOnInit() {
     // console.log("user list on init")
@@ -54,13 +57,21 @@ export class UserListComponent implements OnInit {
     this.userService.updateUser(user).subscribe((result => {
       console.log(result, "save user");
       this.notificationService.showSuccess(`update successful`)
-      user.showForm = false;
       this.getListUser();
 
     }));
   }
 
-
+  openForm(user:User){
+    const modalRef = this.modalService.open(ModalEditUserComponent,{backdrop: 'static', keyboard: false});
+    modalRef.componentInstance.title = 'Edit user';
+    modalRef.componentInstance.user = user;
+       modalRef.result.then((result) => {
+      if (result) {
+      this.updateUser(result);
+      }
+    });
+  }
 
 
 }

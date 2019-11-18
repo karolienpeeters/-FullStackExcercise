@@ -10,7 +10,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-
+using FullStack.BLL.Common;
 
 
 namespace FullStack.BLL.Services
@@ -94,7 +94,11 @@ namespace FullStack.BLL.Services
         {
             try
             {
-                var user = _userRepository.FindById(userId).Result;
+               var user = _userRepository.FindById(userId).Result;
+               if (user == null)
+               {
+                   throw new ApiException("The user you want to delete does not exist");
+               }
                return  await _userRepository.DeleteUser(user);
             }
             catch (Exception e)
@@ -110,15 +114,42 @@ namespace FullStack.BLL.Services
             
             try
             {
-                var user = _userRepository.FindById(userDto.UserId).Result;
+                var user = await _userRepository.FindById(userDto.Id);
+
+                if (user == null)
+                {
+                    throw new ApiException("The user you want to change does not exist");
+                }
+
+                //userDTO rolelist opvangen via validatie model
                 user.Email = userDto.Email;
                 user.UserName = userDto.Email;
-                var userRoles = _userRepository.GetRolesUser(user).Result;
-                await _userRepository.RemoveRoles(user, userRoles, userDto.RolesList);
-                await _userRepository.UpdateUser(user);
 
-                return await _userRepository.AddRoles(user, userRoles, userDto.RolesList);
-                
+                var userRoles = await _userRepository.GetRolesUser(user);
+
+                var result = await _userRepository.RemoveRoles(user, userRoles, userDto.RolesList);
+
+                if (!result.Succeeded)
+                {
+                    throw new ApiException("Something went wrong with removing roles, please contact your web administrator");
+                }
+
+                result = await _userRepository.AddRoles(user, userRoles, userDto.RolesList);
+
+                if (!result.Succeeded)
+                {
+                    throw new ApiException("Something went wrong with adding roles, please contact your web administrator");
+                }
+
+                result = await _userRepository.UpdateUser(user);
+
+                if (!result.Succeeded)
+                {
+                    throw new ApiException("Something went wrong with updating the user, please contact your web administrator");
+                }
+
+                return result;
+
             }
             catch (Exception e)
             {
@@ -128,25 +159,6 @@ namespace FullStack.BLL.Services
 
         }
 
-        //public async Task<IdentityResult> Update(UserDto userDto)
-        //{
-        //    try
-        //    {
-        //        var user = _userRepository.FindById(userDto.UserId).Result;
-        //        user.Email = userDto.Email;
-        //        user.UserName = userDto.Email;
-        //        var userRoles = _userRepository.GetRolesUser(user).Result;
-               
-        //        return await _userRepository.Update(user, userRoles, userDto.RolesList);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e);
-        //        throw;
-        //    }
-
-
-        //}
 
     }
 }

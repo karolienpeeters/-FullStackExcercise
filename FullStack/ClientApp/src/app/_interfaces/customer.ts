@@ -4,6 +4,5 @@ export interface Customer {
     firstName: string;
     lastName: string;
     sumTotalDue: number;
-    showForm:boolean;
 }
 

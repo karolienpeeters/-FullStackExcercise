@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Customer } from '../interfaces/customer';
-import { CustomerFilterPagination } from '../interfaces/customerFilterPagination';
-import { Pagination } from '../interfaces/pagination';
+import { Customer } from '../_interfaces/customer';
+import { CustomerFilterPagination } from '../_interfaces/customerFilterPagination';
+import { Pagination } from '../_interfaces/pagination';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +17,7 @@ export class CustomerDataService {
   }
 
   updateCustomer(customer: Customer) {
+    console.log(customer,"customerservice");
     return this.http.put(this.createRoute("api/customers/updatecustomer", environment.urlAddress), customer);
   }
 
@@ -27,5 +28,7 @@ export class CustomerDataService {
   private createRoute(route: string, envAddress: string) {
     return `${envAddress}/${route}`;
   }
+
+ 
 
 }

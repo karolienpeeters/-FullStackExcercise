@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-lg">
-      <p *ngIf ="customerFilterPagination.pagination.customerList.length == 0">No results found</p>
+      <p *ngIf="customerFilterPagination.pagination.customerList.length == 0">No results found</p>
       <table *ngIf="customerFilterPagination.pagination.customerList.length > 0" class="table">
         <thead>
           <tr>
@@ -13,43 +13,22 @@
             <th *ngIf="currentUser.isAdmin"></th>
           </tr>
         </thead>
-       
+
         <tbody>
           <tr *ngFor="let customer of customerFilterPagination.pagination.customerList">
 
-            <td *ngIf="!customer.showForm">
-              {{customer.accountNumber}}
-            </td>
-            <td *ngIf="customer.showForm">
-              <input type="text" class="form-control" name="accountNumber" [(ngModel)]="customer.accountNumber"
-                placeholder="customer.accountNumber">
-            </td>
+            <td>{{customer.accountNumber}}</td>
 
-            <td *ngIf="!customer.showForm">
-              {{customer.firstName}}
-            </td>
-            <td *ngIf="customer.showForm">
-              <input *ngIf="customer.showForm" type="text" class="form-control" name="firstName"
-                [(ngModel)]="customer.firstName" placeholder="customer.firstName">
-            </td>
+            <td>{{customer.firstName}} </td>
 
-            <td *ngIf="!customer.showForm">
-              {{customer.lastName}}
-            </td>
-            <td *ngIf="customer.showForm">
-              <input *ngIf="customer.showForm" type="text" class="form-control" name="lastName"
-                [(ngModel)]="customer.lastName" placeholder="customer.lastName">
-            </td>
+            <td>{{customer.lastName}}</td>
 
             <td>{{customer.sumTotalDue}}</td>
 
             <td *ngIf="currentUser.isAdmin">
-              <i *ngIf="!customer.showForm" class="far fa-edit" (click)="customer.showForm=true"></i>
-              <i *ngIf="customer.showForm" class="far fa-save" (click)="saveCustomer(customer)"></i>
+              <i *ngIf="!customer.showForm" class="far fa-edit" (click)="openForm(customer)"></i>
             </td>
-            <td *ngIf="currentUser.isAdmin">
-              <i *ngIf="customer.showForm" class="far fa-times" aria-hidden="true" (click)="customer.showForm=false;getListCustomer()"></i>
-            </td>
+
           </tr>
         </tbody>
 
@@ -62,11 +41,12 @@
     </div>
 
   </div>
-<div class="row justify-content-center">
+  <div class="row justify-content-center">
     <div class="col-lg ">
-  <app-pagination [pagination]="customerFilterPagination.pagination"
-    (onClickedPage)="getListCustomer()"></app-pagination>
+      <app-pagination [pagination]="customerFilterPagination.pagination" (onClickedPage)="getListCustomer()">
+      </app-pagination>
     </div>
   </div>
 </div>
+
 

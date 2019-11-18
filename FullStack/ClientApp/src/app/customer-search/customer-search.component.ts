@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { CustomerFilterPagination } from '../interfaces/customerFilterPagination';
+import { CustomerFilterPagination } from '../_interfaces/customerFilterPagination';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { PatternValidator } from '../_validators/pattern-validator';
 

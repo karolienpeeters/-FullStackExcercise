@@ -51,12 +51,12 @@ namespace FullStack.API.Controllers
         [Route("delete")]
         public async Task<IActionResult> Delete(string userId)
         {
-            var result = await _userService.DeleteUser(userId);
+            var result = await _userService.DeleteUser("5");
 
             return !result.Succeeded ? StatusCode(500, result.Errors.First()) : Ok(result);
         }
 
-        [HttpPut("updateuser/{uid}")]
+        [HttpPut("updateuser")]
         public async Task<IActionResult> UpdateUser([FromBody]UserDto userDto, string uid)
         {
             var result = await _userService.UpdateUser(userDto);

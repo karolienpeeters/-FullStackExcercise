@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 
 import * as jwt_decode from 'jwt-decode';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { User } from '../interfaces/user';
+import { User } from '../_interfaces/user';
 import { map, distinctUntilChanged } from 'rxjs/operators';
 
 export const TOKEN_NAME: string = 'jwt_token';
@@ -55,9 +55,9 @@ export class AuthService {
     var decoded = jwt_decode(token);
 
     let user = {
-      rolesList: decoded ['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'],
-      userId: "",
-      email: decoded ['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'],
+      rolesList: decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'],
+      id: "",
+      email: decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'],
       showForm: false,
       token: token,
       isAdmin: false

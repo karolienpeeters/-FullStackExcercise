@@ -10,16 +10,19 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { CustomerListComponent } from './customer-list/customer-list.component';
 import { LoginComponent } from './login/login.component';
 import { UserListComponent } from './user-list/user-list.component';
-import { AuthGuard } from './guards/auth.guard';
+import { AuthGuard } from './_guards/auth.guard';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
-import { AdminGuard } from './guards/admin.guard';
+import { AdminGuard } from './_guards/admin.guard';
 import { PaginationComponent } from './pagination/pagination.component';
 import { CustomerSearchComponent } from './customer-search/customer-search.component';
 import { UserCreateComponent } from './user-create/user-create.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { GlobalErrorHandler } from './_helpers/global-error-handler';
-
+import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from './modal/modal.component';
+import { ModalEditCustomerComponent } from './modal-edit-customer/modal-edit-customer.component';
+import { ModalEditUserComponent } from './modal-edit-user/modal-edit-user.component';
 
 
 
@@ -32,7 +35,10 @@ import { GlobalErrorHandler } from './_helpers/global-error-handler';
     UserListComponent,
     PaginationComponent,
     CustomerSearchComponent,
-    UserCreateComponent
+    UserCreateComponent,
+    ModalComponent,
+    ModalEditCustomerComponent,
+    ModalEditUserComponent
   ],
 
   imports: [
@@ -42,6 +48,7 @@ import { GlobalErrorHandler } from './_helpers/global-error-handler';
     BrowserAnimationsModule,
     MatSnackBarModule,
     ReactiveFormsModule,
+    NgbModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: CustomerListComponent, pathMatch: 'full', canActivate: [AuthGuard] },
       { path: 'login', component: LoginComponent },
@@ -52,10 +59,15 @@ import { GlobalErrorHandler } from './_helpers/global-error-handler';
     ])
   ],
   providers: [
+    NgbActiveModal,
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    ModalEditCustomerComponent,
+    ModalEditUserComponent
+  ]
 })
 export class AppModule { }

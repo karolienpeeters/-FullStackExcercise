@@ -1,0 +1,27 @@
+<app-modal [title]="title">
+  <form [formGroup]="editCustomerForm" (ngSubmit)="saveCustomer(editCustomerForm)">
+
+      <div class="form-group">
+      <label for="firstName">Firstname</label>
+      <input type="text" formControlName="firstName" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+      <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+        <div *ngIf="f.firstName.errors.required">Firstname is required</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="lastName">Lastname</label>
+      <input type="text" formControlName="lastName" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
+      <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+        <div *ngIf="f.lastName.errors.required">Lastname is required</div>
+      </div>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary mr-3">Save</button>
+
+
+  </form>
+</app-modal >

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Pagination } from '../interfaces/pagination';
+import { Pagination } from '../_interfaces/pagination';
 
 
 @Injectable({
@@ -24,7 +24,8 @@ export class UserDataService {
   }
 
   updateUser(user) {
-    return this.http.put(this.createRoute("api/users/updateuser/" + user.userId, environment.urlAddress), user);
+    //console.log('userservice',user)
+    return this.http.put(this.createRoute("api/users/updateuser", environment.urlAddress), user);
   }
 
   private createRoute(route: string, envAddress: string) {
