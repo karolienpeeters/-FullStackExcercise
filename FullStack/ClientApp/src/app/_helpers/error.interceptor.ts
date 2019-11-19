@@ -16,22 +16,12 @@ export class ErrorInterceptor implements HttpInterceptor {
             if ([401, 403].indexOf(err.status) !== -1) {
                 // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
                 console.log ("errorinterceptor 401/403")
-            
                 this.router.navigate(['/login']);
-                return throwError("Please login again or contact your administrator");
+                return throwError("Login again or contact your administrator");
 
             }
 
-            console.log("error interceptor")
-            console.log(err)
-
-                
-
-
             const error = err.error.message || err.error.title || err.error.description;
-            console.log(err.error)
-          
-            console.log(error)
             return throwError(error);
         }))
     }

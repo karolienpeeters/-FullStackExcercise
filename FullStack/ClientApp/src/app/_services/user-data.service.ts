@@ -11,8 +11,8 @@ export class UserDataService {
 
   constructor(private http: HttpClient) { }
 
-  getUsers(route: string, skip: number, take: number) {
-    return this.http.get<Pagination>(this.createRoutePage(route, environment.urlAddress, skip, take));
+  getUsers(skip: number, take: number) {
+    return this.http.get<Pagination>(this.createRoute("api/users" + `?skip=${skip}&take=${take}`, environment.urlAddress));
   }
 
   registerUser(user) {
@@ -20,11 +20,10 @@ export class UserDataService {
   }
 
   deleteUser(user) {
-    return this.http.delete(this.createRoute("api/users/delete?userid=" + user.userId, environment.urlAddress));
+    return this.http.delete(this.createRoute("api/users/delete?id=" + user.id, environment.urlAddress));
   }
 
   updateUser(user) {
-    //console.log('userservice',user)
     return this.http.put(this.createRoute("api/users/updateuser", environment.urlAddress), user);
   }
 
@@ -32,7 +31,5 @@ export class UserDataService {
     return `${envAddress}/${route}`;
   }
 
-  private createRoutePage(route: string, envAddress: string, skip: number, take: number) {
-    return `${envAddress}/${route}?skip=${skip}&take=${take}`;
-  }
+
 }

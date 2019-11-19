@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Pagination } from '../_interfaces/pagination';
 
 @Component({
@@ -7,30 +7,24 @@ import { Pagination } from '../_interfaces/pagination';
   styleUrls: ['./pagination.component.css']
 })
 export class PaginationComponent implements OnInit {
- 
-  @Input() pagination:Pagination;
+
+  @Input() pagination: Pagination;
   @Output() onClickedPage = new EventEmitter();
   pager: any = {};
   maxPages = 10;
- 
+
   constructor() { }
 
-  ngOnInit() {  }
+  ngOnInit() { }
 
-   setPage(page: number) {
-     this.pager = this.paginate(this.pagination.totalItems, page, this.pagination.pageSize, this.maxPages);
-    //  console.log("Setpage activate:")
-    //  console.log("Pager - ",this.pager)
-    //  console.log("pagination - ",this.pagination)
-   }
-
-   goToPage(page:number){
+  setPage(page: number) {
     this.pager = this.paginate(this.pagination.totalItems, page, this.pagination.pageSize, this.maxPages);
-    // console.log("goToPage activate:")
-    // console.log("Pager - ",this.pager)
-    // console.log("pagination - ",this.pagination)
+  }
+
+  goToPage(page: number) {
+    this.pager = this.paginate(this.pagination.totalItems, page, this.pagination.pageSize, this.maxPages);
     this.onClickedPage.emit();
-   }
+  }
 
   paginate(totalItems, currentPage, pageSize, maxPages) {
     if (currentPage === void 0) { currentPage = 1; }

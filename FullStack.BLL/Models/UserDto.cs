@@ -1,5 +1,5 @@
-﻿using FullStack.DAL.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using FullStack.DAL.Models;
 
 namespace FullStack.BLL.Models
 {
@@ -7,9 +7,7 @@ namespace FullStack.BLL.Models
     {
         public UserDto()
         {
-            
         }
-
 
         public UserDto(User user)
         {
@@ -18,11 +16,8 @@ namespace FullStack.BLL.Models
             Email = user.Email;
         }
 
-
         public string Id { get; set; }
         public List<string> RolesList { get; set; }
         public string Email { get; set; }
-        public string PassWord { get; set; }
-      
     }
 }

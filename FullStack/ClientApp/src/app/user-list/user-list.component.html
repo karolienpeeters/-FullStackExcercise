@@ -16,14 +16,17 @@
             <tr *ngFor="let user of pagination.userList">
               <td>{{user.email}}</td>
               <td>{{user.rolesList}}</td>
-              <td><i class="far fa-edit" (click)="openForm(user)"></i></td>
+              <td><i class="far fa-edit" (click)="openUpdateForm(user)"></i></td>
               <td><i class="fa fa-trash" aria-hidden="true" (click)="deleteUser(user)"></i></td>
             </tr>
           </tbody>
         </table>
+
         <app-pagination [pagination]="pagination" (onClickedPage)="getListUser()"></app-pagination>
+
       </div>
     </div>
+
     <div class="coll-md-6  align-self-top">
       <div class="col-md-12">
         <app-user-create (onClicked)="getListUser()"></app-user-create>

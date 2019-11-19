@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using FullStack.DAL.Interfaces;
-using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
+using FullStack.DAL.Interfaces;
 using FullStack.DAL.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace FullStack.DAL.Repositories
 {
-    public class UserRepository:IUserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UserRepository(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public UserRepository(UserManager<IdentityUser> userManager)
         {
             _userManager = userManager;
-            _roleManager = roleManager;
         }
 
 
@@ -25,7 +22,7 @@ namespace FullStack.DAL.Repositories
             return await _userManager.FindByNameAsync(userName);
         }
 
-        public async Task<IdentityUser> FindById (string userId)
+        public async Task<IdentityUser> FindById(string userId)
         {
             return await _userManager.FindByIdAsync(userId);
         }
@@ -36,26 +33,23 @@ namespace FullStack.DAL.Repositories
         }
 
         public async Task<IdentityResult> CreateUser(string userName, string password)
-        { 
-            return await _userManager.CreateAsync(new IdentityUser { UserName = userName, Email = userName }, password);
+        {
+            return await _userManager.CreateAsync(new IdentityUser {UserName = userName, Email = userName}, password);
         }
 
         // GET: ApplicationUserRoles
         public Pagination GetApplicationUsersAndRoles(int skip, int take)
         {
-
             var userPage = new Pagination();
-           
-            var identityUsers = _userManager.Users.Skip((skip-1)*take).Take(take);
+
+            var identityUsers = _userManager.Users.Skip((skip - 1) * take).Take(take);
             userPage.TotalItems = _userManager.Users.Count();
 
             foreach (var user in identityUsers)
             {
                 var roles = GetRolesUser(user).Result.ToList();
                 userPage.UserList.Add(new User(user, roles));
-
             }
-            
 
             return userPage;
         }
@@ -65,7 +59,7 @@ namespace FullStack.DAL.Repositories
             return await _userManager.GetRolesAsync(iUser);
         }
 
-        public async Task<IdentityResult> DeleteUser (IdentityUser iUser)
+        public async Task<IdentityResult> DeleteUser(IdentityUser iUser)
         {
             return await _userManager.DeleteAsync(iUser);
         }
@@ -75,31 +69,14 @@ namespace FullStack.DAL.Repositories
             return await _userManager.UpdateAsync(iUser);
         }
 
-        public async Task<IdentityResult> AddRoles (IdentityUser iUser,IList<string> userRoles, List<string> roles)
+        public async Task<IdentityResult> AddRoles(IdentityUser iUser, IList<string> userRoles, List<string> roles)
         {
             return await _userManager.AddToRolesAsync(iUser, roles.Except(userRoles).ToList());
         }
 
         public async Task<IdentityResult> RemoveRoles(IdentityUser iUser, IList<string> userRoles, List<string> roles)
         {
-            return  await _userManager.RemoveFromRolesAsync(iUser, userRoles.Except(roles).ToList());
+            return await _userManager.RemoveFromRolesAsync(iUser, userRoles.Except(roles).ToList());
         }
-
-        //public async Task<IdentityResult> Update(IdentityUser iUser, IList<string> userRoles, List<string> roles)
-        //{
-        //    if (roles.Any())
-        //    {
-                
-        //    }
-        //    await _userManager.AddToRolesAsync(iUser, roles.Except(userRoles).ToList());
-
-        //    await _userManager.RemoveFromRolesAsync(iUser, userRoles.Except(roles).ToList());
-
-        //    return await _userManager.UpdateAsync(iUser);
-
-            
-        //}
-
-       
     }
 }

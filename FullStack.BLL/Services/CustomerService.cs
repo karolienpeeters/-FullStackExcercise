@@ -1,81 +1,85 @@
-﻿using FullStack.BLL.Interfaces;
+﻿using System;
+using System.Linq;
+using FluentValidation;
+using FullStack.BLL.Common;
+using FullStack.BLL.Interfaces;
 using FullStack.BLL.Models;
 using FullStack.DAL.Interfaces;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using FullStack.DAL.Models;
+using FullStack.DAL.Models.Entities;
+using FullStack.DAL.Validators;
+using Microsoft.AspNetCore.Mvc.Internal;
+using Westwind.Utilities;
 
 namespace FullStack.BLL.Services
 {
     public class CustomerService : ICustomerService
     {
         private readonly ICustomerRepository _customerRepository;
+        private readonly IValidator<Customer> _customerValidator;
 
-        public CustomerService(ICustomerRepository repository )
+        public CustomerService(ICustomerRepository repository, IValidator<Customer> customerValidator)
         {
             _customerRepository = repository;
+            _customerValidator = customerValidator;
         }
 
-        public List<CustomerDto> GetListCustomers()
+
+        public PaginationDto GetListCustomersPage(int skip, int take, string filterFirstName, string filterLastName,
+            string filterAccountNumber, decimal filterSumTotalDueHigher, decimal filterSumTotalDueLower)
         {
             try
             {
-                var customers = _customerRepository.GetCustomers();
-                var listCustomersDto = new List<CustomerDto>();
+                var paginationModel = _customerRepository.GetCustomersPage((skip - 1) * take, take, filterFirstName,
+                    filterLastName, filterAccountNumber, filterSumTotalDueHigher, filterSumTotalDueLower);
 
-                foreach (var customer in customers)
+                var paginationDto = new PaginationDto(paginationModel);
+
+                foreach (var customer in paginationModel.CustomerItemList)
                 {
                     var customerModel = new CustomerDto(customer)
                     {
                         SumTotalDue = customer.SalesOrderHeader.Sum(s => s.TotalDue)
                     };
-                    listCustomersDto.Add(customerModel);
-
+                    paginationDto.CustomerList.Add(customerModel);
                 }
 
-                return listCustomersDto.ToList();
-
+                return paginationDto;
             }
-            catch (System.Exception)
+            catch (Exception e)
             {
-
-                throw;
+                Console.WriteLine(e);
+                throw new ApiException(e);
+                
             }
-
-
         }
 
-        public PaginationDto GetListCustomersPage(int skip, int take, string filterFirstName, string filterLastName, string filterAccountNumber, decimal filterSumTotalDueHigher, decimal filterSumTotalDueLower)
+        public int UpdateCustomer(CustomerDto customerDto)
         {
+            try
+            {
+                var customer = _customerRepository.GetCustomer(customerDto.Id);
 
-            var paginationModel = _customerRepository.GetCustomersPage(((skip-1)*take), take, filterFirstName, filterLastName, filterAccountNumber, filterSumTotalDueHigher,filterSumTotalDueLower);
+                if (customer == null) throw new ApiException("The customer you want to change does not exist");
 
-            var paginationDto = new PaginationDto(paginationModel);
+                customer.Person.FirstName =customerDto.FirstName;
+                customer.Person.LastName = customerDto.LastName;
 
-           foreach (var customer in paginationModel.CustomerItemList)
-           {
-               var customerModel = new CustomerDto(customer)
+               var result =  _customerValidator.Validate(customer);
+
+               if (!result.IsValid)
                {
-                   SumTotalDue = customer.SalesOrderHeader.Sum(s => s.TotalDue)
-               };
-               paginationDto.CustomerList.Add(customerModel);
+                   throw new ApiException(string.Join(" ~ ",result.Errors.Select(failure => failure.ErrorMessage)));
+               }
 
-           }
+                _customerRepository.UpdateCustomer(customer);
 
-           return paginationDto;
-
-        }
-
-        public void UpdateCustomer(CustomerDto customerDto)
-        {
-            var customer = _customerRepository.GetCustomer(customerDto.Id);
-            
-            customer.AccountNumber = customerDto.AccountNumber;
-            customer.Person.FirstName = customerDto.FirstName;
-            customer.Person.LastName = customerDto.LastName;
-
-            _customerRepository.UpdateCustomer(customer);
+                return _customerRepository.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw new ApiException(e);
+            }
         }
     }
 }

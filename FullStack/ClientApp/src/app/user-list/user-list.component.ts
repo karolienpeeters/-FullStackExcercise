@@ -13,17 +13,13 @@ import { ModalEditUserComponent } from '../modal-edit-user/modal-edit-user.compo
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
-  public userList;
-  public user: User;
   public pagination: Pagination;
   @ViewChild(PaginationComponent) paginationComponent: PaginationComponent;
 
-
-  constructor(private userService: UserDataService, 
-    private notificationService: NotificationService,private modalService: NgbModal) { }
+  constructor(private userService: UserDataService,
+    private notificationService: NotificationService, private modalService: NgbModal) { }
 
   ngOnInit() {
-    // console.log("user list on init")
     this.pagination = {
       pageSize: 10,
       currentPage: 1,
@@ -35,43 +31,33 @@ export class UserListComponent implements OnInit {
   }
 
   getListUser() {
-    // console.log("activated get list user")
-    this.userService.getUsers("api/users", this.pagination.currentPage, this.pagination.pageSize).subscribe((result => {
+    this.userService.getUsers(this.pagination.currentPage, this.pagination.pageSize).subscribe((result => {
       this.pagination.totalItems = result.totalItems;
       this.pagination.userList = result.userList;
-      // console.log(this.pagination,"getListUser");
       this.paginationComponent.setPage(this.pagination.currentPage);
     }));
   }
 
   deleteUser(user: User) {
-    this.userService.deleteUser(user).subscribe((() => { 
+    this.userService.deleteUser(user).subscribe((() => {
       this.notificationService.showSuccess(user.email + " deleted successful")
-      this.getListUser(); 
+      this.getListUser();
     }))
   }
 
-  updateUser(user) {
-    var string = user.rolesList.toString();
-    user.rolesList = string.split(",");
-    this.userService.updateUser(user).subscribe((result => {
-      console.log(result, "save user");
-      this.notificationService.showSuccess(`update successful`)
-      this.getListUser();
-
-    }));
-  }
-
-  openForm(user:User){
-    const modalRef = this.modalService.open(ModalEditUserComponent,{backdrop: 'static', keyboard: false});
+  openUpdateForm(user: User) {
+    const modalRef = this.modalService.open(ModalEditUserComponent, { backdrop: 'static', keyboard: false });
     modalRef.componentInstance.title = 'Edit user';
     modalRef.componentInstance.user = user;
-       modalRef.result.then((result) => {
+    modalRef.result.then((result) => {
       if (result) {
-      this.updateUser(result);
+        var string = user.rolesList.toString();
+        user.rolesList = string.split(",");
+        this.userService.updateUser(user).subscribe((result => {
+          this.notificationService.showSuccess(`update successful`)
+          this.getListUser();
+        }));
       }
     });
   }
-
-
 }

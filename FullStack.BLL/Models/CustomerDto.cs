@@ -2,20 +2,12 @@
 
 namespace FullStack.BLL.Models
 {
-
     public class CustomerDto
     {
-        public CustomerDto() { }
-
-        public CustomerDto(int id, string firstName, string lastName, string accountNumber)
+        public CustomerDto()
         {
-            Id = id;
-            AccountNumber = accountNumber;
-            FirstName = firstName;
-            LastName = lastName;
-            SumTotalDue = 0;
-           
         }
+
 
         public CustomerDto(Customer customer)
         {
@@ -24,7 +16,6 @@ namespace FullStack.BLL.Models
             FirstName = customer.Person.FirstName;
             LastName = customer.Person.LastName;
             SumTotalDue = 0;
-         
         }
 
         public int Id { get; set; }
@@ -32,9 +23,5 @@ namespace FullStack.BLL.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public decimal SumTotalDue { get; set; }
-       
-
-
-
     }
 }

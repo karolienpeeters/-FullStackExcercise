@@ -24,12 +24,10 @@ C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.BLL
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.BLL\bin\Debug\netcoreapp2.2\FullStack.BLL.dll
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.BLL\bin\Debug\netcoreapp2.2\FullStack.BLL.pdb
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.BLL\bin\Debug\netcoreapp2.2\FullStack.DAL.dll
-C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.BLL\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Mvc.Abstractions.dll
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.BLL\bin\Debug\netcoreapp2.2\Microsoft.IdentityModel.Tokens.dll
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.BLL\bin\Debug\netcoreapp2.2\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.BLL\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.BLL\bin\Debug\netcoreapp2.2\FullStack.DAL.pdb
-C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.BLL\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Mvc.Abstractions.xml
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.BLL\bin\Debug\netcoreapp2.2\Microsoft.IdentityModel.Tokens.pdb
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.BLL\bin\Debug\netcoreapp2.2\Microsoft.IdentityModel.Tokens.xml
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.BLL\bin\Debug\netcoreapp2.2\System.IdentityModel.Tokens.Jwt.pdb

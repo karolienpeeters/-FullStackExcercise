@@ -6,19 +6,15 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ErrorService {
 
-  getClientErrorMessage(error: Error): string {    
-    console.log("errorservice get client errormessage",error)
-    
-    return error.message ? 
-           error.message : 
-           error.toString();
+  getClientErrorMessage(error: Error): string {
+    return error.message ?
+      error.message :
+      error.toString();
   }
 
   getServerErrorMessage(error: HttpErrorResponse): string {
-    console.log("errorservice get server errormessage",error)
-    
-    return navigator.onLine ?    
-           error.message :
-           'No Internet Connection';
-  }    
+    return navigator.onLine ?
+      error.message :
+      'No Internet Connection';
+  }
 }

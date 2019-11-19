@@ -18,10 +18,9 @@ export class ModalEditUserComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
-    // console.log(this.user,"modal edit user");
     this.editUserForm = this.formBuilder.group({
       id: [this.user.id],
-      email: [this.user.email, [Validators.required,Validators.email]],
+      email: [this.user.email, [Validators.required, Validators.email]],
       rolesList: [this.user.rolesList, [Validators.required]],
     })
   }

@@ -74,6 +74,18 @@
               "target": "Package",
               "version": "[2.2.4, )"
             },
+            "Serilog": {
+              "target": "Package",
+              "version": "[2.9.0, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[3.2.0, )"
+            },
+            "Serilog.Sinks.File": {
+              "target": "Package",
+              "version": "[4.1.0, )"
+            },
             "Westwind.Utilities": {
               "target": "Package",
               "version": "[3.0.30, )"
@@ -128,6 +140,10 @@
       "frameworks": {
         "netcoreapp2.2": {
           "dependencies": {
+            "FluentValidation.AspNetCore": {
+              "target": "Package",
+              "version": "[8.5.1, )"
+            },
             "Microsoft.AspNetCore.Identity": {
               "target": "Package",
               "version": "[2.2.0, )"
@@ -200,6 +216,14 @@
       "frameworks": {
         "netcoreapp2.2": {
           "dependencies": {
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[8.5.1, )"
+            },
+            "FluentValidation.AspNetCore": {
+              "target": "Package",
+              "version": "[8.5.1, )"
+            },
             "Microsoft.AspNetCore.Identity": {
               "target": "Package",
               "version": "[2.2.0, )"

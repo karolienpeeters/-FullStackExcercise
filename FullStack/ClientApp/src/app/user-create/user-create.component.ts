@@ -3,6 +3,7 @@ import { User } from '../_interfaces/user';
 import { UserDataService } from '../_services/user-data.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PatternValidator } from '../_validators/pattern-validator'
+import { NotificationService } from '../_services/notification.service';
 
 @Component({
   selector: 'app-user-create',
@@ -11,11 +12,10 @@ import { PatternValidator } from '../_validators/pattern-validator'
 })
 export class UserCreateComponent implements OnInit {
   @Output() onClicked = new EventEmitter();
-  public user: User;
   registerForm: FormGroup;
   submitted = false;
 
-  constructor(private userService: UserDataService, private formBuilder: FormBuilder) { }
+  constructor(private userService: UserDataService, private notificationService: NotificationService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -32,13 +32,13 @@ export class UserCreateComponent implements OnInit {
   get f() { return this.registerForm.controls; }
 
   registerUser(form) {
-    console.log(form);
     this.submitted = true;
     if (this.registerForm.invalid) {
       return;
     }
     this.userService.registerUser(form.value).subscribe((() => {
       this.submitted = false;
+      this.notificationService.showSuccess(form.value.email + " created successful")
       form.reset();
       this.onClicked.emit();
     }));

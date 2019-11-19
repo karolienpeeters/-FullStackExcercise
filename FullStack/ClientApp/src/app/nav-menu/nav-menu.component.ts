@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { User } from '../_interfaces/user';
 import { Router } from '@angular/router';
-import * as jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-nav-menu',

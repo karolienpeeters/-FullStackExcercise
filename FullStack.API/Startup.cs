@@ -14,7 +14,11 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using System.Threading.Tasks;
-
+using FluentValidation.AspNetCore;
+using FullStack.BLL.Validators;
+using System.Linq;
+using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace FullStack.API
 {
@@ -22,10 +26,10 @@ namespace FullStack.API
     {
         public Startup(IConfiguration configuration)
         {
+            Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
+
             Configuration = configuration;
             LocalHost = "https://localhost:44354";
-
-
 
         }
 
@@ -36,22 +40,19 @@ namespace FullStack.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddContext(Configuration);
+          
             services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()
-                
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
             services.AddRepositories();
             services.AddServices();
+            services.AddValidatorsDto();
+            services.AddValidatorsDal();
             services.AddCors(c => { c.AddPolicy("AllowOrigin", options => options.WithOrigins(LocalHost).AllowAnyHeader().AllowAnyMethod()); });
-           
-
-            //services.AddIdentity<IdentityUser, IdentityRole>()
-            //    .AddEntityFrameworkStores<AppDbContext>()
-            //    .AddDefaultTokenProviders();
 
 
-         
+            
 
             // ===== Add Jwt Authentication ========
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // => remove default claims
@@ -86,17 +87,41 @@ namespace FullStack.API
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            services.AddMvc(options =>
+            services.AddLogging();
+
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddFluentValidation();
+            services.AddScoped<ApiExceptionFilter>();
+            // override Model State
+            services.Configure<ApiBehaviorOptions>(options =>
             {
-                options.Filters.Add(new ApiExceptionFilter());
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                options.InvalidModelStateResponseFactory = (context) =>
+                {
+                    //var errors = context.ModelState.Values.SelectMany(x => x.Errors.Select(e => e.ErrorMessage)).ToList();
+                    var errors = string.Join("  ~  ", context.ModelState.Values.Where(v => v.Errors.Count > 0)
+                        .SelectMany(v => v.Errors)
+                        .Select(v => v.ErrorMessage));
+
+                    return new BadRequestObjectResult(new
+                    {
+                        ErrorCode = "Your validation error code",
+                        Message = errors
+                    });
+
+                };
+            });
 
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider services)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider services,ILoggerFactory loggerFactory)
         {
+          
+
+            loggerFactory.AddSerilog();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -28,8 +28,6 @@ export class ModalEditCustomerComponent implements OnInit {
   get f() { return this.editCustomerForm.controls; }
 
   saveCustomer(form) {
-    // console.log('savecustomer', form.value)
-
     this.submitted = true;
     if (this.editCustomerForm.invalid) {
       return;

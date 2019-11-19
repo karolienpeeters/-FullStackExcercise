@@ -3,27 +3,26 @@ using FullStack.BLL.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using FullStack.API.ErrorHandling;
 
 namespace FullStack.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [EnableCors("AllowOrigin")]
+    [ServiceFilter(typeof(ApiExceptionFilter))]
+
     public class AccountController : ControllerBase
     {
-        
-
         private readonly IUserService _userService;
-       
 
         public AccountController(IUserService userService)
         {
             _userService = userService;
         }
 
-
         [HttpPost, Route("login")]
-        public async Task<IActionResult> LoginAsync([FromBody]UserDto user)
+        public async Task<IActionResult> LoginAsync([FromBody]LoginDto user)
         {
             if (user == null)
             {
@@ -31,14 +30,12 @@ namespace FullStack.API.Controllers
             }
 
             var token = await _userService.HandleLogin(user);
-            if (token.ToString() != "")
+            if (token == "")
             {
-                return Ok(new { Token = token });
+                return Unauthorized("Please enter a correct email and password");
             }
-            else
-            {
-                return Unauthorized();
-            }
+
+            return Ok(new { Token = token });
         }
     }
 }

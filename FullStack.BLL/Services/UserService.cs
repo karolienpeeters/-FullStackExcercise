@@ -1,9 +1,4 @@
-﻿using FullStack.BLL.Interfaces;
-using FullStack.BLL.Models;
-using FullStack.DAL.Interfaces;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -11,11 +6,15 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using FullStack.BLL.Common;
-
+using FullStack.BLL.Interfaces;
+using FullStack.BLL.Models;
+using FullStack.DAL.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FullStack.BLL.Services
 {
-    public class UserService:IUserService
+    public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
 
@@ -24,36 +23,36 @@ namespace FullStack.BLL.Services
             _userRepository = userRepository;
         }
 
-        public async Task<string> HandleLogin(UserDto userLogin)
+        public async Task<string> HandleLogin(LoginDto userLogin)
         {
-            
-            var theUser = await _userRepository.FindByName(userLogin.Email);
-            if (theUser != null && await _userRepository.CheckPassword(theUser, userLogin.PassWord))
+            try
             {
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("fullstack_951357456"));
-                var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-                var roles = await _userRepository.GetRolesUser(theUser);
-                var claims = new List<Claim>();
-                claims.Add(new Claim(ClaimTypes.Name, userLogin.Email));
-                foreach (string item in roles)
+                var theUser = await _userRepository.FindByName(userLogin.Email);
+                if (theUser != null && await _userRepository.CheckPassword(theUser, userLogin.PassWord))
                 {
-                    claims.Add(new Claim(ClaimTypes.Role, item));
+                    var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("fullstack_951357456"));
+                    var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+                    var roles = await _userRepository.GetRolesUser(theUser);
+                    var claims = new List<Claim>();
+                    claims.Add(new Claim(ClaimTypes.Name, userLogin.Email));
+                    foreach (var item in roles) claims.Add(new Claim(ClaimTypes.Role, item));
+                    var tokeOptions = new JwtSecurityToken(
+                        "https://localhost:44318",
+                        "*",
+                        claims,
+                        expires: DateTime.Now.AddMinutes(120),
+                        signingCredentials: signinCredentials
+                    );
+                    var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
+                    return tokenString;
                 }
-                var tokeOptions = new JwtSecurityToken(
-                    issuer: "https://localhost:44318",
-                    audience: "*",
-                    claims: claims,
-                    expires: DateTime.Now.AddMinutes(50),
-                    signingCredentials: signinCredentials
-                );
-                var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
-                return tokenString;
 
-
+                return "";
             }
-
-            return "";
-
+            catch (Exception e)
+            {
+                throw new ApiException(e);
+            }
         }
 
         public PaginationDto GetUsersWithRoles(int skip, int take)
@@ -70,23 +69,22 @@ namespace FullStack.BLL.Services
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                throw new ApiException(e);
+
             }
-            
         }
 
-        public async Task<IdentityResult> RegisterNewUser(UserDto userDto)
+        public async Task<IdentityResult> RegisterNewUser(LoginDto userDto)
         {
             try
             {
                 var result = await _userRepository.CreateUser(userDto.Email, userDto.PassWord);
+
                 return result;
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+               throw new ApiException("Something went wrong with creating a new user, contact your administrator");
             }
         }
 
@@ -94,34 +92,22 @@ namespace FullStack.BLL.Services
         {
             try
             {
-               var user = _userRepository.FindById(userId).Result;
-               if (user == null)
-               {
-                   throw new ApiException("The user you want to delete does not exist");
-               }
-               return  await _userRepository.DeleteUser(user);
+                var user = await GetUserById(userId);
+
+                return await _userRepository.DeleteUser(user);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+               throw new ApiException("Something went wrong with deleting a user, contact your administrator");
             }
-
         }
 
         public async Task<IdentityResult> UpdateUser(UserDto userDto)
         {
-            
             try
             {
-                var user = await _userRepository.FindById(userDto.Id);
+                var user = await GetUserById(userDto.Id);
 
-                if (user == null)
-                {
-                    throw new ApiException("The user you want to change does not exist");
-                }
-
-                //userDTO rolelist opvangen via validatie model
                 user.Email = userDto.Email;
                 user.UserName = userDto.Email;
 
@@ -130,35 +116,45 @@ namespace FullStack.BLL.Services
                 var result = await _userRepository.RemoveRoles(user, userRoles, userDto.RolesList);
 
                 if (!result.Succeeded)
-                {
-                    throw new ApiException("Something went wrong with removing roles, please contact your web administrator");
-                }
+                    throw new ApiException(
+                        "Something went wrong with removing roles, please contact your web administrator");
 
                 result = await _userRepository.AddRoles(user, userRoles, userDto.RolesList);
 
                 if (!result.Succeeded)
-                {
-                    throw new ApiException("Something went wrong with adding roles, please contact your web administrator");
-                }
+                    throw new ApiException(
+                        "Something went wrong with adding roles, please contact your web administrator");
 
                 result = await _userRepository.UpdateUser(user);
 
                 if (!result.Succeeded)
-                {
-                    throw new ApiException("Something went wrong with updating the user, please contact your web administrator");
-                }
+                    throw new ApiException(
+                        "Something went wrong with updating the user, please contact your web administrator");
 
                 return result;
-
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
-            }
+                throw new ApiException(e);
 
+            }
         }
 
+        private async Task<IdentityUser> GetUserById(string userId)
+        {
+            try
+            {
+                var user = await _userRepository.FindById("0");
 
+                if (user == null) throw new ApiException("The user does not exist");
+
+                return user;
+            }
+            catch (Exception e)
+            {
+                
+                throw new ApiException(e);
+            }
+        }
     }
 }

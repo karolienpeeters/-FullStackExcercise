@@ -1,6 +1,9 @@
-﻿using FullStack.DAL.Interfaces;
+﻿using FluentValidation;
+using FullStack.DAL.Interfaces;
 using FullStack.DAL.Models;
+using FullStack.DAL.Models.Entities;
 using FullStack.DAL.Repositories;
+using FullStack.DAL.Validators;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,9 +14,8 @@ namespace FullStack.DAL.ExtensionMethods
     {
         public static IServiceCollection AddContext(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("AdventureWorksConnection")));
-          
-          
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("AdventureWorksConnection")));
 
             return services;
         }
@@ -22,12 +24,15 @@ namespace FullStack.DAL.ExtensionMethods
         {
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
-
-
+            
             return services;
         }
 
-       
+        public static IServiceCollection AddValidatorsDal(this IServiceCollection services)
+        {
+            services.AddSingleton<IValidator<Customer>, CustomerValidator>();
 
+            return services;
+        }
     }
 }

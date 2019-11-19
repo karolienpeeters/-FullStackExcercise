@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentValidation.Results;
 using Westwind.Utilities;
 
 namespace FullStack.BLL.Common
@@ -10,11 +11,11 @@ namespace FullStack.BLL.Common
     {
         public int StatusCode { get; set; }
 
-        public ValidationErrorCollection Errors { get; set; }
+        public IList<ValidationFailure> Errors { get; set; }
 
         public ApiException(string message,
             int statusCode = 500,
-            ValidationErrorCollection errors = null) :
+            IList<ValidationFailure> errors = null) :
             base(message)
         {
             StatusCode = statusCode;

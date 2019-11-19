@@ -20,9 +20,7 @@ export class AuthService {
   public currentUser: Observable<User>;
 
   constructor(private http: HttpClient) {
-    console.log("authservice constructor");
     const token = JSON.parse(localStorage.getItem('currentUser'));
-    console.log(localStorage.getItem('currentUser'));
     this.currentUserSubject = new BehaviorSubject<User>(token ? this.getCurrentUserFromToken(token.token) : null);
     this.currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
   }
@@ -63,7 +61,6 @@ export class AuthService {
       isAdmin: false
     };
 
-    console.log(user);
     user.isAdmin = user.rolesList.includes("Admin");
     return user;
   }

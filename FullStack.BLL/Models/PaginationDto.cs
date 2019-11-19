@@ -13,7 +13,6 @@ namespace FullStack.BLL.Models
         }
 
         public int TotalItems { get; set; }
-      
         public List<CustomerDto> CustomerList { get; set; }
         public List<UserDto> UserList { get; set; }
     }
