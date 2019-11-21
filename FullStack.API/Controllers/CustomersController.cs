@@ -26,7 +26,7 @@ namespace FullStack.API.Controllers
             string filterAccountNumber, decimal filterSumTotalDueHigher, decimal filterSumTotalDueLower)
         {
             if ((skip == 0) & (take == 0) || take == 0)
-                return StatusCode(400,
+                return StatusCode(500,
                     "Something went wrong with getting the list of customers, contact your administrator");
 
             var customers = _customerService.GetListCustomersPage(skip, take, filterFirstName, filterLastName,

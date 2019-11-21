@@ -52,10 +52,6 @@ namespace FullStack.API
             services.AddCors(c => { c.AddPolicy("AllowOrigin", options => options.WithOrigins(LocalHost).AllowAnyHeader().AllowAnyMethod()); });
 
 
-
-
-            
-
             // ===== Add Jwt Authentication ========
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // => remove default claims
             services
@@ -94,20 +90,21 @@ namespace FullStack.API
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddFluentValidation();
+            
             services.AddScoped<ApiExceptionFilter>();
+            
             // override Model State
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.InvalidModelStateResponseFactory = (context) =>
                 {
-                    //var errors = context.ModelState.Values.SelectMany(x => x.Errors.Select(e => e.ErrorMessage)).ToList();
-                    var errors = string.Join("  ~  ", context.ModelState.Values.Where(v => v.Errors.Count > 0)
+                   var errors = string.Join("  ~  ", context.ModelState.Values.Where(v => v.Errors.Count > 0)
                         .SelectMany(v => v.Errors)
                         .Select(v => v.ErrorMessage));
 
                     return new BadRequestObjectResult(new
                     {
-                        ErrorCode = "Your validation error code",
+                        ErrorCode = "ValidationError",
                         Message = errors
                     });
 
@@ -145,22 +142,22 @@ namespace FullStack.API
 
         private async Task CreateUserRoles(IServiceProvider serviceProvider)
         {
-            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
             //Adding Admin Role 
-            var roleCheck = await RoleManager.RoleExistsAsync("Admin");
+            var roleCheck = await roleManager.RoleExistsAsync("Admin");
             if (!roleCheck)
             {
                 //create the roles and seed them to the database 
-                await RoleManager.CreateAsync(new IdentityRole("Admin"));
+                await roleManager.CreateAsync(new IdentityRole("Admin"));
             }
             //Create adminuser and assign the user the adminrole
 
             var user = new IdentityUser { UserName = "admin@mail.com", Email = "admin@mail.com" };
-            await UserManager.CreateAsync(user, "Admin123!");
+            await userManager.CreateAsync(user, "Admin123!");
 
-            await UserManager.AddToRoleAsync(user, "Admin");
+            await userManager.AddToRoleAsync(user, "Admin");
         }
     }
 }

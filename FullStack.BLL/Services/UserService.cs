@@ -40,7 +40,7 @@ namespace FullStack.BLL.Services
                         "https://localhost:44318",
                         "*",
                         claims,
-                        expires: DateTime.Now.AddMinutes(10),
+                        expires: DateTime.Now.AddMinutes(1),
                         signingCredentials: signinCredentials
                     );
                     var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
