@@ -34,7 +34,6 @@ C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.BLL
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.BLL\bin\Debug\netcoreapp2.2\System.IdentityModel.Tokens.Jwt.xml
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.BLL\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Identity.EntityFrameworkCore.xml
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.BLL\obj\Debug\netcoreapp2.2\FullStack.BLL.csprojAssemblyReference.cache
-C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.BLL\obj\Debug\netcoreapp2.2\FullStack.BLL.csproj.CoreCompileInputs.cache
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.BLL\obj\Debug\netcoreapp2.2\FullStack.BLL.AssemblyInfoInputs.cache
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.BLL\obj\Debug\netcoreapp2.2\FullStack.BLL.AssemblyInfo.cs
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.BLL\obj\Debug\netcoreapp2.2\FullStack.BLL.csproj.CopyComplete

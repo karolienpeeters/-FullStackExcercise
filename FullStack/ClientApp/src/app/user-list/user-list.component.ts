@@ -45,19 +45,32 @@ export class UserListComponent implements OnInit {
     }))
   }
 
+  updateUser(user) {
+    var string = user.rolesList.toString();
+    user.rolesList = string.split(",");
+    this.userService.updateUser(user).subscribe(() => {
+      this.notificationService.showSuccess(`update successful`)
+      this.getListUser();
+    });
+  }
+
   openUpdateForm(user: User) {
     const modalRef = this.modalService.open(ModalEditUserComponent, { backdrop: 'static', keyboard: false });
     modalRef.componentInstance.title = 'Edit user';
     modalRef.componentInstance.user = user;
+
     modalRef.result.then((result) => {
       if (result) {
-        var string = user.rolesList.toString();
-        user.rolesList = string.split(",");
-        this.userService.updateUser(user).subscribe((result => {
-          this.notificationService.showSuccess(`update successful`)
-          this.getListUser();
-        }));
+        console.log(result);
+        this.updateUser(result);
       }
+
     });
+
+
   }
+
+
+
 }
+

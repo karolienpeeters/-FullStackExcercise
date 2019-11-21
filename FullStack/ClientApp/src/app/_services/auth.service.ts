@@ -30,6 +30,7 @@ export class AuthService {
   }
 
   login(user) {
+    console.log("login method auth service")
     return this.http.post<any>(`${environment.urlAddress}/api/account/login`, user)
       .pipe(map(userToken => {
         // login successful if there's a jwt token in the response

@@ -3,15 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FullStack_old", "FullStack\FullStack_old.csproj", "{9AA5DAC4-B8D4-467C-B384-957ED69C3B55}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FullStack.API", "FullStack.API\FullStack.API.csproj", "{4E7EC341-DCAD-4542-91DF-59FE992203BB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FullStack.BLL", "FullStack.BLL\FullStack.BLL.csproj", "{44BF62AE-213F-4B93-A477-AFA3A0F7536B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FullStack.DAL", "FullStack.DAL\FullStack.DAL.csproj", "{22A96438-7B96-49E4-8BEF-20317008AFC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullStack", "FullStack\FullStack.csproj", "{58A2F1E9-79EF-413A-ADD1-AD8FD52377A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FullStack", "FullStack\FullStack.csproj", "{58A2F1E9-79EF-413A-ADD1-AD8FD52377A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9AA5DAC4-B8D4-467C-B384-957ED69C3B55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9AA5DAC4-B8D4-467C-B384-957ED69C3B55}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9AA5DAC4-B8D4-467C-B384-957ED69C3B55}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9AA5DAC4-B8D4-467C-B384-957ED69C3B55}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4E7EC341-DCAD-4542-91DF-59FE992203BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4E7EC341-DCAD-4542-91DF-59FE992203BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E7EC341-DCAD-4542-91DF-59FE992203BB}.Release|Any CPU.ActiveCfg = Release|Any CPU

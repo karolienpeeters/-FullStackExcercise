@@ -42,7 +42,6 @@ C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.DAL
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.DAL\bin\Debug\netcoreapp2.2\System.IdentityModel.Tokens.Jwt.pdb
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.DAL\bin\Debug\netcoreapp2.2\System.IdentityModel.Tokens.Jwt.xml
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.DAL\obj\Debug\netcoreapp2.2\FullStack.DAL.csprojAssemblyReference.cache
-C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.DAL\obj\Debug\netcoreapp2.2\FullStack.DAL.csproj.CoreCompileInputs.cache
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.DAL\obj\Debug\netcoreapp2.2\FullStack.DAL.AssemblyInfoInputs.cache
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.DAL\obj\Debug\netcoreapp2.2\FullStack.DAL.AssemblyInfo.cs
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.DAL\obj\Debug\netcoreapp2.2\FullStack.DAL.csproj.CopyComplete

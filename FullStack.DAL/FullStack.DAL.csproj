@@ -8,6 +8,8 @@
     <Compile Remove="AdventureWorksContext.cs" />
     <Compile Remove="Migrations\20191028144010_IdentityAdded.cs" />
     <Compile Remove="Migrations\20191028144010_IdentityAdded.Designer.cs" />
+    <Compile Remove="Migrations\20191120065300_validationcheck.cs" />
+    <Compile Remove="Migrations\20191120065300_validationcheck.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

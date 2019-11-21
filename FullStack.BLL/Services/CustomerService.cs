@@ -64,12 +64,12 @@ namespace FullStack.BLL.Services
                 customer.Person.FirstName =customerDto.FirstName;
                 customer.Person.LastName = customerDto.LastName;
 
-               var result =  _customerValidator.Validate(customer);
+               //var result =  _customerValidator.Validate(customer);
 
-               if (!result.IsValid)
-               {
-                   throw new ApiException(string.Join(" ~ ",result.Errors.Select(failure => failure.ErrorMessage)));
-               }
+               //if (!result.IsValid)
+               //{
+               //    throw new ApiException(string.Join(" ~ ",result.Errors.Select(failure => failure.ErrorMessage)));
+               //}
 
                 _customerRepository.UpdateCustomer(customer);
 

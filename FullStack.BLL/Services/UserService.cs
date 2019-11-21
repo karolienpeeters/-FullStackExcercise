@@ -40,7 +40,7 @@ namespace FullStack.BLL.Services
                         "https://localhost:44318",
                         "*",
                         claims,
-                        expires: DateTime.Now.AddMinutes(120),
+                        expires: DateTime.Now.AddMinutes(10),
                         signingCredentials: signinCredentials
                     );
                     var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
@@ -96,9 +96,10 @@ namespace FullStack.BLL.Services
 
                 return await _userRepository.DeleteUser(user);
             }
-            catch (Exception e)
+            catch (ApiException e)
             {
-               throw new ApiException("Something went wrong with deleting a user, contact your administrator");
+              
+               throw ;
             }
         }
 
@@ -130,10 +131,10 @@ namespace FullStack.BLL.Services
                 if (!result.Succeeded)
                     throw new ApiException(
                         "Something went wrong with updating the user, please contact your web administrator");
-
+               
                 return result;
             }
-            catch (Exception e)
+            catch (ApiException e)
             {
                 throw new ApiException(e);
 
@@ -144,7 +145,7 @@ namespace FullStack.BLL.Services
         {
             try
             {
-                var user = await _userRepository.FindById("0");
+                var user = await _userRepository.FindById(userId);
 
                 if (user == null) throw new ApiException("The user does not exist");
 

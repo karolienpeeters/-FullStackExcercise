@@ -52,6 +52,8 @@ namespace FullStack.API
             services.AddCors(c => { c.AddPolicy("AllowOrigin", options => options.WithOrigins(LocalHost).AllowAnyHeader().AllowAnyMethod()); });
 
 
+
+
             
 
             // ===== Add Jwt Authentication ========
@@ -134,8 +136,9 @@ namespace FullStack.API
 
             app.UseHttpsRedirection();
             app.UseAuthentication();
-            app.UseMvc();
             app.UseCors(options => options.WithOrigins(LocalHost).AllowAnyHeader().AllowAnyMethod());
+            app.UseMvc();
+            
             
             CreateUserRoles(services).Wait();
         }

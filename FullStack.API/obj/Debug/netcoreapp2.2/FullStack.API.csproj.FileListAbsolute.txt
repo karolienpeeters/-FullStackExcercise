@@ -17,6 +17,9 @@ C:\Users\admin\Documents\dotnetacademy\FullStackExercise\FullStack\FullStack.API
 C:\Users\admin\Documents\dotnetacademy\FullStackExercise\FullStack\FullStack.API\obj\Debug\netcoreapp2.2\FullStack.API.csproj.CopyComplete
 C:\Users\admin\Documents\dotnetacademy\FullStackExercise\FullStack\FullStack.API\obj\Debug\netcoreapp2.2\FullStack.API.dll
 C:\Users\admin\Documents\dotnetacademy\FullStackExercise\FullStack\FullStack.API\obj\Debug\netcoreapp2.2\FullStack.API.pdb
+C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.API\bin\Debug\netcoreapp2.2\appsettings.Development.json
+C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.API\bin\Debug\netcoreapp2.2\appsettings.json
+C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.API\bin\Debug\netcoreapp2.2\Properties\launchSettings.json
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.API\bin\Debug\netcoreapp2.2\FullStack.API.deps.json
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.API\bin\Debug\netcoreapp2.2\FullStack.API.runtimeconfig.json
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.API\bin\Debug\netcoreapp2.2\FullStack.API.runtimeconfig.dev.json
@@ -27,7 +30,6 @@ C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.API
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.API\bin\Debug\netcoreapp2.2\FullStack.BLL.pdb
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.API\bin\Debug\netcoreapp2.2\FullStack.DAL.pdb
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.API\obj\Debug\netcoreapp2.2\FullStack.API.csprojAssemblyReference.cache
-C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.API\obj\Debug\netcoreapp2.2\FullStack.API.csproj.CoreCompileInputs.cache
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.API\obj\Debug\netcoreapp2.2\FullStack.API.RazorAssemblyInfo.cache
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.API\obj\Debug\netcoreapp2.2\FullStack.API.RazorAssemblyInfo.cs
 C:\Users\admin\Documents\dotnetacademy\FullStack\FullStackExercise\FullStack.API\obj\Debug\netcoreapp2.2\FullStack.API.AssemblyInfoInputs.cache
