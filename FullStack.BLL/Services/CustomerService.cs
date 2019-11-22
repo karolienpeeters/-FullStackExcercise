@@ -1,26 +1,25 @@
-﻿using System;
-using System.Linq;
-using FluentValidation;
-using FullStack.BLL.Common;
+﻿using FullStack.BLL.Common;
 using FullStack.BLL.Interfaces;
 using FullStack.BLL.Models;
 using FullStack.DAL.Interfaces;
-using FullStack.DAL.Models.Entities;
-using FullStack.DAL.Validators;
-using Microsoft.AspNetCore.Mvc.Internal;
-using Westwind.Utilities;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Linq;
 
 namespace FullStack.BLL.Services
 {
     public class CustomerService : ICustomerService
     {
         private readonly ICustomerRepository _customerRepository;
-        private readonly IValidator<Customer> _customerValidator;
+        private readonly ILogger<CustomerService> _logger;
 
-        public CustomerService(ICustomerRepository repository, IValidator<Customer> customerValidator)
+
+
+        public CustomerService(ICustomerRepository repository, ILogger<CustomerService> logger)
         {
             _customerRepository = repository;
-            _customerValidator = customerValidator;
+            _logger = logger;
+           
         }
 
 
@@ -47,7 +46,8 @@ namespace FullStack.BLL.Services
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _logger.LogDebug(e.Message);
+
                 throw new ApiException(e);
                 
             }
@@ -59,25 +59,22 @@ namespace FullStack.BLL.Services
             {
                 var customer = _customerRepository.GetCustomer(customerDto.Id);
 
-                if (customer == null) throw new ApiException("The customer you want to change does not exist");
+                //if (customer == null) throw new ApiException("The customer you want to change does not exist");
+
+                customer = null;
 
                 customer.Person.FirstName =customerDto.FirstName;
                 customer.Person.LastName = customerDto.LastName;
 
-               //var result =  _customerValidator.Validate(customer);
-
-               //if (!result.IsValid)
-               //{
-               //    throw new ApiException(string.Join(" ~ ",result.Errors.Select(failure => failure.ErrorMessage)));
-               //}
-
+           
                 _customerRepository.UpdateCustomer(customer);
 
                 return _customerRepository.SaveChanges();
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _logger.LogDebug(e.Message);
+
                 throw new ApiException(e);
             }
         }

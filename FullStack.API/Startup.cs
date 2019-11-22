@@ -26,7 +26,7 @@ namespace FullStack.API
     {
         public Startup(IConfiguration configuration)
         {
-            Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
+            //Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
 
             Configuration = configuration;
             LocalHost = "https://localhost:44354";
@@ -48,10 +48,8 @@ namespace FullStack.API
             services.AddRepositories();
             services.AddServices();
             services.AddValidatorsDto();
-            services.AddValidatorsDal();
             services.AddCors(c => { c.AddPolicy("AllowOrigin", options => options.WithOrigins(LocalHost).AllowAnyHeader().AllowAnyMethod()); });
-
-
+         
             // ===== Add Jwt Authentication ========
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // => remove default claims
             services
@@ -119,7 +117,7 @@ namespace FullStack.API
         {
           
 
-            loggerFactory.AddSerilog();
+           // loggerFactory.AddSerilog();
 
             if (env.IsDevelopment())
             {

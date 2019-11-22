@@ -3,7 +3,6 @@ using FullStack.DAL.Interfaces;
 using FullStack.DAL.Models;
 using FullStack.DAL.Models.Entities;
 using FullStack.DAL.Repositories;
-using FullStack.DAL.Validators;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,11 +27,6 @@ namespace FullStack.DAL.ExtensionMethods
             return services;
         }
 
-        public static IServiceCollection AddValidatorsDal(this IServiceCollection services)
-        {
-            services.AddSingleton<IValidator<Customer>, CustomerValidator>();
-
-            return services;
-        }
+      
     }
 }

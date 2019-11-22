@@ -10,6 +10,7 @@ using FullStack.BLL.Interfaces;
 using FullStack.BLL.Models;
 using FullStack.DAL.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 
 namespace FullStack.BLL.Services
@@ -17,10 +18,12 @@ namespace FullStack.BLL.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly ILogger<UserService> _logger;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, ILogger<UserService> logger)
         {
             _userRepository = userRepository;
+            _logger = logger;
         }
 
         public async Task<string> HandleLogin(LoginDto userLogin)
@@ -51,6 +54,7 @@ namespace FullStack.BLL.Services
             }
             catch (Exception e)
             {
+                _logger.LogDebug(e.Message);
                 throw new ApiException(e);
             }
         }
@@ -69,6 +73,8 @@ namespace FullStack.BLL.Services
             }
             catch (Exception e)
             {
+                _logger.LogDebug(e.Message);
+
                 throw new ApiException(e);
 
             }
@@ -84,7 +90,9 @@ namespace FullStack.BLL.Services
             }
             catch (Exception e)
             {
-               throw new ApiException("Something went wrong with creating a new user, contact your administrator");
+                _logger.LogDebug(e.Message);
+
+                throw new ApiException("Something went wrong with creating a new user, contact your administrator");
             }
         }
 
@@ -96,10 +104,11 @@ namespace FullStack.BLL.Services
 
                 return await _userRepository.DeleteUser(user);
             }
-            catch (ApiException e)
+            catch (Exception e)
             {
-              
-               throw ;
+                _logger.LogDebug(e.Message);
+
+                throw;
             }
         }
 
@@ -128,14 +137,16 @@ namespace FullStack.BLL.Services
 
                 result = await _userRepository.UpdateUser(user);
 
-                if (!result.Succeeded)
+                if (result.Succeeded)
                     throw new ApiException(
                         "Something went wrong with updating the user, please contact your web administrator");
-               
+              
                 return result;
             }
             catch (ApiException e)
             {
+                _logger.LogDebug(e.Message);
+
                 throw new ApiException(e);
 
             }
@@ -153,7 +164,8 @@ namespace FullStack.BLL.Services
             }
             catch (Exception e)
             {
-                
+                _logger.LogDebug(e.Message);
+
                 throw new ApiException(e);
             }
         }

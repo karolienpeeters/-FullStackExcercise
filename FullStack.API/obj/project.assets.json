@@ -3245,6 +3245,19 @@
           "lib/netstandard2.0/Serilog.Settings.Configuration.dll": {}
         }
       },
+      "Serilog.Sinks.ColoredConsole/3.0.1": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1",
+          "Serilog.Sinks.Console": "3.0.1"
+        },
+        "compile": {
+          "lib/netstandard1.3/Serilog.Sinks.ColoredConsole.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Serilog.Sinks.ColoredConsole.dll": {}
+        }
+      },
       "Serilog.Sinks.Console/3.1.1": {
         "type": "package",
         "dependencies": {
@@ -4938,6 +4951,7 @@
           "FluentValidation": "8.5.1",
           "FluentValidation.AspNetCore": "8.5.1",
           "Microsoft.AspNetCore.Identity": "2.2.0",
+          "Microsoft.AspNetCore.Mvc": "2.2.0",
           "Microsoft.EntityFrameworkCore.Design": "2.2.6",
           "Microsoft.EntityFrameworkCore.SqlServer": "2.2.6",
           "Microsoft.Extensions.Identity.Core": "2.2.0"
@@ -8755,6 +8769,19 @@
         "lib/netstandard2.0/Serilog.Settings.Configuration.xml",
         "serilog.settings.configuration.3.1.0.nupkg.sha512",
         "serilog.settings.configuration.nuspec"
+      ]
+    },
+    "Serilog.Sinks.ColoredConsole/3.0.1": {
+      "sha512": "Upbxq6I1v3hwOIXzyWb19Hdm7UtdxSLiW6MhkJgyN12Vw71Sv/U7BfhbTxiJ0v/ut3KOwBVigHj24i5b3yiXJw==",
+      "type": "package",
+      "path": "serilog.sinks.coloredconsole/3.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/Serilog.Sinks.ColoredConsole.dll",
+        "lib/netstandard1.3/Serilog.Sinks.ColoredConsole.dll",
+        "serilog.sinks.coloredconsole.3.0.1.nupkg.sha512",
+        "serilog.sinks.coloredconsole.nuspec"
       ]
     },
     "Serilog.Sinks.Console/3.1.1": {
@@ -13441,6 +13468,7 @@
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.2.4",
       "Serilog >= 2.9.0",
       "Serilog.AspNetCore >= 3.2.0",
+      "Serilog.Sinks.ColoredConsole >= 3.0.1",
       "Serilog.Sinks.File >= 4.1.0",
       "Westwind.Utilities >= 3.0.30"
     ]
@@ -13526,6 +13554,10 @@
           "Serilog.AspNetCore": {
             "target": "Package",
             "version": "[3.2.0, )"
+          },
+          "Serilog.Sinks.ColoredConsole": {
+            "target": "Package",
+            "version": "[3.0.1, )"
           },
           "Serilog.Sinks.File": {
             "target": "Package",
