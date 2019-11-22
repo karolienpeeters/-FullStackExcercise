@@ -36,8 +36,10 @@ namespace FullStack.BLL.Services
                     var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("fullstack_951357456"));
                     var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
                     var roles = await _userRepository.GetRolesUser(theUser);
-                    var claims = new List<Claim>();
-                    claims.Add(new Claim(ClaimTypes.Name, userLogin.Email));
+                    var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Name, userLogin.Email)
+                    };
                     foreach (var item in roles) claims.Add(new Claim(ClaimTypes.Role, item));
                     var tokeOptions = new JwtSecurityToken(
                         "https://localhost:44318",
@@ -137,7 +139,7 @@ namespace FullStack.BLL.Services
 
                 result = await _userRepository.UpdateUser(user);
 
-                if (result.Succeeded)
+                if (!result.Succeeded)
                     throw new ApiException(
                         "Something went wrong with updating the user, please contact your web administrator");
               

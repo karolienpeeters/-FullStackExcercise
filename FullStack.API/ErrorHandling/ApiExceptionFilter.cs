@@ -29,8 +29,10 @@ namespace FullStack.API.ErrorHandling
                 // handle explicit 'known' API errors
                 var ex = context.Exception as ApiException;
                 context.Exception = null;
-                apiError = new ApiError(ex.Message);
-                apiError.Errors = ex.Errors;
+                apiError = new ApiError(ex.Message)
+                {
+                    Errors = ex.Errors
+                };
 
                 context.HttpContext.Response.StatusCode = ex.StatusCode;
 
@@ -53,8 +55,10 @@ namespace FullStack.API.ErrorHandling
                 string stack = context.Exception.StackTrace;
 #endif
 
-                apiError = new ApiError(msg);
-                apiError.Detail = stack;
+                apiError = new ApiError(msg)
+                {
+                    Detail = stack
+                };
 
                 context.HttpContext.Response.StatusCode = 500;
 

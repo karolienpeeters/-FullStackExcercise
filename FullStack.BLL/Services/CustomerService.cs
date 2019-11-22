@@ -59,9 +59,7 @@ namespace FullStack.BLL.Services
             {
                 var customer = _customerRepository.GetCustomer(customerDto.Id);
 
-                //if (customer == null) throw new ApiException("The customer you want to change does not exist");
-
-                customer = null;
+                if (customer == null) throw new ApiException("The customer you want to change does not exist");
 
                 customer.Person.FirstName =customerDto.FirstName;
                 customer.Person.LastName = customerDto.LastName;
