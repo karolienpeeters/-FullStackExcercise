@@ -24,6 +24,7 @@ export class UserDataService {
   }
 
   updateUser(user) {
+    
     return this.http.put(this.createRoute("api/users/updateuser", environment.urlAddress), user);
   }
 

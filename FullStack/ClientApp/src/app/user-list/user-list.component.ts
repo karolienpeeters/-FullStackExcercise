@@ -58,16 +58,12 @@ export class UserListComponent implements OnInit {
     const modalRef = this.modalService.open(ModalEditUserComponent, { backdrop: 'static', keyboard: false });
     modalRef.componentInstance.title = 'Edit user';
     modalRef.componentInstance.user = user;
-
     modalRef.result.then((result) => {
       if (result) {
-        console.log(result);
         this.updateUser(result);
       }
 
     });
-
-
   }
 
 

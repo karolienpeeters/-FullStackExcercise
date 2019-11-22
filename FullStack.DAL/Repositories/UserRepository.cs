@@ -10,10 +10,12 @@ namespace FullStack.DAL.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UserRepository(UserManager<IdentityUser> userManager)
+        public UserRepository(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
         }
 
 
@@ -77,6 +79,11 @@ namespace FullStack.DAL.Repositories
         public async Task<IdentityResult> RemoveRoles(IdentityUser iUser, IList<string> userRoles, List<string> roles)
         {
             return await _userManager.RemoveFromRolesAsync(iUser, userRoles.Except(roles).ToList());
+        }
+
+        public async Task<bool> CheckRole(string role)
+        {
+           return await _roleManager.RoleExistsAsync(role);
         }
     }
 }

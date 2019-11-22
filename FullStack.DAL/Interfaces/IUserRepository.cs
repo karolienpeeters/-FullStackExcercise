@@ -17,5 +17,6 @@ namespace FullStack.DAL.Interfaces
         Task<IList<string>> GetRolesUser(IdentityUser iUser);
         Task<IdentityResult> AddRoles(IdentityUser iUser, IList<string> userRoles, List<string> roles);
         Task<IdentityResult> RemoveRoles(IdentityUser iUser, IList<string> userRoles, List<string> roles);
+        Task<bool> CheckRole(string role);
     }
 }

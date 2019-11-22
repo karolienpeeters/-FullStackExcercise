@@ -20,9 +20,9 @@ namespace FullStack.BLL.ExtensionMethods
 
         public static IServiceCollection AddValidatorsDto(this IServiceCollection services)
         {
-            services.AddSingleton<IValidator<LoginDto>, LoginDtoValidator>();
-            services.AddSingleton<IValidator<UserDto>, UserDtoValidator>();
-            services.AddSingleton<IValidator<CustomerDto>, CustomerDtoValidator>();
+            services.AddTransient<IValidator<LoginDto>, LoginDtoValidator>();
+            services.AddTransient<IValidator<UserDto>, UserDtoValidator>();
+            services.AddTransient<IValidator<CustomerDto>, CustomerDtoValidator>();
 
             return services;
         }
