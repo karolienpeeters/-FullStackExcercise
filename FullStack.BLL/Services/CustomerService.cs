@@ -19,7 +19,6 @@ namespace FullStack.BLL.Services
         {
             _customerRepository = repository;
             _logger = logger;
-           
         }
 
 
@@ -46,7 +45,7 @@ namespace FullStack.BLL.Services
             }
             catch (Exception e)
             {
-                _logger.LogDebug(e.Message);
+                _logger.LogDebug("get list customers",e);
 
                 throw new ApiException(e);
                 
@@ -59,19 +58,18 @@ namespace FullStack.BLL.Services
             {
                 var customer = _customerRepository.GetCustomer(customerDto.Id);
 
-                if (customer == null) throw new ApiException("The customer you want to change does not exist");
+                if (customer == null) throw new NullReferenceException("The customer you want to change does not exist");
 
                 customer.Person.FirstName =customerDto.FirstName;
                 customer.Person.LastName = customerDto.LastName;
 
-           
                 _customerRepository.UpdateCustomer(customer);
 
                 return _customerRepository.SaveChanges();
             }
             catch (Exception e)
             {
-                _logger.LogDebug(e.Message);
+                _logger.LogDebug("update customer",e);
 
                 throw new ApiException(e);
             }

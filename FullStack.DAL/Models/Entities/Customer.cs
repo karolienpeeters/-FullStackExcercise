@@ -10,8 +10,6 @@ namespace FullStack.DAL.Models.Entities
             SalesOrderHeader = new HashSet<SalesOrderHeader>();
         }
 
-     
-
         public int CustomerId { get; set; }
         public int? PersonId { get; set; }
         public int? StoreId { get; set; }

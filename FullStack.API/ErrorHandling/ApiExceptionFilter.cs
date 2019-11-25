@@ -11,9 +11,7 @@ namespace FullStack.API.ErrorHandling
 {
     public class ApiExceptionFilter : ExceptionFilterAttribute
     {
-        //private readonly ILogger<ApiExceptionFilter> _logger;
-
-       
+             
         public ApiExceptionFilter()
         {
            
@@ -36,13 +34,13 @@ namespace FullStack.API.ErrorHandling
 
                 context.HttpContext.Response.StatusCode = ex.StatusCode;
 
-                //_logger.LogWarning($"Application thrown error: {ex.Message}", ex);
+               
             }
             else if (context.Exception is UnauthorizedAccessException)
             {
                 apiError = new ApiError("Unauthorized Access");
                 context.HttpContext.Response.StatusCode = 401;
-               //_logger.LogWarning("Unauthorized Access in Controller Filter.");
+             
             }
             else
             {
@@ -62,8 +60,7 @@ namespace FullStack.API.ErrorHandling
 
                 context.HttpContext.Response.StatusCode = 500;
 
-                // handle logging here
-                //_logger.LogError(new EventId(0), context.Exception, msg);
+               
             }
 
             // always return a JSON result

@@ -10,6 +10,7 @@ namespace FullStack.BLL.Validators
             RuleFor(u => u.Email)
                 .NotEmpty().WithMessage("The email cannot be empty")
                 .EmailAddress().WithMessage("This is not a valid email");
+
             RuleFor(u => u.PassWord)
                 .NotEmpty().WithMessage("The password cannot be empty")
                 .MinimumLength(6).WithMessage("Password must be at least 6 characters")

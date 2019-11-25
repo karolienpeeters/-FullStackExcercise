@@ -1,10 +1,8 @@
-﻿using System;
-using System.ComponentModel;
-using System.Threading;
-using System.Threading.Tasks;
-using FluentValidation;
+﻿using FluentValidation;
 using FullStack.BLL.Models;
 using FullStack.DAL.Interfaces;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace FullStack.BLL.Validators
 {

@@ -56,7 +56,7 @@ namespace FullStack.BLL.Services
             }
             catch (Exception e)
             {
-                _logger.LogDebug(e.Message);
+                _logger.LogDebug("handle login", e);
                 throw new ApiException(e);
             }
         }
@@ -75,7 +75,7 @@ namespace FullStack.BLL.Services
             }
             catch (Exception e)
             {
-                _logger.LogDebug(e.Message);
+                _logger.LogDebug("get user with roles", e);
 
                 throw new ApiException(e);
 
@@ -92,7 +92,7 @@ namespace FullStack.BLL.Services
             }
             catch (Exception e)
             {
-                _logger.LogDebug(e.Message);
+                _logger.LogDebug("register new user",e);
 
                 throw new ApiException("Something went wrong with creating a new user, contact your administrator");
             }
@@ -108,9 +108,9 @@ namespace FullStack.BLL.Services
             }
             catch (Exception e)
             {
-                _logger.LogDebug(e.Message);
+                _logger.LogDebug("delete user",e);
 
-                throw;
+                throw new ApiException(e);
             }
         }
 
@@ -128,26 +128,24 @@ namespace FullStack.BLL.Services
                 var result = await _userRepository.RemoveRoles(user, userRoles, userDto.RolesList);
 
                 if (!result.Succeeded)
-                    throw new ApiException(
-                        "Something went wrong with removing roles, please contact your web administrator");
+                    throw new ApiException(result.Errors.ToString());
+
 
                 result = await _userRepository.AddRoles(user, userRoles, userDto.RolesList);
 
                 if (!result.Succeeded)
-                    throw new ApiException(
-                        "Something went wrong with adding roles, please contact your web administrator");
+                    throw new ApiException(result.Errors.ToString());
 
                 result = await _userRepository.UpdateUser(user);
 
                 if (!result.Succeeded)
-                    throw new ApiException(
-                        "Something went wrong with updating the user, please contact your web administrator");
+                    throw new ApiException(result.Errors.ToString());
               
                 return result;
             }
-            catch (ApiException e)
+            catch (Exception e)
             {
-                _logger.LogDebug(e.Message);
+                _logger.LogDebug("update user",e);
 
                 throw new ApiException(e);
 
@@ -160,13 +158,13 @@ namespace FullStack.BLL.Services
             {
                 var user = await _userRepository.FindById(userId);
 
-                if (user == null) throw new ApiException("The user does not exist");
+                if (user == null) throw new NullReferenceException("The user does not exist");
 
                 return user;
             }
             catch (Exception e)
             {
-                _logger.LogDebug(e.Message);
+                _logger.LogDebug("Get user by id",e);
 
                 throw new ApiException(e);
             }

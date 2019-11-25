@@ -150,6 +150,13 @@ namespace FullStack.API
                 //create the roles and seed them to the database 
                 await roleManager.CreateAsync(new IdentityRole("Admin"));
             }
+
+            roleCheck = await roleManager.RoleExistsAsync("User");
+            if (!roleCheck)
+            {
+                //create the roles and seed them to the database 
+                await roleManager.CreateAsync(new IdentityRole("User"));
+            }
             //Create adminuser and assign the user the adminrole
 
             var user = new IdentityUser { UserName = "admin@mail.com", Email = "admin@mail.com" };
